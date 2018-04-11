@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <RelativeLayout
+            android:id="@+id/top_Panel"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#699DD9">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="330dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/trebuc"
+                android:gravity="center"
+                android:paddingRight="50dp"
+                android:text="Clients"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_menubutton"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="13dp"/>
+
+        </RelativeLayout>
+
+    <TextView
+        android:id="@+id/dt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="50dp"
+        android:text="Daniela Lourenço"
+        android:paddingTop="@dimen/paddingTopBot"
+        android:fontFamily="@font/trebuc"/>
+
+    <TextView
+        android:id="@+id/dt_phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="100dp"
+        android:text="078 737 34 04"
+        android:fontFamily="@font/trebuc"
+        android:layout_marginTop="20dp"/>
+
+ <!-- Informations sur le package -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp">
+
+            <TextView
+                android:id="@+id/dt_name_package"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="135dp"
+                tools:layout_editor_absoluteY="100dp"
+                android:text="Vivo S"
+                android:paddingRight="200dp"
+                android:paddingLeft="@dimen/padingLeftCB"
+                android:textStyle="bold"
+                android:paddingTop="@dimen/paddingTopBot"
+                android:fontFamily="@font/trebuc"/>
+
+            <TextView
+                android:id="@+id/dt_price_package"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                tools:layout_editor_absoluteX="135dp"
+                tools:layout_editor_absoluteY="100dp"
+                android:text="80 CHF"
+                android:paddingRight="@dimen/padingLeftCB"
+                android:fontFamily="@font/trebuc"/>
+        </LinearLayout>
+
+
+
+        <TextView
+        android:id="@+id/dt_street"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:text="Place du Midi 37"
+        android:paddingTop="40dp"
+        android:fontFamily="@font/trebuc"
+        android:layout_marginTop="20dp"/>
+
+
+<!-- Informations CP + ville -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+            android:id="@+id/dt_postal_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="135dp"
+            tools:layout_editor_absoluteY="100dp"
+                android:text="1950"
+                android:paddingRight="20dp"
+                android:paddingTop="7dp"
+                android:fontFamily="@font/trebuc"/>
+
+            <TextView
+                android:id="@+id/dt_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="135dp"
+                tools:layout_editor_absoluteY="100dp"
+                android:text="Sion"
+                android:fontFamily="@font/trebuc"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/dt_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="135dp"
+            tools:layout_editor_absoluteY="100dp"
+            tools:text="Switzerland"
+            android:paddingTop="7dp"
+            android:fontFamily="@font/trebuc"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <!--Bouton delete-->
+            <ImageButton
+                android:id="@+id/dt_btn_delete"
+                android:layout_width="@dimen/width"
+                android:layout_height="@dimen/height"
+                android:layout_marginBottom="@dimen/MarginButtom"
+                android:layout_marginLeft="@dimen/MarginLR"
+                android:layout_marginRight="25dp"
+                android:layout_weight="@dimen/weight"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/delete" />
+
+            <!--Bouton modifier-->
+            <ImageButton
+                android:id="@+id/dt_btn_edit"
+                android:layout_width="@dimen/width"
+                android:layout_height="@dimen/height"
+                android:layout_marginBottom="@dimen/MarginButtom"
+                android:layout_marginRight="@dimen/MarginLR"
+                android:layout_weight="@dimen/weight"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/edit" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

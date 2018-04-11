@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+ <!-- Dimensions pour les check box -->
+    <dimen name="marginTopCB">20dp</dimen>
+    <dimen name="textSize">18sp</dimen>
+    <dimen name="padingLeftCB">30dp</dimen>
+
+
+ <!-- Dimension pour les boutons add/delete-->
+    <dimen name="width">1dp</dimen>
+    <dimen name="height">60dp</dimen>
+    <dimen name="weight">60</dimen>
+    <dimen name="MarginLR">100dp</dimen>
+    <dimen name="padding">5dp</dimen>
+    <dimen name="MarginButtom">10dp</dimen>
+
+
+  <!--Dimension add client-->
+   <dimen name="paddingTopBot">20dp</dimen>
+   <dimen name="layout_width">300dp</dimen>
+
+
+
+</resources>

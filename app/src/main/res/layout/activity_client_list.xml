@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.jaufray.telecomproject.ListClient">
+
+    <RelativeLayout
+        android:id="@+id/top_Panel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#699DD9">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="330dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/trebuc"
+            android:gravity="center"
+            android:paddingRight="50dp"
+            android:text="Clients"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_menubutton"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="13dp"/>
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="430dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/client1_name"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:hint="Daniela Lourenco"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/trebuc"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:background="@android:color/transparent"
+                android:textColorHint="#000000"
+                android:layout_gravity="center"/>
+
+
+            <Button
+                android:id="@+id/client2_name"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:hint="Jaufray Ramses"
+                android:gravity="center_vertical"
+                android:layout_gravity="center"
+                android:fontFamily="@font/trebuc"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:background="@android:color/transparent"
+                android:textColorHint="#000000"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/add"
+        android:layout_toRightOf="@+id/delete_button"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

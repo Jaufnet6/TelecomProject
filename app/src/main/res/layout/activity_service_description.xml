@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/top_Panel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#699DD9">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="330dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/trebuc"
+            android:gravity="center"
+            android:paddingRight="50dp"
+            android:text="Services"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_menubutton"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="13dp"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="507dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/package_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/trebuc"
+                android:gravity="center"
+                android:text="Internet 4G Unlimited"
+                android:textColor="#000000"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="300dp"
+                android:text="Lorem ipsum dolor sit amet, his ne elit pericula, ea mel tacimates intellegat. Id solum mundi putent cum. Cu cum oratio pertinax reprehendunt. Hinc error minimum pri ex. Mea ea scaevola constituam."
+                android:padding="20sp"
+                android:fontFamily="@font/trebuc"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                />
+
+
+            <TextView
+                android:id="@+id/total_price_box"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/trebuc"
+                android:gravity="center"
+                android:text="10 CHF"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold|italic" />
+
+            <RelativeLayout
+                android:id="@+id/delete_new_panel"
+                android:layout_width="match_parent"
+                android:layout_height="77dp">
+
+                <Button
+                    android:id="@+id/delete_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/delete"
+                    android:layout_marginStart="100dp"/>
+
+                <Button
+                    android:id="@+id/edit_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="100dp"
+                    android:background="@drawable/edit" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

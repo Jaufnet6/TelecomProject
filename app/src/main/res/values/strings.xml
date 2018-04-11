@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TelecomProject</string>
+    <string name="title_client">Client</string>
+    <string name="bClient">Clients</string>
+    <string name="bServices">Services</string>
+    <string name="bPackages">Package</string>
+
+
+    <!--Strings pour ajouter un contact-->
+    <string name="name">Name</string>
+    <string name="phoneNumber">Phone number</string>
+    <string name="addPackage">Add a package</string>
+    <string name="street">Street</string>
+    <string name="NPA">P. C.</string>
+    <string name="city">City</string>
+    <string name="Country">Country</string>
+
+</resources>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/top_Panel"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#699DD9">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="330dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/trebuc"
+                android:gravity="center"
+                android:paddingRight="50dp"
+                android:text="Clients"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_menubutton"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="13dp"/>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="507dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Daniela Lourenco"
+                    android:gravity="center"
+                    android:fontFamily="@font/trebuc"
+                    android:inputType="text"
+                    android:paddingTop="@dimen/paddingTopBot"
+                    android:textSize="@dimen/textSize" />
+
+                <EditText
+                    android:id="@+id/et_phoneNumber"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/paddingTopBot"
+                    android:gravity="center"
+                    android:hint="078 737 34 04"
+                    android:textSize="@dimen/textSize"
+                    android:inputType="phone"
+                    android:fontFamily="@font/trebuc"/>
+
+                <!-- Informations sur le package -->
+                <LinearLayout
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="40dp">
+
+                    <TextView
+                        android:id="@+id/dt_name_package"
+                        android:layout_width="240dp"
+                        android:layout_height="50dp"
+                        android:textColor="#636363"
+                        android:textSize="18sp"
+                        tools:layout_editor_absoluteX="135dp"
+                        tools:layout_editor_absoluteY="100dp"
+                        android:text="Vivo S"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/padingLeftCB"
+                        android:fontFamily="@font/trebuc"/>
+
+                    <TextView
+                        android:id="@+id/dt_price_package"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="#636363"
+                        android:textSize="18sp"
+                        android:textStyle="bold|italic"
+                        tools:layout_editor_absoluteX="135dp"
+                        tools:layout_editor_absoluteY="100dp"
+                        android:text="80 CHF"
+                        android:fontFamily="@font/trebuc"/>
+
+                    <ImageButton
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center"
+                        android:scaleType="fitCenter"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/edit"/>
+                </LinearLayout>
+
+
+
+
+
+
+                <!-- Informations CP + ville -->
+                <EditText
+                    android:id="@+id/et_street"
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/paddingTopBot"
+                    android:hint="Place du Midi 37"
+                    android:textSize="@dimen/textSize"
+                    android:inputType="text"
+                    android:fontFamily="@font/trebuc"
+                    android:layout_marginTop="20dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <EditText
+                        android:id="@+id/et_npa"
+                        android:layout_width="79dp"
+                        android:layout_height="match_parent"
+                        android:hint="1950"
+                        android:inputType="number"
+                        android:paddingTop="@dimen/paddingTopBot"
+                        android:textSize="@dimen/textSize"
+                        android:fontFamily="@font/trebuc"/>
+
+                    <EditText
+                        android:id="@+id/et_city"
+                        android:layout_width="225dp"
+                        android:layout_height="match_parent"
+                        android:hint="Sion"
+                        android:inputType="text"
+                        android:paddingTop="@dimen/paddingTopBot"
+                        android:textSize="@dimen/textSize"
+                        android:fontFamily="@font/trebuc"/>
+
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_country"
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="wrap_content"
+                    android:hint="Switzerland"
+                    android:inputType="text"
+                    android:paddingTop="@dimen/paddingTopBot"
+                    android:textSize="@dimen/textSize"
+                    android:fontFamily="@font/trebuc"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+
+                    <!--Bouton delete-->
+                    <ImageButton
+                        android:id="@+id/dt_btn_delete"
+                        android:layout_width="@dimen/width"
+                        android:layout_height="@dimen/height"
+                        android:layout_marginBottom="@dimen/MarginButtom"
+                        android:layout_marginLeft="@dimen/MarginLR"
+                        android:layout_marginRight="25dp"
+                        android:layout_weight="@dimen/weight"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_savebutton" />
+
+                    <!--Bouton modifier-->
+                    <ImageButton
+                        android:id="@+id/dt_btn_edit"
+                        android:layout_width="@dimen/width"
+                        android:layout_height="@dimen/height"
+                        android:layout_marginBottom="@dimen/MarginButtom"
+                        android:layout_marginRight="@dimen/MarginLR"
+                        android:layout_weight="@dimen/weight"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_cancelbutton" />
+
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/delete_client"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Delete"
+                    android:textColorHint="#ffffff"
+                    android:fontFamily="@font/trebuc"
+                    android:textSize="20sp"
+                    android:backgroundTint="#BF3333"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
