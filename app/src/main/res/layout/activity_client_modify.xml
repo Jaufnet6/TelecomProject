@@ -207,6 +207,8 @@
 
                 </LinearLayout>
 
+
+
                 <Button
                     android:id="@+id/delete_client"
                     android:layout_width="match_parent"
@@ -217,6 +219,8 @@
                     android:textSize="20sp"
                     android:backgroundTint="#BF3333"
                     />
+                
+
 
             </LinearLayout>
         </ScrollView>
