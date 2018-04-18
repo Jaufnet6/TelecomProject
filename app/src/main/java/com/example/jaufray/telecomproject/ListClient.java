@@ -12,18 +12,11 @@ import android.widget.ImageButton;
 
 public class ListClient extends Activity {
 
-    ImageButton imageButton;
-
-   // protected void onCreate(Bundle savedInstanceState) {
-        /*super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_list);
 
-        Intent intent = getIntent();
-
-        addListenerOnButton();
-        addListenerOnButton_delete();*/
-
-   // }
+    }
 //A SUPPRIMER ADDLI.._DELETE C'EST POUR TESTER LES DETAILS DES CLIENTS
     private void addListenerOnButton_delete() {
        /* ImageButton imageB = (ImageButton) findViewById(R.id.delete_button);

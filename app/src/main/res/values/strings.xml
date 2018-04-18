@@ -1,10 +1,14 @@
 <resources>
-    <string name="app_name">TelecomProject</string>
+    <string name="app_name">Telecommunication HES</string>
     <string name="title_client">Client</string>
     <string name="bClient">Clients</string>
     <string name="bServices">Services</string>
     <string name="bPackages">Package</string>
 
+    <!-- String for drawer nav bar-->
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
     <!--Strings pour ajouter un contact-->
     <string name="name">Name</string>

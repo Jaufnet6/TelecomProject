@@ -2,9 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="140dp"
     android:orientation="vertical"
-    android:background="#E2E2E2">
+    android:background="@drawable/ic_header_background">
+
 
     <TextView
         android:layout_width="210dp"
@@ -14,8 +15,13 @@
         android:gravity="center"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:textColor="#33808F"
+        android:textColor="#ffffff"
         android:fontFamily="@font/trebuc"/>
+
+    <!--
+
+    android:textColor="#33808F"
+
 
     <View
         android:layout_width="match_parent"
@@ -23,5 +29,7 @@
         android:background="#979797"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"/>
+
+        -->
 
 </LinearLayout>
