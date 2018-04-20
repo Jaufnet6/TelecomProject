@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
 <!-- old color  3F51B5 -->
+
+    <!-- Subjects colors -->
+    <color name="clientColor">#699DD9</color>
+    <color name="serviceColor">#326DB2</color>
+    <color name="packageColor">#1D4C83</color>
+
 </resources>
