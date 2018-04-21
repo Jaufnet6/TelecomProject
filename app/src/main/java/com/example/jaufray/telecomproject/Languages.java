@@ -10,7 +10,6 @@ public class Languages extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.languages);
         Intent intent = getIntent();
 

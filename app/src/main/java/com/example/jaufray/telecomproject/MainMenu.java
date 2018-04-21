@@ -12,9 +12,10 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 
-public class MainMenu extends AppCompatActivity {
+public class MainMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -29,8 +30,8 @@ public class MainMenu extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_main);
+        navigationView.setNavigationItemSelectedListener(this);
 
 
     }
@@ -53,29 +54,53 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (mToggle.onOptionsItemSelected(item)) {
-            switch (item.getItemId()) {
-                case R.id.nav_language:
-                    Intent intent1 = new Intent(MainMenu.this, Languages.class);
-                    startActivity(intent1);
-                    return true;
-
-                case R.id.nav_about:
-                    Intent intent2 = new Intent(MainMenu.this, About.class);
-                    startActivity(intent2);
-                    return true;
-                default:
-                    return super.onOptionsItemSelected(item);
-
-            }
+           return true;
         }
-
         return super.onOptionsItemSelected(item);
 
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_language:
+                Intent intent1 = new Intent(MainMenu.this, Languages.class);
+                startActivity(intent1);
+                return true;
+
+            case R.id.nav_about:
+                Intent intent2 = new Intent(MainMenu.this, About.class);
+                startActivity(intent2);
+                return true;
+
+            case R.id.nav_client:
+                Intent intent3 = new Intent(MainMenu.this, ListClient.class);
+                startActivity(intent3);
+                return true;
+
+            case R.id.nav_main_menu:
+                Toast.makeText(this, "You already are on the main Menu", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.nav_package:
+                Intent intent4 = new Intent(MainMenu.this, ListPackages.class);
+                startActivity(intent4);
+                return true;
+
+            case R.id.nav_service:
+                Intent intent5 = new Intent(MainMenu.this, ListServices.class);
+                startActivity(intent5);
+                return true;
+
+            default:
+                return false;
+
+        }
+    }
 }
