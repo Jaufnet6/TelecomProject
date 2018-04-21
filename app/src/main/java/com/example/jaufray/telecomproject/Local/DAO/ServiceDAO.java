@@ -1,5 +1,6 @@
 package com.example.jaufray.telecomproject.Local.DAO;
 
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -10,13 +11,12 @@ import com.example.jaufray.telecomproject.Model.Service;
 import java.util.List;
 
 import io.reactivex.Flowable;
-
+@Dao
 public interface ServiceDAO {
 
     //Get Service with specific ID
-    @Query("SELECT * FROM services WHERE idService = :serviceId")
+    @Query("SELECT * FROM services WHERE idService=:serviceId")
     Flowable<Service> getServiceById(int serviceId);
-
 
     //Get all services
     @Query("SELECT * FROM services")

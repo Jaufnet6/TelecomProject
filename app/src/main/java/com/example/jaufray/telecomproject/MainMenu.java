@@ -37,7 +37,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     public void changeToClient(View view){
-
         Intent intent = new Intent(MainMenu.this, ListClient.class);
         startActivity(intent);
 

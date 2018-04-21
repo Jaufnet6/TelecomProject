@@ -26,16 +26,28 @@
             android:label="@string/string_Languages">
         </activity>
         <activity
-            android:name=".ListClient"
-            android:label="@string/string_Client">
+            android:name=".ListServices"
+            android:label="@string/string_Services">
         </activity>
         <activity
-            android:name=".ListServices"
+            android:name=".AddService"
             android:label="@string/string_Services">
         </activity>
         <activity
             android:name=".ListPackages"
             android:label="@string/string_Packages">
+        </activity>
+        <activity
+            android:name=".AddPackage"
+            android:label="@string/string_Packages">
+        </activity>
+        <activity
+            android:name=".ListClient"
+            android:label="@string/string_Client">
+        </activity>
+        <activity
+            android:name=".AddClient"
+            android:label="@string/string_Client">
         </activity>
 
 

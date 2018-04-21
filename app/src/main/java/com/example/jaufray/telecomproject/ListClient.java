@@ -16,36 +16,11 @@ public class ListClient extends Activity {
 
     }
 
-    /*
-    private void addListenerOnButton_delete() {
-        ImageButton imageB = (ImageButton) findViewById(R.id.delete_button);
-        imageB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ListClient.this, DetailsClient.class);
-                startActivity(intent);
-            }
-        });
+
+
+    public void changeToCreateClient(View view){
+        Intent intent = new Intent(ListClient.this, AddClient.class);
+        startActivity(intent);
 
     }
-
-    */
-/*
-    private void addListenerOnButton() {
-
-
-        imageButton = (ImageButton) findViewById(R.id.add_button);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ListClient.this, AddClient.class);
-
-
-                startActivity(intent);
-            }
-        });
-
-
-    }
-    */
 }

@@ -55,7 +55,8 @@
         android:layout_height="60dp"
         android:background="@drawable/add"
         android:layout_toRightOf="@+id/delete_button"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:onClick="changeToCreatePackage"/>
 
 
 
