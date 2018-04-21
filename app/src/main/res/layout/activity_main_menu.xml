@@ -40,7 +40,8 @@
             android:fontFamily="@font/trebuc"
             android:hint="Clients"
             android:textColorHint="#ffffff"
-            android:textSize="25sp"/>
+            android:textSize="25sp"
+            android:onClick="changeToClient"/>
 
         <Button
             android:id="@+id/button_to_service"
@@ -53,7 +54,8 @@
             android:fontFamily="@font/trebuc"
             android:hint="Services"
             android:textColorHint="#ffffff"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:onClick="changeToService"/>
 
         <Button
             android:id="@+id/button_to_package"
@@ -66,7 +68,8 @@
             android:textSize="25sp"
             android:backgroundTint="#1D4C83"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"/>
+            android:layout_marginTop="50dp"
+            android:onClick="changeToPackage"/>
 
     </LinearLayout>
     

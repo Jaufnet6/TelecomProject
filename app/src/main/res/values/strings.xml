@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Telecommunication HES</string>
-    <string name="title_client">Client</string>
-    <string name="bClient">Clients</string>
-    <string name="bServices">Services</string>
-    <string name="bPackages">Package</string>
+    <string name="string_Client">Clients</string>
+    <string name="string_Services">Services</string>
+    <string name="string_Packages">Package</string>
+    <string name="string_Languages">Languages</string>
+    <string name="string_About">About</string>
 
     <!-- String for drawer nav bar-->
 

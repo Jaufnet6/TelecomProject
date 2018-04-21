@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-/**
- * Created by danie on 06.04.2018.
- */
-
 public class DetailsClient extends Activity {
 
 

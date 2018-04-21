@@ -1,19 +1,25 @@
 package com.example.jaufray.telecomproject;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.content.Intent;
 
 
-public class AddClient extends Activity {
+public class About extends Activity{
 
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_client_add);
+
+        setContentView(R.layout.about);
 
         Intent intent = getIntent();
 
     }
+
+
+
+
 
 }
