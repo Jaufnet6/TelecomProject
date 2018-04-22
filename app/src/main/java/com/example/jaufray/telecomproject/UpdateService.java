@@ -31,5 +31,9 @@ public class UpdateService extends Activity{
         edtName = (EditText) findViewById(R.id.edt_name_service);
         edtDescription = (EditText) findViewById(R.id.edt_description_name);
         edtPrice = (EditText) findViewById(R.id.edit_price);
+
+        serviceName = nameService.getText().toString();
+
+        nameEdt = nameEdt.
     }
 }
