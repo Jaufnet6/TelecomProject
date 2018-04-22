@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,7 +23,6 @@ import com.example.jaufray.telecomproject.Model.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -72,8 +68,6 @@ public class ListServices extends Activity{
 
         //Load all data from DB
         loadData();
-        for(Service s : serviceList)
-            Log.i("All data", "" +s);
 
     }
 
@@ -132,16 +126,17 @@ public class ListServices extends Activity{
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         final Service service = serviceList.get(info.position);
+
         switch (item.getItemId())
         {
             case 0: //Update
             {
                 Intent intent = new Intent(ListServices.this, UpdateService.class);
-                intent.putExtra("serviceToModify", (Parcelable) service);
+                intent.putExtra("serviceToModify", service);
                 startActivity(intent);
 
             }
-    this.finish();
+            break;
             case 1: //Delete
             {
                 new AlertDialog.Builder(ListServices.this)

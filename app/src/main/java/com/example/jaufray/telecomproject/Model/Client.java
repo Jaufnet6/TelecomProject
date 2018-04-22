@@ -8,6 +8,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 import io.reactivex.annotations.NonNull;
 
 @Entity(tableName = "clients",
@@ -20,7 +22,7 @@ import io.reactivex.annotations.NonNull;
                         , indices = {@Index(value = {"idpackage"})}
 
 )
-public class Client {
+public class Client implements Serializable {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)

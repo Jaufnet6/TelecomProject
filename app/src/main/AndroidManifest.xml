@@ -30,8 +30,14 @@
             android:label="@string/string_Services">
         </activity>
         <activity
+            android:name=".UpdateService"
+            android:label="@string/string_Services"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
             android:name=".AddService"
-            android:label="@string/string_Services">
+            android:label="@string/string_Services"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".ListPackages"
@@ -39,7 +45,8 @@
         </activity>
         <activity
             android:name=".AddPackage"
-            android:label="@string/string_Packages">
+            android:label="@string/string_Packages"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".ListClient"
@@ -47,7 +54,8 @@
         </activity>
         <activity
             android:name=".AddClient"
-            android:label="@string/string_Client">
+            android:label="@string/string_Client"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
 

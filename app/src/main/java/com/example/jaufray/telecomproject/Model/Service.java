@@ -6,10 +6,12 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 import io.reactivex.annotations.NonNull;
 
 @Entity(tableName = "services")
-public class Service  {
+public class Service implements Serializable {
 
 
     @NonNull
@@ -73,4 +75,6 @@ public class Service  {
     public String toString() {
         return new StringBuilder(name).append("\n").append(description).append("\n").append(price).toString();
     }
+
+
 }

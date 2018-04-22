@@ -7,10 +7,12 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 import io.reactivex.annotations.NonNull;
 
 @Entity(tableName = "packages")
-public class Package {
+public class Package implements Serializable {
 
 
     @NonNull

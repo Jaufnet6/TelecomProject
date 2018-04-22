@@ -4,6 +4,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 
+import java.io.Serializable;
+
 @Entity(tableName = "package_service_join",
         primaryKeys = { "packageJoinID", "serviceJoinID" },
         foreignKeys = {
@@ -14,7 +16,7 @@ import android.arch.persistence.room.Ignore;
                         parentColumns = "idService",
                         childColumns = "serviceJoinID")
         })
-public class PackageServiceJoin {
+public class PackageServiceJoin implements Serializable {
 
 
     @ColumnInfo(name = "packageJoinID")
