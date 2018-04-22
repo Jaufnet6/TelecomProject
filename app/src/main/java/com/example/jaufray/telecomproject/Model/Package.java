@@ -9,15 +9,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity(tableName = "packages",
-        foreignKeys = {
-                @ForeignKey(entity = Service.class,
-                        parentColumns = "idService",
-                        childColumns = "idservice",
-                        onDelete = ForeignKey.CASCADE),
-        }
-        , indices = {@Index(value = {"idservice"})}
-)
+@Entity(tableName = "packages")
 public class Package {
 
 
@@ -35,23 +27,15 @@ public class Package {
     @ColumnInfo(name = "description")
     private String description;
 
-    @ColumnInfo(name = "idclient")
-    private int idClient;
-
-    @ColumnInfo(name = "idservice")
-    private int idService;
-
     public Package(){
 
     }
 
     @Ignore
-    public Package(String name, int price, String description, int idClient, int idService) {
+    public Package(String name, int price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
-        this.idClient = idClient;
-        this.idService = idService;
     }
 
     public int getId() {
@@ -86,25 +70,8 @@ public class Package {
         this.description = description;
     }
 
-    public int getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
-    }
-
-    public int getIdService() {
-        return idService;
-    }
-
-    public void setIdService(int idService) {
-        this.idService = idService;
-    }
-
     @Override
     public String toString() {
-        return new StringBuilder(name).append("\n").append(price).append("\n").append(description)
-                .append("\n").append(idClient).append("\n").append(idService).toString();
+        return new StringBuilder(name).append("\n").append(price).append("\n").append(description).toString();
     }
 }

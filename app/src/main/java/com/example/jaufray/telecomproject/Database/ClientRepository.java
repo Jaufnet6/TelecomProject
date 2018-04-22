@@ -1,6 +1,7 @@
 package com.example.jaufray.telecomproject.Database;
 
 import com.example.jaufray.telecomproject.Model.Client;
+import com.example.jaufray.telecomproject.Model.Package;
 
 import java.util.List;
 
@@ -31,6 +32,11 @@ public class ClientRepository implements IClientDataSource {
     @Override
     public Flowable<List<Client>> getAllClients() {
         return mLocalDataSource.getAllClients();
+    }
+
+    @Override
+    public Flowable<Package> getPackageName(int packageid) {
+        return mLocalDataSource.getPackageName(packageid);
     }
 
     @Override

@@ -7,14 +7,16 @@ package com.example.jaufray.telecomproject.Local;
 
         import com.example.jaufray.telecomproject.Local.DAO.ClientDAO;
         import com.example.jaufray.telecomproject.Local.DAO.PackageDAO;
+        import com.example.jaufray.telecomproject.Local.DAO.PackageServiceJoinDAO;
         import com.example.jaufray.telecomproject.Local.DAO.ServiceDAO;
         import com.example.jaufray.telecomproject.Model.Client;
         import com.example.jaufray.telecomproject.Model.Package;
+        import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
         import com.example.jaufray.telecomproject.Model.Service;
 
         import static com.example.jaufray.telecomproject.Local.TelecomDatabase.DATABASE_VERSION;
 
-@Database(entities = {Client.class, Service.class, Package.class}, version = DATABASE_VERSION)
+@Database(entities = {Client.class, Service.class, Package.class, PackageServiceJoin.class}, version = DATABASE_VERSION)
 public abstract class TelecomDatabase extends RoomDatabase{
 
     public static final int DATABASE_VERSION=1;
@@ -23,6 +25,7 @@ public abstract class TelecomDatabase extends RoomDatabase{
     public abstract ClientDAO clientDAO();
     public abstract ServiceDAO serviceDAO();
     public abstract PackageDAO packageDAO();
+    public abstract PackageServiceJoinDAO packageServiceJoinDAO();
 
     private static TelecomDatabase mInstance;
 

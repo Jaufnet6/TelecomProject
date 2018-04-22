@@ -7,6 +7,7 @@ package com.example.jaufray.telecomproject.Local.DAO;
         import android.arch.persistence.room.Update;
 
         import com.example.jaufray.telecomproject.Model.Client;
+        import com.example.jaufray.telecomproject.Model.Package;
 
         import java.util.List;
 
@@ -19,8 +20,9 @@ public interface ClientDAO {
     @Query("SELECT * FROM clients WHERE idClient=:clientId")
     Flowable<Client> getClientById(int clientId);
 
-    @Query("SELECT name FROM packages WHERE idPackage=:packageid")
-    Flowable<Client> getPackageName(int packageid);
+    //Get the name of the package linked to the client
+    @Query("SELECT name FROM packages WHERE idPackage=IdPackage")
+    Flowable<Package> getPackageName(int IdPackage);
 
     //Get all clients
     @Query("SELECT * FROM clients")
@@ -29,8 +31,6 @@ public interface ClientDAO {
     @Insert
     void insertClient(Client... clients);
 
-    @Insert
-    // insertion
     @Update
     void updateClient(Client... clients);
 

@@ -48,14 +48,6 @@ public class Client {
     @ColumnInfo(name = "country")
     private String country;
 
-    public int getIdPackage() {
-        return idPackage;
-    }
-
-    public void setIdPackage(int idPackage) {
-        this.idPackage = idPackage;
-    }
-
     @ColumnInfo(name = "idpackage")
     private int idPackage;
 
@@ -137,6 +129,14 @@ public class Client {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public int getIdPackage() {
+        return idPackage;
+    }
+
+    public void setIdPackage(int idPackage) {
+        this.idPackage = idPackage;
     }
 
 

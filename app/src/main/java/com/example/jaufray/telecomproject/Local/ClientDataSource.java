@@ -3,6 +3,7 @@ package com.example.jaufray.telecomproject.Local;
 import com.example.jaufray.telecomproject.Database.IClientDataSource;
 import com.example.jaufray.telecomproject.Local.DAO.ClientDAO;
 import com.example.jaufray.telecomproject.Model.Client;
+import com.example.jaufray.telecomproject.Model.Package;
 
 import java.util.List;
 
@@ -34,6 +35,11 @@ public class ClientDataSource implements IClientDataSource {
     @Override
     public Flowable<List<Client>> getAllClients() {
         return clientDAO.getAllClients();
+    }
+
+    @Override
+    public Flowable<Package> getPackageName(int packageid) {
+        return clientDAO.getPackageName(packageid);
     }
 
     @Override
