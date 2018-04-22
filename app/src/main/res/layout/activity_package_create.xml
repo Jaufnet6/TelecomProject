@@ -17,7 +17,7 @@
 
 
             <EditText
-                android:id="@+id/package_title"
+                android:id="@+id/et_name_package"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:hint="Name"
@@ -33,7 +33,7 @@
                 android:id="@+id/list_services"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Liste des Services"
+                android:text="List of services"
                 android:gravity="center"
                 android:textStyle="normal"
                 android:fontFamily="@font/trebuc"
@@ -53,6 +53,15 @@
                 android:minHeight="200dp"
                 android:orientation="vertical">
 
+                <ListView
+                    android:id="@+id/full_package_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+
+                </ListView>
 
 
             </LinearLayout>
@@ -77,10 +86,10 @@
                 android:layout_height="50dp">
 
                 <TextView
-                    android:id="@+id/discount_field"
+                    android:id="@+id/price_field"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:text="Rabais"
+                    android:text="Price"
                     android:gravity="center"
                     android:fontFamily="@font/trebuc"
                     android:textStyle="bold"
@@ -88,11 +97,11 @@
                     android:textColor="#000000"/>
 
                 <EditText
-                    android:id="@+id/discount_edit"
+                    android:id="@+id/et_price_package"
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/discount_field"
-                    android:hint="Entrez rabais"
+                    android:layout_toRightOf="@id/price_field"
+                    android:hint="Enter price"
                     android:gravity="center"
                     android:fontFamily="@font/trebuc"
                     android:inputType="numberDecimal"
@@ -107,7 +116,7 @@
                     android:text="CHF"
                     android:gravity="center"
                     android:fontFamily="@font/trebuc"
-                    android:layout_toRightOf="@id/discount_edit"
+                    android:layout_toRightOf="@id/et_price_package"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="#000000"/>
@@ -116,7 +125,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Prix total:  CHF"
+                android:text="Total price:  CHF"
                 android:gravity="center"
                 android:fontFamily="@font/trebuc"
                 android:textColor="#000000"
@@ -131,22 +140,24 @@
                 android:layout_marginBottom="20dp">
 
                 <Button
-                    android:id="@+id/save_button"
+                    android:id="@+id/save_button_package"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="100dp"
-                    android:background="@drawable/ic_savebutton" />
+                    android:background="@drawable/ic_savebutton"
+                    android:onClick="savePackage"/>
 
                 <Button
-                    android:id="@+id/cancel_button"
+                    android:id="@+id/cancel_button_package"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="100dp"
-                    android:background="@drawable/ic_cancelbutton" />
+                    android:background="@drawable/ic_cancelbutton"
+                    android:onClick="cancelPackageAdd"/>
 
 
             </RelativeLayout>

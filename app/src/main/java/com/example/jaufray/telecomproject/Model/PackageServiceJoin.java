@@ -5,7 +5,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 
 @Entity(tableName = "package_service_join",
-        primaryKeys = { "packageID", "serviceID" },
+        primaryKeys = { "packageJoinID", "serviceJoinID" },
         foreignKeys = {
                 @ForeignKey(entity = Package.class,
                         parentColumns = "idPackage",

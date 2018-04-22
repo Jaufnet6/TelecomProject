@@ -19,7 +19,7 @@ public interface PackageServiceJoinDAO {
     void insert(PackageServiceJoin packageServiceJoin);
 
     //Get the names of all services attached to a specific package
-    @Query("SELECT name FROM services INNER JOIN package_service_join ON idService = serviceJoinID WHERE  packageJoinID=:packageId")
+    @Query("SELECT * FROM services INNER JOIN package_service_join ON idService = serviceJoinID WHERE  packageJoinID=:packageId")
     Flowable<List<Service>> getServicesForPackage(final int packageId);
 
 

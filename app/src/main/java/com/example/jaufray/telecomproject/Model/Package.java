@@ -24,18 +24,14 @@ public class Package {
     @ColumnInfo(name = "price")
     private int price;
 
-    @ColumnInfo(name = "description")
-    private String description;
-
     public Package(){
 
     }
 
     @Ignore
-    public Package(String name, int price, String description) {
+    public Package(String name, int price) {
         this.name = name;
         this.price = price;
-        this.description = description;
     }
 
     public int getId() {
@@ -62,16 +58,8 @@ public class Package {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @Override
     public String toString() {
-        return new StringBuilder(name).append("\n").append(price).append("\n").append(description).toString();
+        return new StringBuilder(name).append("\n").append(price).toString();
     }
 }

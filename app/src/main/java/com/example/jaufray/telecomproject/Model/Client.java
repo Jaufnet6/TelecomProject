@@ -27,11 +27,8 @@ public class Client {
     @ColumnInfo(name = "idClient")
     private int id;
 
-    @ColumnInfo(name = "firstname")
-    private String firstname;
-
-    @ColumnInfo(name = "lastname")
-    private String lastname;
+    @ColumnInfo(name = "name")
+    private String name;
 
     @ColumnInfo(name = "phone")
     private String phone;
@@ -40,7 +37,7 @@ public class Client {
     private String address;
 
     @ColumnInfo(name = "npa")
-    private int npa;
+    private String npa;
 
     @ColumnInfo(name = "locality")
     private String locality;
@@ -56,9 +53,8 @@ public class Client {
     }
 
     @Ignore
-    public Client(String firstname, String lastname, String phone, String address, int npa, String locality, String country, int idPackage) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public Client(String name, String phone, String address, String npa, String locality, String country, int idPackage) {
+        this.name = name;
         this.phone = phone;
         this.address = address;
         this.npa = npa;
@@ -74,21 +70,12 @@ public class Client {
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getLastname() {
-        return lastname;
+        return name;
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.name = lastname;
     }
 
     public String getPhone() {
@@ -107,11 +94,11 @@ public class Client {
         this.address = address;
     }
 
-    public int getNpa() {
+    public String getNpa() {
         return npa;
     }
 
-    public void setNpa(int npa) {
+    public void setNpa(String npa) {
         this.npa = npa;
     }
 
@@ -144,7 +131,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return new StringBuilder(firstname).append("\n").append(lastname).append("\n").append(phone)
+        return new StringBuilder(name).append("\n").append(phone)
                 .append("\n").append(address).append("\n").append(npa)
                 .append("\n").append(locality).append("\n").append(country)
                 .append("\n").append(idPackage).toString();

@@ -140,7 +140,8 @@
                     android:layout_weight="@dimen/weight"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_savebutton" />
+                    android:src="@drawable/ic_savebutton"
+                    android:onClick="saveClient"/>
 
                 <!--Bouton canel-->
                 <ImageButton
@@ -152,7 +153,8 @@
                     android:layout_weight="@dimen/weight"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_cancelbutton" />
+                    android:src="@drawable/ic_cancelbutton"
+                    android:onClick="cancelClientAdd"/>
 
 
 

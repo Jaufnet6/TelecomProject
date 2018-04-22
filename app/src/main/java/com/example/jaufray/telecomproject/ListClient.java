@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,7 +15,6 @@ import com.example.jaufray.telecomproject.Model.Client;
 
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -59,8 +57,6 @@ public class ListClient extends Activity {
         //Load all data from DB
         loadData();
 
-        //Event
-
 
     }
 
@@ -90,7 +86,6 @@ public class ListClient extends Activity {
         clientList.clear();
         clientList.addAll(clients);
         adapter.notifyDataSetChanged();
-
 
     }
 

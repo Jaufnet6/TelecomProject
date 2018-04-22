@@ -21,8 +21,8 @@ public interface ClientDAO {
     Flowable<Client> getClientById(int clientId);
 
     //Get the name of the package linked to the client
-    @Query("SELECT name FROM packages WHERE idPackage=IdPackage")
-    Flowable<Package> getPackageName(int IdPackage);
+    @Query("SELECT * FROM packages WHERE idPackage=:idpackage")
+    Flowable<Package> getPackageName(int idpackage);
 
     //Get all clients
     @Query("SELECT * FROM clients")
