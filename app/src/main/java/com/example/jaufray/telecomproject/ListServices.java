@@ -1,10 +1,20 @@
 package com.example.jaufray.telecomproject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,12 +23,17 @@ import com.example.jaufray.telecomproject.Local.ServiceDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -31,7 +46,7 @@ public class ListServices extends Activity{
     private ServiceRepository serviceRepository;
 
     //Adapter
-    List<Service> serviceList;
+    List<Service> serviceList = new ArrayList<>();
     ArrayAdapter adapter;
 
 
@@ -57,6 +72,8 @@ public class ListServices extends Activity{
 
         //Load all data from DB
         loadData();
+        for(Service s : serviceList)
+            Log.i("All data", "" +s);
 
     }
 
@@ -93,9 +110,97 @@ public class ListServices extends Activity{
     public void changeToCreateService(View view){
         Intent intent = new Intent(ListServices.this, AddService.class);
         startActivity(intent);
+        this.finish();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+        menu.setHeaderTitle("Select action :");
+
+        menu.add(Menu.NONE,0, Menu.NONE, "Update");
+        menu.add(Menu.NONE,1, Menu.NONE, "Delete");
+
+
+
 
     }
 
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        final Service service = serviceList.get(info.position);
+        switch (item.getItemId())
+        {
+            case 0: //Update
+            {
+                Intent intent = new Intent(ListServices.this, UpdateService.class);
+                intent.putExtra("serviceToModify", (Parcelable) service);
+                startActivity(intent);
+
+            }
+    this.finish();
+            case 1: //Delete
+            {
+                new AlertDialog.Builder(ListServices.this)
+                        .setMessage("Do you want to delete ? " + service.toString())
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteService(service);
+                            }
+                        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).create().show();
+            }
+            break;
+        }
+        return true;
+    }
+
+    private void deleteService(final Service service) {
+
+        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
+
+
+            @Override
+            public void subscribe(ObservableEmitter<Object> e) throws Exception {
+                serviceRepository.deleteService(service);
+                e.onComplete();
+            }
+        })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer() {
+                               @Override
+                               public void accept(Object o) throws Exception {
+
+                               }
+                           },
+
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Toast.makeText(ListServices.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+
+                        new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                loadData();
+                            }
+                        }
+
+                );
+
+        compositeDisposable.add(disposable);
+
+    }
 
 }

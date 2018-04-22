@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Database.ClientRepository;
+import com.example.jaufray.telecomproject.Local.ClientDataSource;
+import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Client;
 
 import io.reactivex.Observable;
@@ -53,6 +55,10 @@ public class AddClient extends Activity {
     }
 
     public void saveClient(View view) {
+
+        //Database
+        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
+        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
 
         nameClient = (EditText) findViewById(R.id.et_name);
         phoneClient = (EditText) findViewById(R.id.et_phoneNumber);
@@ -129,10 +135,10 @@ public class AddClient extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(AddClient.this, ListClient.class);
                                 startActivity(intent);
-
                             }
                         }
                 );
+        this.finish();
     }
 
 
@@ -140,7 +146,8 @@ public class AddClient extends Activity {
 
         Intent intent = new Intent(AddClient.this, ListClient.class);
         startActivity(intent);
-
+        this.finish();
     }
+
 
 }

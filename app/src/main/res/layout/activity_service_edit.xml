@@ -27,6 +27,7 @@
             android:minHeight="517dp">
 
             <EditText
+                android:id="@+id/edt_name_service"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:hint="Internet 4G Unlimited"
@@ -43,6 +44,7 @@
                 android:background="@android:color/darker_gray"/>
 
             <EditText
+                android:id="@+id/edt_description_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="200dp"

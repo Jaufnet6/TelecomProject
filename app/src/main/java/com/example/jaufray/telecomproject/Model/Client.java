@@ -70,12 +70,12 @@ public class Client {
     public void setId(int id) {
         this.id = id;
     }
-    public String getLastname() {
+    public String getName() {
         return name;
     }
 
-    public void setLastname(String lastname) {
-        this.name = lastname;
+    public void setName(String lastname) {
+        this.name = name;
     }
 
     public String getPhone() {

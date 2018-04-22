@@ -13,6 +13,7 @@ import com.example.jaufray.telecomproject.Local.ClientDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,7 +32,7 @@ public class ListClient extends Activity {
     private ClientRepository clientRepository;
 
     //Adapter
-    List<Client> clientList;
+    List<Client> clientList = new ArrayList<>();
     ArrayAdapter adapter;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,7 @@ public class ListClient extends Activity {
     public void changeToCreateClient(View view) {
         Intent intent = new Intent(ListClient.this, AddClient.class);
         startActivity(intent);
+        this.finish();
 
     }
 }

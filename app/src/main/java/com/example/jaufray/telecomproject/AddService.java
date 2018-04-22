@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Database.ServiceRepository;
+import com.example.jaufray.telecomproject.Local.ServiceDataSource;
+import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Service;
 
+
+import java.util.List;
 
 import io.reactivex.functions.Consumer;
 
@@ -32,6 +37,8 @@ public class AddService extends Activity {
     private String serviceDescription;
     private Integer servicePrice;
 
+    private Service service;
+
     private ServiceRepository serviceRepository;
 
 
@@ -41,10 +48,16 @@ public class AddService extends Activity {
 
         Intent intent = getIntent();
 
+
     }
 
 
     public void saveService(View view) {
+
+        //Database
+        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
+        serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
+
 
         nameService = (EditText) findViewById(R.id.et_name_service);
         descriptionService = (EditText) findViewById(R.id.et_description_service);
@@ -72,7 +85,8 @@ public class AddService extends Activity {
         Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                Service service = new Service(serviceName, serviceDescription, servicePrice);
+                service = new Service(serviceName, serviceDescription, servicePrice);
+
                 serviceRepository.insertService(service);
                 e.onComplete();
             }
@@ -102,13 +116,17 @@ public class AddService extends Activity {
                             }
                         }
                 );
+        this.finish();
     }
 
     public void cancelServiceAdd(View view) {
 
         Intent intent = new Intent(AddService.this, ListServices.class);
         startActivity(intent);
+        this.finish();
 
     }
+
+
 
 }

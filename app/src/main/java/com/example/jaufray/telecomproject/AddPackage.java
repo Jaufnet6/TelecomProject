@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Database.PackageRepository;
+import com.example.jaufray.telecomproject.Local.PackageDataSource;
+import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
 
 import io.reactivex.Observable;
@@ -41,6 +43,10 @@ public class AddPackage extends Activity {
     }
 
     public void savePackage(View view) {
+
+        //Database
+        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
+        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
 
         namePackage = (EditText) findViewById(R.id.et_name_package);
         pricePackage = (EditText) findViewById(R.id.et_price_package);
@@ -93,13 +99,14 @@ public class AddPackage extends Activity {
                             }
                         }
                 );
+        this.finish();
     }
 
     public void cancelPackageAdd(View view) {
 
         Intent intent = new Intent(AddPackage.this, ListPackages.class);
         startActivity(intent);
-
+        this.finish();
     }
 
 

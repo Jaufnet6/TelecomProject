@@ -13,6 +13,7 @@ import com.example.jaufray.telecomproject.Local.PackageDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -30,7 +31,7 @@ public class ListPackages extends Activity{
     private PackageRepository packageRepository;
 
     //Adapter
-    List<Package> packageList;
+    List<Package> packageList = new ArrayList<>();
     ArrayAdapter adapter;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class ListPackages extends Activity{
     public void changeToCreatePackage(View view){
         Intent intent = new Intent(ListPackages.this, AddPackage.class);
         startActivity(intent);
-
+        this.finish();
     }
 
 
