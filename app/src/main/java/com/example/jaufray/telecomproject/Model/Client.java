@@ -3,12 +3,23 @@ package com.example.jaufray.telecomproject.Model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity(tableName = "clients")
+@Entity(tableName = "clients",
+        foreignKeys = {
+                @ForeignKey(entity = Package.class,
+                        parentColumns = "idPackage",
+                        childColumns = "idpackage",
+                        onDelete = ForeignKey.CASCADE),
+                        }
+                        , indices = {@Index(value = {"idpackage"})}
+
+)
 public class Client {
 
     @NonNull
@@ -37,12 +48,23 @@ public class Client {
     @ColumnInfo(name = "country")
     private String country;
 
+    public int getIdPackage() {
+        return idPackage;
+    }
+
+    public void setIdPackage(int idPackage) {
+        this.idPackage = idPackage;
+    }
+
+    @ColumnInfo(name = "idpackage")
+    private int idPackage;
+
     public Client(){
 
     }
 
     @Ignore
-    public Client(String firstname, String lastname, String phone, String address, int npa, String locality, String country) {
+    public Client(String firstname, String lastname, String phone, String address, int npa, String locality, String country, int idPackage) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.phone = phone;
@@ -50,6 +72,7 @@ public class Client {
         this.npa = npa;
         this.locality = locality;
         this.country = country;
+        this.idPackage = idPackage;
     }
 
     public int getId() {
@@ -116,10 +139,14 @@ public class Client {
         this.country = country;
     }
 
+
+
+
     @Override
     public String toString() {
         return new StringBuilder(firstname).append("\n").append(lastname).append("\n").append(phone)
                 .append("\n").append(address).append("\n").append(npa)
-                .append("\n").append(locality).append("\n").append(country).toString();
+                .append("\n").append(locality).append("\n").append(country)
+                .append("\n").append(idPackage).toString();
     }
 }

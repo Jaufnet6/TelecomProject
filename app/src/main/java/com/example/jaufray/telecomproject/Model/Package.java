@@ -11,17 +11,12 @@ import io.reactivex.annotations.NonNull;
 
 @Entity(tableName = "packages",
         foreignKeys = {
-                @ForeignKey(entity = Client.class,
-                        parentColumns = "idClient",
-                        childColumns = "idclient",
-                        onDelete = ForeignKey.CASCADE
-                ),
                 @ForeignKey(entity = Service.class,
                         parentColumns = "idService",
                         childColumns = "idservice",
                         onDelete = ForeignKey.CASCADE),
         }
-        , indices = {@Index(value = {"idclient", "idservice"})}
+        , indices = {@Index(value = {"idservice"})}
 )
 public class Package {
 

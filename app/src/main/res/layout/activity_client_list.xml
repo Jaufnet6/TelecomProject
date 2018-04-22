@@ -14,39 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="430dp">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/list_client"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/client1_name"
-                android:layout_width="300dp"
-                android:layout_height="60dp"
-                android:hint="Daniela Lourenco"
-                android:gravity="center_vertical"
-                android:fontFamily="@font/trebuc"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:background="@android:color/transparent"
-                android:textColorHint="#000000"
-                android:layout_gravity="center"/>
 
 
-            <Button
-                android:id="@+id/client2_name"
-                android:layout_width="300dp"
-                android:layout_height="60dp"
-                android:hint="Jaufray Ramses"
-                android:gravity="center_vertical"
-                android:layout_gravity="center"
-                android:fontFamily="@font/trebuc"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:background="@android:color/transparent"
-                android:textColorHint="#000000"/>
-
-        </LinearLayout>
+        </ListView>
 
 
     </ScrollView>
