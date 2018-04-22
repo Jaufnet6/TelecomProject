@@ -82,9 +82,9 @@ public class ListServices extends Activity{
         compositeDisposable.add(disposable);
     }
 
-    private void onGetAllServiceSuccess(List<Service> clients) {
+    private void onGetAllServiceSuccess(List<Service> services) {
         serviceList.clear();
-        serviceList.addAll(clients);
+        serviceList.addAll(services);
         adapter.notifyDataSetChanged();
 
     }

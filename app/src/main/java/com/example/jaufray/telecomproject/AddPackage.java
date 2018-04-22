@@ -95,7 +95,7 @@ public class AddPackage extends Activity {
                 );
     }
 
-    public void cancelServiceAdd(View view) {
+    public void cancelPackageAdd(View view) {
 
         Intent intent = new Intent(AddPackage.this, ListPackages.class);
         startActivity(intent);

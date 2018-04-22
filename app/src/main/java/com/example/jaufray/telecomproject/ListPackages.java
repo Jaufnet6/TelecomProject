@@ -12,7 +12,6 @@ import com.example.jaufray.telecomproject.Database.PackageRepository;
 import com.example.jaufray.telecomproject.Local.PackageDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
-import com.example.jaufray.telecomproject.Model.Service;
 
 import java.util.List;
 
