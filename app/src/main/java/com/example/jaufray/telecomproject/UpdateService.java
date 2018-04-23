@@ -60,17 +60,19 @@ public class UpdateService extends Activity{
         edtDescription.setText(service.getDescription(), TextView.BufferType.EDITABLE);
         edtPrice.setText(String.valueOf(service.getPrice()), TextView.BufferType.EDITABLE);
 
+        //Database
+        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
+        serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
+
+        // Init
+        compositeDisposable = new CompositeDisposable();
+
 
     }
 
 
 
     public void saveServiceUpdate(View view) {
-
-        //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
-
 
 
         nameEdt = edtName.getText().toString();

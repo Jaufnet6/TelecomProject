@@ -9,7 +9,6 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -48,9 +47,10 @@ public class ListServices extends Activity{
 
 
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_list);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
 
         // Init
         compositeDisposable = new CompositeDisposable();
@@ -69,7 +69,21 @@ public class ListServices extends Activity{
         //Load all data from DB
         loadData();
 
+        list_services.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final Service service = (Service)adapterView.getAdapter().getItem(i);
+
+                Intent intent1 = new Intent(ListServices.this, DetailsService.class);
+                intent1.putExtra("DetailsService", service);
+                startActivity(intent1);
+            }
+        });
     }
+
+
+
+
 
     private void loadData() {
 
@@ -140,7 +154,7 @@ public class ListServices extends Activity{
             case 1: //Delete
             {
                 new AlertDialog.Builder(ListServices.this)
-                        .setMessage("Do you want to delete ? " + service.toString())
+                        .setMessage("Do you want to delete ? " + service.getName().toString())
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
