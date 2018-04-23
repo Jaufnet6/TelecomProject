@@ -29,11 +29,11 @@ public class PackageServiceJoinDataSource implements PackageServiceJoinDAO{
 
     @Override
     public void insert(PackageServiceJoin packageServiceJoin) {
-
+        packageServiceJoinDAO.insert(packageServiceJoin);
     }
 
     @Override
     public Flowable<List<Service>> getServicesForPackage(int packageId) {
-        return null;
+        return packageServiceJoinDAO.getServicesForPackage(packageId);
     }
 }

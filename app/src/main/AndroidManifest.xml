@@ -53,6 +53,10 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
+            android:name=".ListServiceForPackage"
+            android:label="@string/string_Packages">
+        </activity>
+        <activity
             android:name=".ListClient"
             android:label="@string/string_Client">
         </activity>

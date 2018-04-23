@@ -12,6 +12,7 @@ import com.example.jaufray.telecomproject.Database.PackageRepository;
 import com.example.jaufray.telecomproject.Local.PackageDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
+import com.example.jaufray.telecomproject.Model.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +92,7 @@ public class ListPackages extends Activity{
     public void changeToCreatePackage(View view){
         Intent intent = new Intent(ListPackages.this, AddPackage.class);
         startActivity(intent);
-        this.finish();
+        finish();
     }
 
 
