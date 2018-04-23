@@ -184,7 +184,7 @@
                     android:id="@+id/delete_client"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:hint="Delete"
+                    android:hint="@string/delete"
                     android:textColorHint="#ffffff"
                     android:fontFamily="@font/trebuc"
                     android:textSize="20sp"

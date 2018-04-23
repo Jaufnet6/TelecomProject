@@ -81,7 +81,7 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
                 return true;
 
             case R.id.nav_main_menu:
-                Toast.makeText(this, "You already are on the main Menu", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.al_main_menu), Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.nav_package:

@@ -1,4 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+    <!--Main-->
+    <string name="welcome">Welcome to Telecommunication HES !</string>
+    <!--Button -->
+    <string name="delete">Delete</string>
+<!--Title-->
+    <string name="create">Create</string>
+    <string name="modify">Modify</string>
+<!-- nav-->
     <string name="app_name">Telecommunication HES</string>
     <string name="string_Client">Clients</string>
     <string name="string_Services">Services</string>
@@ -6,10 +17,13 @@
     <string name="string_Languages">Languages</string>
     <string name="string_About">About</string>
 
+    <!--About-->
+    <string name="developped">Developped by Daniela Lourenço and Jaufray Sornette</string>
+
     <!-- String for drawer nav bar-->
 
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+    <string name="open" translatable="false">Open</string>
+    <string name="close" translatable="false">Close</string>
 
     <!--Strings pour ajouter un contact-->
     <string name="name">Name</string>
@@ -19,5 +33,15 @@
     <string name="NPA">P. C.</string>
     <string name="city">City</string>
     <string name="Country">Country</string>
+
+    <!--Create pack-->
+    <string name="listservice">List of services</string>
+    <string name="price">Price</string>
+    <string name="totalPrice">Total price : </string>
+
+    <!-- details pack -->
+    <string name="discount">Discount</string>
+    <string name="al_main_menu">You already are on the main Menu</string>
+
 
 </resources>
