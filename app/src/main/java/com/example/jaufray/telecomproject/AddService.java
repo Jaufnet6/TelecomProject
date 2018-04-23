@@ -65,7 +65,12 @@ public class AddService extends Activity {
 
         serviceName = nameService.getText().toString();
         serviceDescription = descriptionService.getText().toString();
-        servicePrice = Integer.parseInt(priceService.getText().toString());
+        try{
+            servicePrice = Integer.parseInt(priceService.getText().toString());
+        } catch (NumberFormatException ex){
+            servicePrice = 0;
+        }
+
 
         if(TextUtils.isEmpty(serviceName)) {
             nameService.setError("Cannot be empty");
@@ -75,8 +80,8 @@ public class AddService extends Activity {
             descriptionService.setError("Cannot be empty");
             return;
         }
-        if(servicePrice == null){
-            Toast.makeText(AddService.this, "Please enter a price", Toast.LENGTH_LONG).show();
+        if(servicePrice == 0){
+            priceService.setError("You have to choose a price");
             return;
         }
 
