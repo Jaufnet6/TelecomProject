@@ -1,5 +1,6 @@
 package com.example.jaufray.telecomproject.Local;
 
+import com.example.jaufray.telecomproject.Database.IPackageServiceJoinDataSource;
 import com.example.jaufray.telecomproject.Local.DAO.PackageServiceJoinDAO;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 
-public class PackageServiceJoinDataSource implements PackageServiceJoinDAO{
+public class PackageServiceJoinDataSource implements IPackageServiceJoinDataSource{
 
 
     private PackageServiceJoinDAO packageServiceJoinDAO;

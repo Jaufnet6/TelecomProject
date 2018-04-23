@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/paddingTopBot"
             android:paddingTop="20dp"
-            android:text="TextView"
+            android:text="Version 1.0"
             android:textAlignment="center"
             android:textSize="18sp"
             tools:text="Version 1.0"
@@ -57,9 +57,9 @@
             android:gravity="center">
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="231dp"
-            android:layout_height="82dp"
-            app:srcCompat="@drawable/hes" />
+            android:layout_width="230dp"
+            android:layout_height="100dp"
+            android:src="@drawable/hes" />
         </LinearLayout>
 
 

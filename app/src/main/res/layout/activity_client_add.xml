@@ -66,8 +66,8 @@
 
             <ImageButton
                 android:id="@+id/btn_add_package"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/add"
                 android:background="@android:color/transparent"/>
@@ -127,13 +127,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
 
                 <!--Bouton valid-->
                 <ImageButton
                     android:id="@+id/addC_btn_valid"
-                    android:layout_width="@dimen/width"
-                    android:layout_height="@dimen/height"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="@dimen/MarginButtom"
                     android:layout_marginLeft="@dimen/MarginLR"
                     android:layout_marginRight="25dp"
@@ -146,8 +147,8 @@
                 <!--Bouton canel-->
                 <ImageButton
                     android:id="@+id/addC_btn_cancel"
-                    android:layout_width="@dimen/width"
-                    android:layout_height="@dimen/height"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="@dimen/MarginButtom"
                     android:layout_marginRight="@dimen/MarginLR"
                     android:layout_weight="@dimen/weight"

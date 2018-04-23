@@ -21,6 +21,7 @@ import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -93,7 +95,12 @@ public class AddPackage extends Activity {
         pricePackage = (EditText) findViewById(R.id.et_price_package);
 
         packageName = namePackage.getText().toString();
-        packagePrice = Integer.parseInt(pricePackage.getText().toString());
+        try{
+            packagePrice = Integer.parseInt(pricePackage.getText().toString());
+        } catch (NumberFormatException ex){
+            packagePrice = 0;
+        }
+
 
         if(TextUtils.isEmpty(packageName)) {
             namePackage.setError("Cannot be empty");
@@ -112,12 +119,8 @@ public class AddPackage extends Activity {
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
                 Package pack = new Package(packageName, packagePrice);
                 packageRepository.insertPackage(pack);
-
-                for(Service s : servicesList){
-                    PackageServiceJoin packServ = new PackageServiceJoin(pack.getId(), s.getId());
-                    packageServiceJoinRepository.insert(packServ);
-                }
                 e.onComplete();
+                addDataLinkService();
             }
 
         })
@@ -145,13 +148,87 @@ public class AddPackage extends Activity {
                             }
                         }
                 );
+
         this.finish();
     }
 
-    public void linkServicePackage(Package pack){
+    public void addDataLinkService(){
 
+        int id = retrieveLastIDPackage();
+
+
+        for(Service s : servicesList){
+            final PackageServiceJoin packServ = new PackageServiceJoin(id, s.getId());
+
+
+            Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+
+                public void subscribe(ObservableEmitter<Object> e) throws Exception {
+                    packageServiceJoinRepository.insert(packServ);
+                    e.onComplete();
+                }
+
+            })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Consumer() {
+                                   @Override
+                                   public void accept(Object o) throws Exception {
+                                       Toast.makeText(AddPackage.this, "Package added!", Toast.LENGTH_SHORT).show();
+                                   }
+                               },
+                            new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    Toast.makeText(AddPackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            ,
+
+                            new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                    Intent intent = new Intent(AddPackage.this, ListPackages.class);
+                                    startActivity(intent);
+                                }
+                            }
+                    );
+
+        }
     }
 
+    private int retrieveLastIDPackage() {
+
+        final ArrayList<Package> allPackages = new ArrayList<Package>();
+
+        CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+        //Use RxJava
+        Disposable disposable = packageRepository.getAllPackages()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<List<Package>>() {
+                               @Override
+                               public void accept(List<Package> packages) throws Exception{
+                                   for(Package p : packages)
+                                       allPackages.add(p);
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+
+                            }
+                        }
+                );
+        compositeDisposable.add(disposable);
+
+        int id = allPackages.size();
+
+        return id;
+
+
+    }
 
 
     public void cancelPackageAdd(View view) {
