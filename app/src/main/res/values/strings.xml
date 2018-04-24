@@ -42,6 +42,8 @@
     <!-- details pack -->
     <string name="discount">Discount</string>
     <string name="al_main_menu">You already are on the main Menu</string>
+    <string name="enter_price">Enter a price</string>
+    <string name="main_menu">Main menu</string>
 
 
 </resources>

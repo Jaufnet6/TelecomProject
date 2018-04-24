@@ -3,9 +3,12 @@ package com.example.jaufray.telecomproject;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.widget.TextView;
 
 
 public class About extends Activity{
+
+    private TextView txtDevelopped ;
 
 
     @Override
@@ -15,6 +18,8 @@ public class About extends Activity{
         setContentView(R.layout.about);
 
         Intent intent = getIntent();
+
+
 
     }
 

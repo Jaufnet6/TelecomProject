@@ -107,7 +107,7 @@
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@id/price_field"
-                    android:hint="Enter price"
+                    android:hint="@string/enter_price"
                     android:gravity="center"
                     android:fontFamily="@font/trebuc"
                     android:inputType="numberDecimal"
