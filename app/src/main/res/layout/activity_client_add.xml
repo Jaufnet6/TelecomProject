@@ -54,9 +54,10 @@
                 android:fontFamily="@font/trebuc"/>
 
             <TextView
+                android:id="@+id/name_package_client"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/addPackage"
+                android:hint="@string/addPackage"
                 android:textAlignment="center"
                 android:textSize="@dimen/textSize"
                 android:textStyle="bold"
@@ -70,6 +71,7 @@
                 android:layout_height="42dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/add"
+                android:onClick="openListPackages"
                 android:background="@android:color/transparent"/>
 
 

@@ -6,12 +6,17 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Database.ClientRepository;
+import com.example.jaufray.telecomproject.Database.PackageRepository;
 import com.example.jaufray.telecomproject.Local.ClientDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Client;
+import com.example.jaufray.telecomproject.Model.Package;
+
+import org.w3c.dom.Text;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -34,6 +39,10 @@ public class AddClient extends Activity {
     private EditText localityClient;
     private EditText countryClient;
 
+    //TextView ou l'on stocke le package
+    private TextView namePackageC;
+    Package pack ;
+
     private String clientName;
     private String clientPhone;
     private String clientAddress;
@@ -41,18 +50,37 @@ public class AddClient extends Activity {
     private String clientLocality;
     private String clientCountry;
 
-    private Integer idPackage;
+  //  private Integer idPackage;
 
     private ClientRepository clientRepository;
+    private TextView packTxt;
+
+
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_add);
-
         Intent intent = getIntent();
 
+        packTxt = (TextView) findViewById(R.id.name_package_client);
+
+        //Ajouter le package
+        //doute
+        pack = (Package) intent.getSerializableExtra("PackageForClient");
+
     }
+
+    public void openListPackages(View v)
+    {
+        Intent intent = new Intent(AddClient.this, ListPackageForClient.class);
+        startActivity(intent);
+
+        //Voir si bsoin mettre finish
+    }
+
+
 
     public void saveClient(View view) {
 
@@ -74,40 +102,37 @@ public class AddClient extends Activity {
         clientCountry = countryClient.getText().toString();
         clientLocality = localityClient.getText().toString();
 
-        if(TextUtils.isEmpty(clientName)) {
+        if (TextUtils.isEmpty(clientName)) {
             nameClient.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(clientPhone)) {
+        if (TextUtils.isEmpty(clientPhone)) {
             phoneClient.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(clientAddress)) {
+        if (TextUtils.isEmpty(clientAddress)) {
             addressClient.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(clientNPA)) {
+        if (TextUtils.isEmpty(clientNPA)) {
             NPAClient.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(clientLocality)) {
+        if (TextUtils.isEmpty(clientLocality)) {
             localityClient.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(clientCountry)) {
+        if (TextUtils.isEmpty(clientCountry)) {
             countryClient.setError("Cannot be empty");
             return;
         }
 
-        if(idPackage == null){
-            Toast.makeText(AddClient.this, "Please choose a package", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+    }
+     /*   Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                Client client = new Client(clientName, clientPhone, clientAddress, clientNPA, clientLocality, clientCountry, idPackage);
+
+                Client client = new Client(clientName, clientPhone, clientAddress, clientNPA, clientLocality, clientCountry);
                 clientRepository.insertClient(client);
                 e.onComplete();
             }
@@ -135,11 +160,11 @@ public class AddClient extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(AddClient.this, ListClient.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
-                );
-        this.finish();
-    }
+                );*/
+
 
 
     public void cancelClientAdd(View view) {
