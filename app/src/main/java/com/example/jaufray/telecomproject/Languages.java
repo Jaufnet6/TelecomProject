@@ -72,10 +72,6 @@ public class Languages extends Activity implements View.OnClickListener {
 
 
 
-
-
-
-
     @Override
     public void onClick(View v) {
 
