@@ -142,7 +142,7 @@ public class ListPackages extends Activity{
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                deleteService(packages);
+                                deletePackage(packages);
                             }
                         }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
@@ -156,7 +156,7 @@ public class ListPackages extends Activity{
         return true;
     }
 
-    private void deleteService(final Package packages) {
+    private void deletePackage(final Package packages) {
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 

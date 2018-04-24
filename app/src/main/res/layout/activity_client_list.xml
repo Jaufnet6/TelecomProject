@@ -14,19 +14,24 @@
         android:layout_width="match_parent"
         android:layout_height="430dp">
 
-        <ListView
-            android:id="@+id/list_client"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="430dp">
+
+            <ListView
+                android:id="@+id/full_client_liste"
+                android:layout_width="match_parent"
+                android:layout_height="430dp">
 
 
 
-        </ListView>
+            </ListView>
+
+        </LinearLayout>
+
 
 
     </ScrollView>
-
     <Button
         android:id="@+id/add_client_button"
         android:layout_width="60dp"
