@@ -83,7 +83,7 @@ public class DetailsPackage extends Activity {
 
 
 
-
+        loadData();
 
 
 

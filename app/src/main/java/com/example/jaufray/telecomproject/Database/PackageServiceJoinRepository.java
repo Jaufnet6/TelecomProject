@@ -34,4 +34,9 @@ public class PackageServiceJoinRepository  implements IPackageServiceJoinDataSou
     public Flowable<List<Service>> getServicesForPackage(int packageId) {
         return mLocalDataSource.getServicesForPackage(packageId);
     }
+
+    @Override
+    public void deletePackageServiceJoin(PackageServiceJoin packageServiceJoin) {
+        mLocalDataSource.deletePackageServiceJoin(packageServiceJoin);
+    }
 }

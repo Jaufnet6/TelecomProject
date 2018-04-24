@@ -11,7 +11,7 @@ public interface IPackageServiceJoinDataSource {
 
     void insert(PackageServiceJoin packageServiceJoin);
     Flowable<List<Service>> getServicesForPackage(final int packageId);
-
+    void deletePackageServiceJoin(PackageServiceJoin packageServiceJoin);
 
 
 }

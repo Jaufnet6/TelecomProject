@@ -37,4 +37,9 @@ public class PackageServiceJoinDataSource implements IPackageServiceJoinDataSour
     public Flowable<List<Service>> getServicesForPackage(int packageId) {
         return packageServiceJoinDAO.getServicesForPackage(packageId);
     }
+
+    @Override
+    public void deletePackageServiceJoin(PackageServiceJoin packageServiceJoin) {
+        packageServiceJoinDAO.deletePackageServiceJoin(packageServiceJoin);
+    }
 }

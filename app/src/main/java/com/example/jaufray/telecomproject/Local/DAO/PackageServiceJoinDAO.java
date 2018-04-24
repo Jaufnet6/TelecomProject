@@ -1,9 +1,11 @@
 package com.example.jaufray.telecomproject.Local.DAO;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
+import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
 
@@ -21,6 +23,9 @@ public interface PackageServiceJoinDAO {
     //Get the names of all services attached to a specific package
     @Query("SELECT * FROM services INNER JOIN package_service_join ON idService = serviceJoinID WHERE  packageJoinID=:packageId")
     Flowable<List<Service>> getServicesForPackage(final int packageId);
+
+    @Delete
+    void deletePackageServiceJoin(PackageServiceJoin packageServiceJoin);
 
 
 }
