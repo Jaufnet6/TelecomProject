@@ -66,6 +66,17 @@ public class ListPackages extends Activity{
         //Load all data from DB
         loadData();
 
+        list_packages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final Package packages = (Package) adapterView.getAdapter().getItem(i);
+
+                Intent intent1 = new Intent(ListPackages.this, DetailsPackage.class);
+                intent1.putExtra("DetailPackages", packages);
+                startActivity(intent1);
+            }
+        });
+
     }
 
     private void loadData() {

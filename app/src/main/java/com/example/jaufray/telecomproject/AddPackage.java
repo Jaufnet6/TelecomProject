@@ -107,7 +107,7 @@ public class AddPackage extends Activity {
             return;
         }
 
-        if(packagePrice == null){
+        if(packagePrice == 0){
             Toast.makeText(AddPackage.this, "Please enter a price", Toast.LENGTH_LONG).show();
             return;
         }
@@ -223,8 +223,26 @@ public class AddPackage extends Activity {
                 );
         compositeDisposable.add(disposable);
 
-        int id = allPackages.size();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        int size = allPackages.size();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        int id = allPackages.get(size-1).getId();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return id;
 
 

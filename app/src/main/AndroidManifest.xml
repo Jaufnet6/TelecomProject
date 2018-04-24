@@ -57,6 +57,10 @@
             android:label="@string/string_Packages">
         </activity>
         <activity
+            android:name=".UpdatePackage"
+            android:label="@string/string_Packages">
+        </activity>
+        <activity
             android:name=".ListServiceForPackage"
             android:label="@string/string_Packages">
         </activity>

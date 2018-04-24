@@ -28,79 +28,32 @@
                 android:textSize="23sp"
                 android:textColor="#000000"/>
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="250dp"
-                android:orientation="vertical">
+                android:layout_height="250dp">
 
-                <RelativeLayout
-                    android:id="@+id/service1"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="250dp"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/service1_name"
-                        android:layout_width="300dp"
-                        android:layout_height="60dp"
-                        android:text="Internet 4G unlimited"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/trebuc"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:textColor="#000000"
-                        android:paddingLeft="20dp"/>
+                    <ListView
+                        android:id="@+id/list_of_services_in_package"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp">
 
-                    <TextView
-                        android:id="@+id/service_price1"
-                        android:layout_width="100dp"
-                        android:layout_height="60dp"
-                        android:text="10 CHF"
-                        android:textStyle="italic"
-                        android:textColor="#000000"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/trebuc"
-                        android:layout_toRightOf="@id/service1_name"
-                        android:buttonTint="#000000"
-                        android:paddingRight="10dp"/>
 
-                </RelativeLayout>
+                    </ListView>
 
-                <RelativeLayout
-                    android:id="@+id/service2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/service2_name"
-                        android:layout_width="300dp"
-                        android:layout_height="60dp"
-                        android:text="SMS unlimited"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/trebuc"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:textColor="#000000"
-                        android:paddingLeft="20dp"/>
+                </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/service_price2"
-                        android:layout_width="100dp"
-                        android:layout_height="60dp"
-                        android:text="10 CHF"
-                        android:textStyle="italic"
-                        android:textColor="#000000"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/trebuc"
-                        android:layout_toRightOf="@id/service2_name"
-                        android:buttonTint="#000000"
-                        android:paddingRight="10dp"/>
 
-                </RelativeLayout>
 
-            </LinearLayout>
+
+            </ScrollView>
+
 
 
 
@@ -113,60 +66,51 @@
             <RelativeLayout
                 android:id="@+id/discount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/discount_box"
-                    android:layout_width="300dp"
+                    android:layout_width="212dp"
                     android:layout_height="60dp"
-                    android:text="@string/discount"
-                    android:gravity="center_vertical"
                     android:fontFamily="@font/trebuc"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="@string/totalPrice"
                     android:textColor="#000000"
-                    android:paddingLeft="20dp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/discount_price"
-                    android:layout_width="100dp"
+                    android:id="@+id/package_price"
+                    android:layout_width="142dp"
                     android:layout_height="60dp"
-                    android:text="2 CHF"
-                    android:textStyle="italic"
-                    android:textColor="#000000"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/trebuc"
                     android:layout_toRightOf="@id/discount_box"
                     android:buttonTint="#000000"
-                    android:paddingRight="10dp"/>
+                    android:fontFamily="@font/trebuc"
+                    android:gravity="center"
+                    android:paddingRight="10dp"
+                    android:text="2 CHF"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
 
             </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/total_price_box"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="@string/totalPrice"
-                android:gravity="center"
-                android:fontFamily="@font/trebuc"
-                android:textStyle="bold|italic"
-                android:textSize="20sp"
-                android:textColor="#000000"/>
 
             <RelativeLayout
                 android:id="@+id/delete_new_panel"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="50dp"
+                android:paddingTop="20dp">
 
                 <Button
                     android:id="@+id/delete_button"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/delete"
-                    android:layout_marginStart="100dp"/>
+                    android:layout_marginStart="100dp"
+                    android:onClick="deletePackage"/>
 
                 <Button
                     android:id="@+id/edit_button"
@@ -175,7 +119,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="100dp"
-                    android:background="@drawable/edit" />
+                    android:background="@drawable/edit"
+                    android:onClick="editPackage"/>
 
             </RelativeLayout>
 

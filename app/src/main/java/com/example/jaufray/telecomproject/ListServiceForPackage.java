@@ -33,9 +33,9 @@ public class ListServiceForPackage extends Activity{
     private ServiceRepository serviceRepository;
 
     //Adapter
-    List<Service> serviceList = new ArrayList<Service>();
-    ArrayAdapter adapter;
-    List<Service> listToPass;
+    private List<Service> serviceList = new ArrayList<Service>();
+    private ArrayAdapter adapter;
+    private List<Service> listToPass;
 
 
 

@@ -19,7 +19,7 @@ package com.example.jaufray.telecomproject.Local;
 @Database(entities = {Client.class, Service.class, Package.class, PackageServiceJoin.class}, version = DATABASE_VERSION)
 public abstract class TelecomDatabase extends RoomDatabase{
 
-    public static final int DATABASE_VERSION=1;
+    public static final int DATABASE_VERSION=2;
     public static final String DATABASE_NAME="TELECOM-Database";
 
     public abstract ClientDAO clientDAO();
