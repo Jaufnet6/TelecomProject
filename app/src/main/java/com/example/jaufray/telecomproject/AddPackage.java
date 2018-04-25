@@ -61,8 +61,14 @@ public class AddPackage extends Activity {
 
         listServices = (ListView) findViewById(R.id.full_list_service_package);
 
+
+        namePackage = (EditText) findViewById(R.id.et_name_package);
+        pricePackage = (EditText) findViewById(R.id.et_price_package);
+
         //add service to list
         servicesList = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
+        packageName = (String) intent.getStringExtra("packageName");
+        packagePrice = (Integer) intent.getIntExtra("packagePrice", 0);
 
         if(servicesList == null){
             servicesList = new ArrayList<Service>();
@@ -76,8 +82,20 @@ public class AddPackage extends Activity {
 
     public void openListServices(View view){
 
+
+        packageName = namePackage.getText().toString();
+
+        try{
+            packagePrice = Integer.parseInt(pricePackage.getText().toString());
+        } catch (NumberFormatException ex){
+            packagePrice = 0;
+        }
+
+
         Intent intent = new Intent(AddPackage.this, ListServiceForPackage.class);
         intent.putExtra("serviceForPackage", (Serializable) servicesList);
+        intent.putExtra("packageName", packageName);
+        intent.putExtra("packagePrice", packagePrice);
         startActivity(intent);
         finish();
 
@@ -91,15 +109,15 @@ public class AddPackage extends Activity {
         packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
         packageServiceJoinRepository = PackageServiceJoinRepository.getInstance((IPackageServiceJoinDataSource) PackageServiceJoinDataSource.getInstance(telecomDatabase.packageServiceJoinDAO()));
 
-        namePackage = (EditText) findViewById(R.id.et_name_package);
-        pricePackage = (EditText) findViewById(R.id.et_price_package);
 
         packageName = namePackage.getText().toString();
+
         try{
             packagePrice = Integer.parseInt(pricePackage.getText().toString());
         } catch (NumberFormatException ex){
             packagePrice = 0;
         }
+
 
 
         if(TextUtils.isEmpty(packageName)) {
@@ -188,8 +206,6 @@ public class AddPackage extends Activity {
                             new Action() {
                                 @Override
                                 public void run() throws Exception {
-                                    Intent intent = new Intent(AddPackage.this, ListPackages.class);
-                                    startActivity(intent);
                                 }
                             }
                     );

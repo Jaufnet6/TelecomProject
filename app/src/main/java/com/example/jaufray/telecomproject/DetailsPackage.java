@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,8 +19,10 @@ import com.example.jaufray.telecomproject.Local.PackageDataSource;
 import com.example.jaufray.telecomproject.Local.PackageServiceJoinDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
+import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +93,6 @@ public class DetailsPackage extends Activity {
     }
 
     private void loadData() {
-
         //Use RxJava
         Disposable disposable = packageServiceJoinRepository.getServicesForPackage(packages.getId())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -122,7 +124,9 @@ public class DetailsPackage extends Activity {
 
         Intent intent = new Intent(DetailsPackage.this, UpdatePackage.class);
         intent.putExtra("packageToModify", packages);
+        intent.putExtra("serviceForPackage", (Serializable) listOfServices);
         startActivity(intent);
+        this.finish();
 
     }
 
@@ -133,7 +137,7 @@ public class DetailsPackage extends Activity {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        deletePackage(packages);
+                        deletePackage();
                     }
                 }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -145,15 +149,22 @@ public class DetailsPackage extends Activity {
 
     }
 
-    private void deletePackage(final Package packages) {
+    private void deletePackage(){
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
 
             @Override
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
+                deleteLinkPackageToService();
+                try{
+                    Thread.sleep(50);
+                }catch (Exception ex){
+
+                }
                 packageRepository.deletePackage(packages);
                 e.onComplete();
+
             }
         })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -183,9 +194,55 @@ public class DetailsPackage extends Activity {
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();
 
     }
+
+    private void deleteLinkPackageToService() {
+
+        for(Service s : listOfServices){
+
+            final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
+
+            Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
+
+
+                @Override
+                public void subscribe(ObservableEmitter<Object> e) throws Exception {
+                    packageServiceJoinRepository.deletePackageServiceJoin(packServ);
+                    e.onComplete();
+                }
+            })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Consumer() {
+                                   @Override
+                                   public void accept(Object o) throws Exception {
+
+                                   }
+                               },
+
+                            new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    Toast.makeText(DetailsPackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            },
+
+                            new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                }
+                            }
+
+                    );
+
+            compositeDisposable.add(disposable);
+
+        }
+
+
+    }
+
 
 
 }

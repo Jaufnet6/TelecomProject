@@ -58,6 +58,11 @@
         </activity>
         <activity
             android:name=".UpdatePackage"
+            android:label="@string/string_Packages"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+            android:name=".EditListServiceForPackage"
             android:label="@string/string_Packages">
         </activity>
         <activity

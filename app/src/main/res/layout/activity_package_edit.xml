@@ -5,13 +5,9 @@
     android:orientation="vertical">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="507dp">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="512dp"
             android:orientation="vertical">
 
 
@@ -46,99 +42,28 @@
                 android:layout_gravity="center"
                 android:background="@android:color/darker_gray"/>
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:minHeight="200dp">
+                android:layout_height="201dp">
 
-                <RelativeLayout
-                    android:id="@+id/service1"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/service1_button"
-                        android:layout_width="250dp"
-                        android:layout_height="60dp"
-                        android:hint="Internet 4G unlimited"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/trebuc"
-                        android:background="@android:color/transparent"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:textColorHint="#000000"
-                        android:paddingLeft="20dp"/>
+                    <ListView
+                        android:id="@+id/service_list_in_package"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/service_price1"
-                        android:layout_width="80dp"
-                        android:layout_height="60dp"
-                        android:text="10 CHF"
-                        android:textStyle="italic"
-                        android:textColor="#000000"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/trebuc"
-                        android:layout_toRightOf="@id/service1_button"
-                        android:buttonTint="#000000"
-                        android:paddingRight="10dp"/>
+                    </ListView>
 
-                    <Button
-                        android:id="@+id/service1_delete"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/delete"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/service_price1"/>
+                </LinearLayout>
 
-                </RelativeLayout>
+            </ScrollView>
 
-                <RelativeLayout
-                    android:id="@+id/service2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <Button
-                        android:id="@+id/service2_button"
-                        android:layout_width="250dp"
-                        android:layout_height="60dp"
-                        android:hint="SMS unlimited"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/trebuc"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:textColorHint="#000000"
-                        android:background="@android:color/transparent"
-                        android:paddingLeft="20dp"/>
-
-                    <TextView
-                        android:id="@+id/service_price2"
-                        android:layout_width="80dp"
-                        android:layout_height="60dp"
-                        android:text="10 CHF"
-                        android:textStyle="italic"
-                        android:textColor="#000000"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/trebuc"
-                        android:layout_toRightOf="@id/service2_button"
-                        android:buttonTint="#000000"
-                        android:paddingRight="10dp"/>
-
-                    <Button
-                        android:id="@+id/service2_delete"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/delete"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/service_price2"/>
-
-                </RelativeLayout>
-
-            </LinearLayout>
 
 
             <Button
@@ -146,7 +71,8 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:layout_gravity="center"
-                android:background="@drawable/add"/>
+                android:background="@drawable/add"
+                android:onClick="addServicesToPackage"/>
 
             <View
                 android:layout_width="350dp"
@@ -161,17 +87,18 @@
 
                 <TextView
                     android:id="@+id/discount_field"
-                    android:layout_width="100dp"
+                    android:layout_width="111dp"
                     android:layout_height="match_parent"
-                    android:text="@string/discount"
-                    android:gravity="center"
                     android:fontFamily="@font/trebuc"
-                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:text="@string/totalPrice"
+                    android:textColor="#000000"
                     android:textSize="20sp"
-                    android:textColor="#000000"/>
+                    android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/discount_edit"
+                    android:id="@+id/package_price_id"
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@id/discount_field"
@@ -180,7 +107,7 @@
                     android:inputType="numberDecimal"
                     android:fontFamily="@font/trebuc"
                     android:backgroundTint="#000000"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_marginLeft="10dp" />
 
 
                 <TextView
@@ -190,27 +117,17 @@
                     android:text="CHF"
                     android:gravity="center"
                     android:fontFamily="@font/trebuc"
-                    android:layout_toRightOf="@id/discount_edit"
+                    android:layout_toRightOf="@id/package_price_id"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="#000000"/>
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="@string/totalPrice"
-                android:gravity="center"
-                android:fontFamily="@font/trebuc"
-                android:textColor="#000000"
-                android:textStyle="italic"
-                android:textSize="18sp"/>
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="18dp">
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp">
 
                 <Button
                     android:id="@+id/save_button"
@@ -220,7 +137,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="100dp"
                     android:background="@drawable/ic_savebutton"
-                    android:onClick="saveServiceUpdate"/>
+                    android:onClick="savePackageUpdate"/>
 
                 <Button
                     android:id="@+id/cancel_button"
@@ -230,7 +147,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="100dp"
                     android:background="@drawable/ic_cancelbutton"
-                    android:onClick="cancelServiceUpdate"/>
+                    android:onClick="cancelPackageUpdate"/>
 
 
             </RelativeLayout>
@@ -238,22 +155,15 @@
 
             <Button
                 android:id="@+id/delete_package"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:hint="@string/delete"
-                android:textColorHint="#ffffff"
-                android:fontFamily="@font/trebuc"
-                android:textSize="20sp"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="#BF3333"
-                />
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/delete"
+                android:layout_gravity="center"
+                android:onClick="deletePackageButton"/>
 
 
         </LinearLayout>
 
-
-
-    </ScrollView>
 
 
 

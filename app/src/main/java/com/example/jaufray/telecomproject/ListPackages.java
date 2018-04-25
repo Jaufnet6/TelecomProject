@@ -15,9 +15,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Database.PackageRepository;
+import com.example.jaufray.telecomproject.Database.PackageServiceJoinRepository;
 import com.example.jaufray.telecomproject.Local.PackageDataSource;
+import com.example.jaufray.telecomproject.Local.PackageServiceJoinDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
+import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
 
 import java.util.ArrayList;
@@ -43,6 +46,8 @@ public class ListPackages extends Activity{
     //Adapter
     List<Package> packageList = new ArrayList<>();
     ArrayAdapter adapter;
+
+    private ArrayList<Service> listService = new ArrayList<Service>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +106,7 @@ public class ListPackages extends Activity{
         compositeDisposable.add(disposable);
     }
 
+
     private void onGetAllPackageSuccess(List<Package> packages) {
         packageList.clear();
         packageList.addAll(packages);
@@ -113,99 +119,5 @@ public class ListPackages extends Activity{
         startActivity(intent);
         finish();
     }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-        menu.setHeaderTitle("Select action :");
-
-        menu.add(Menu.NONE,0, Menu.NONE, "Update");
-        menu.add(Menu.NONE,1, Menu.NONE, "Delete");
-
-
-
-
-    }
-
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        final Package packages = packageList.get(info.position);
-
-        switch (item.getItemId())
-        {
-            case 0: //Update
-            {
-                /*
-                Intent intent = new Intent(ListPackages.this, UpdateService.class);
-                intent.putExtra("serviceToModify", packages);
-                startActivity(intent);
-                */
-
-            }
-            break;
-            case 1: //Delete
-            {
-                new AlertDialog.Builder(ListPackages.this)
-                        .setMessage("Do you want to delete ? " + packages.getName().toString())
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                deletePackage(packages);
-                            }
-                        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).create().show();
-            }
-            break;
-        }
-        return true;
-    }
-
-    private void deletePackage(final Package packages) {
-
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
-
-
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                packageRepository.deletePackage(packages);
-                e.onComplete();
-            }
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListPackages.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                loadData();
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);
-
-    }
-
 
 }
