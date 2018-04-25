@@ -40,7 +40,6 @@ public class AddClient extends Activity {
     private EditText countryClient;
 
     //TextView ou l'on stocke le package
-    private TextView namePackageC;
     private Package pack = new Package();
     private int idPackage;
 
