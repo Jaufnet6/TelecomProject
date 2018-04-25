@@ -41,10 +41,10 @@ public class DetailsClient extends Activity {
     private TextView pricePackage;
 
 
-    int idPack;
+    private int idPack;
 
     private Client client;
-    private Package pack;
+    private Package clientpack = new Package();
 
     private ClientRepository clientRepository;
     private PackageRepository packageRepository;
@@ -56,6 +56,27 @@ public class DetailsClient extends Activity {
         setContentView(R.layout.activity_client_details);
         Intent intent = getIntent();
 
+        //Database
+        //Instantiate connection to database
+        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this);
+        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
+
+        // Init
+        compositeDisposable = new CompositeDisposable();
+
+
+        //get the client that was given when clicked in the list
+        client = (Client) intent.getSerializableExtra("DetailsClient");
+        idPack = client.getIdPackage();
+
+
+        //retrieve package from the client
+        loadPackage();
+        try {
+            Thread.sleep(30);
+        } catch (Exception ex){}
+
+        //Link to TextViews in the activity
         nameClient = (TextView)findViewById(R.id.dt_name);
         phoneClient = (TextView)findViewById(R.id.dt_phoneNumber);
         addressClient = (TextView)findViewById(R.id.dt_street);
@@ -66,42 +87,32 @@ public class DetailsClient extends Activity {
         pricePackage = (TextView)findViewById(R.id.dt_price_package);
         namePackage = (TextView)findViewById(R.id.dt_name_package) ;
 
-
+        //Fill the textview fields
         nameClient.setText(client.getName());
         phoneClient.setText(client.getPhone());
         addressClient.setText(client.getAddress());
         NPAClient.setText(client.getNpa());
         localityClient.setText(client.getLocality());
         countryClient.setText(client.getCountry());
-        idPack = client.getIdPackage();
-        namePackage.setText(pack.getName());
 
         // Init
         compositeDisposable = new CompositeDisposable();
 
-        //Database
-        //Create daze base
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this);
-        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
-        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
-
-
-
-        loadData();
 
     }
 
 
-    private void loadData() {
+    private void loadPackage() {
+
         //Use RxJava
-        Disposable disposable = clientRepository.getClientById(client.getId())
+        Disposable disposable = packageRepository.getPackageById(idPack)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
+                .subscribe(new Consumer<Package>() {
 
                                @Override
-                               public void accept(Object o) throws Exception {
-
+                               public void accept(Package pack) throws Exception {
+                                   onGetPackageSuccess(pack);
                                }
                            },
                         new Consumer<Throwable>() {
@@ -114,14 +125,17 @@ public class DetailsClient extends Activity {
         compositeDisposable.add(disposable);
     }
 
-    private void onGetPackageSucess(Package pack) {
+    public void onGetPackageSuccess(Package pack) {
+        clientpack = pack;
+        namePackage.setText(clientpack.getName());
+        pricePackage.setText(clientpack.getPrice());
     }
 
     public void editClient (View view){
 
         Intent intent = new Intent(DetailsClient.this, UpdateClient.class);
         intent.putExtra("clientToModify", client);
-        intent.putExtra("packageToClient", (Serializable) pack);
+        intent.putExtra("packageToClient", (Serializable) clientpack);
         startActivity(intent);
         this.finish();
 

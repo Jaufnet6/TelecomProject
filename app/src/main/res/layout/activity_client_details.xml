@@ -39,40 +39,42 @@
         android:layout_marginTop="20dp"/>
 
  <!-- Informations sur le package -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:layout_marginTop="40dp">
 
             <TextView
                 android:id="@+id/dt_name_package"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/trebuc"
+                android:paddingLeft="@dimen/padingLeftCB"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:text="Vivo S"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                tools:layout_editor_absoluteX="135dp"
-                tools:layout_editor_absoluteY="100dp"
-                android:text="Vivo S"
-                android:paddingRight="200dp"
-                android:paddingLeft="@dimen/padingLeftCB"
                 android:textStyle="bold"
-                android:paddingTop="@dimen/paddingTopBot"
-                android:fontFamily="@font/trebuc"/>
+                tools:layout_editor_absoluteX="135dp"
+                tools:layout_editor_absoluteY="100dp" />
 
             <TextView
                 android:id="@+id/dt_price_package"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
                 tools:layout_editor_absoluteX="135dp"
                 tools:layout_editor_absoluteY="100dp"
+                android:gravity="center"
                 android:text="80 CHF"
                 android:paddingRight="@dimen/padingLeftCB"
-                android:fontFamily="@font/trebuc"/>
-        </LinearLayout>
+                android:fontFamily="@font/trebuc"
+                android:layout_toRightOf="@id/dt_name_package"/>
+        </RelativeLayout>
 
 
 
