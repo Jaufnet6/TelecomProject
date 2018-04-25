@@ -76,7 +76,7 @@ public class Client implements Serializable {
         return name;
     }
 
-    public void setName(String lastname) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -133,9 +133,6 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder(name).append("\n").append(phone)
-                .append("\n").append(address).append("\n").append(npa)
-                .append("\n").append(locality).append("\n").append(country)
-                .append("\n").append(idPackage).toString();
+        return name;
     }
 }

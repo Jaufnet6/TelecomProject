@@ -151,7 +151,8 @@
                 android:layout_weight="@dimen/weight"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/delete" />
+                android:src="@drawable/delete"
+                android:onClick="deleteClient"/>
 
             <!--Bouton modifier-->
             <ImageButton
@@ -163,7 +164,8 @@
                 android:layout_weight="@dimen/weight"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/edit" />
+                android:src="@drawable/edit"
+                android:onClick="editClient"/>
 
 
         </LinearLayout>

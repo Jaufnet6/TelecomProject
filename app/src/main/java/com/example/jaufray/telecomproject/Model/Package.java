@@ -62,6 +62,6 @@ public class Package implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder(name).append("\n").append(price).toString();
+        return name;
     }
 }

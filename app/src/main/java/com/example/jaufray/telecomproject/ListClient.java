@@ -18,6 +18,7 @@ import com.example.jaufray.telecomproject.Database.ClientRepository;
 import com.example.jaufray.telecomproject.Local.ClientDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Client;
+import com.example.jaufray.telecomproject.Model.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,17 @@ public class ListClient extends Activity {
         //Load all data from DB
         loadData();
 
+        list_client.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final Client client = (Client) adapterView.getAdapter().getItem(i);
+
+                Intent intent1 = new Intent(ListClient.this, DetailsClient.class);
+                intent1.putExtra("DetailsClient", client);
+                startActivity(intent1);
+            }
+        });
+
 
     }
 
@@ -103,7 +115,7 @@ public class ListClient extends Activity {
     public void changeToCreateClient(View view) {
         Intent intent = new Intent(ListClient.this, AddClient.class);
         startActivity(intent);
-        finish();
+        this.finish();
 
     }
 

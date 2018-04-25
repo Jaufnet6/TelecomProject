@@ -82,7 +82,14 @@
             android:label="@string/string_Client"
             android:windowSoftInputMode="adjustPan">
         </activity>
-
+        <activity
+            android:name=".ListPackageForClient"
+            android:label="@string/string_Client">
+        </activity>
+        <activity
+            android:name=".UpdateClient"
+            android:label="@string/string_Client">
+        </activity>
 
 
     </application>

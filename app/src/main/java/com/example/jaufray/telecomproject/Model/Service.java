@@ -73,7 +73,7 @@ public class Service implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder(name).append("\n").append(description).append("\n").append(price).toString();
+        return name;
     }
 
 

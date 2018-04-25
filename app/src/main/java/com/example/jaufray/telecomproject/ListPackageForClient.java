@@ -35,6 +35,12 @@ public class ListPackageForClient extends Activity{
     private List<Package> packageList = new ArrayList<Package>();
     private ArrayAdapter adapter;
 
+    private String clientName;
+    private String clientPhone;
+    private String clientAddress;
+    private String clientNPA;
+    private String clientLocality;
+    private String clientCountry;
 
 
 
@@ -50,6 +56,18 @@ public class ListPackageForClient extends Activity{
 
         //Init View
         list_package = (ListView) findViewById(R.id.package_list_client);
+
+        //Retrieve user inputs from creation frame
+        clientName = (String) intent.getStringExtra("clientName");
+        clientPhone = (String) intent.getStringExtra("clientPhone");
+        clientAddress = (String) intent.getStringExtra("clientAddress");
+        clientNPA = (String) intent.getStringExtra("clientNPA");
+        clientLocality = (String) intent.getStringExtra("clientLocality");
+        clientCountry = (String) intent.getStringExtra("clientCountry");
+
+
+
+
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, packageList);
         registerForContextMenu(list_package);
@@ -67,7 +85,13 @@ public class ListPackageForClient extends Activity{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final Package packages = (Package) adapterView.getAdapter().getItem(i);
                 Intent intent1 = new Intent(ListPackageForClient.this, AddClient.class);
-                intent1.putExtra("serviceForPackage", (Serializable) packages);
+                intent1.putExtra("PackageForClient", packages);
+                intent1.putExtra("clientName", clientName);
+                intent1.putExtra("clientPhone", clientPhone);
+                intent1.putExtra("clientAddress", clientAddress);
+                intent1.putExtra("clientNPA", clientNPA);
+                intent1.putExtra("clientCountry", clientCountry);
+                intent1.putExtra("clientLocality", clientLocality);
                 startActivity(intent1);
                 finish();
             }

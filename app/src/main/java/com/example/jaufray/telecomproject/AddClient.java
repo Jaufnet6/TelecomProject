@@ -41,7 +41,8 @@ public class AddClient extends Activity {
 
     //TextView ou l'on stocke le package
     private TextView namePackageC;
-    Package pack ;
+    private Package pack = new Package();
+    private int idPackage;
 
     private String clientName;
     private String clientPhone;
@@ -67,26 +68,33 @@ public class AddClient extends Activity {
         packTxt = (TextView) findViewById(R.id.name_package_client);
 
         //Ajouter le package
-        //doute
+        //Retrieve package from list of package choice
         pack = (Package) intent.getSerializableExtra("PackageForClient");
+
+        if(pack != null){
+            packTxt.setText(pack.getName());
+            idPackage = pack.getId();
+        }
+
 
     }
 
     public void openListPackages(View v)
     {
+        getUserInput();
         Intent intent = new Intent(AddClient.this, ListPackageForClient.class);
+        intent.putExtra("clientName", clientName);
+        intent.putExtra("clientPhone", clientPhone);
+        intent.putExtra("clientAddress", clientAddress);
+        intent.putExtra("clientNPA", clientNPA);
+        intent.putExtra("clientCountry", clientCountry);
+        intent.putExtra("clientLocality", clientLocality);
         startActivity(intent);
 
-        //Voir si bsoin mettre finish
+        this.finish();
     }
 
-
-
-    public void saveClient(View view) {
-
-        //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
+    public void getUserInput(){
 
         nameClient = (EditText) findViewById(R.id.et_name);
         phoneClient = (EditText) findViewById(R.id.et_phoneNumber);
@@ -101,6 +109,18 @@ public class AddClient extends Activity {
         clientNPA = NPAClient.getText().toString();
         clientCountry = countryClient.getText().toString();
         clientLocality = localityClient.getText().toString();
+
+    }
+
+
+
+    public void saveClient(View view) {
+
+        //Database
+        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
+        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
+
+        getUserInput();
 
         if (TextUtils.isEmpty(clientName)) {
             nameClient.setError("Cannot be empty");
@@ -127,12 +147,11 @@ public class AddClient extends Activity {
             return;
         }
 
-    }
-     /*   Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
 
-                Client client = new Client(clientName, clientPhone, clientAddress, clientNPA, clientLocality, clientCountry);
+                Client client = new Client(clientName, clientPhone, clientAddress, clientNPA, clientLocality, clientCountry, idPackage);
                 clientRepository.insertClient(client);
                 e.onComplete();
             }
@@ -163,7 +182,10 @@ public class AddClient extends Activity {
                                 finish();
                             }
                         }
-                );*/
+                );
+    }
+
+
 
 
 

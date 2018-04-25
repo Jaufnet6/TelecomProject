@@ -29,10 +29,6 @@ public class DetailsService extends Activity{
     private TextView serviceDescription;
     private TextView servicePrice;
 
-    private String nameService;
-    private String descriptionService;
-    private String priceService;
-
     private Service service;
 
     //Database
