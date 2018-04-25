@@ -83,7 +83,8 @@
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:layout_marginLeft="30dp"
-                        android:src="@drawable/edit"/>
+                        android:src="@drawable/edit"
+                        android:onClick="modifyClientPackage"/>
                 </LinearLayout>
 
 
@@ -152,7 +153,7 @@
 
                     <!--Bouton delete-->
                     <ImageButton
-                        android:id="@+id/dt_btn_delete"
+                        android:id="@+id/dt_btn_save"
                         android:layout_width="@dimen/width"
                         android:layout_height="@dimen/height"
                         android:layout_marginBottom="@dimen/MarginButtom"
@@ -161,7 +162,8 @@
                         android:layout_weight="@dimen/weight"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_savebutton" />
+                        android:src="@drawable/ic_savebutton"
+                        android:onClick="saveClientModified"/>
 
                     <!--Bouton modifier-->
                     <ImageButton
@@ -173,7 +175,8 @@
                         android:layout_weight="@dimen/weight"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_cancelbutton" />
+                        android:src="@drawable/ic_cancelbutton"
+                        android:onClick="cancelClientModified"/>
 
 
                 </LinearLayout>
@@ -189,7 +192,7 @@
                     android:fontFamily="@font/trebuc"
                     android:textSize="20sp"
                     android:backgroundTint="#BF3333"
-                    />
+                    android:onClick="deleteClientModified"/>
 
 
 

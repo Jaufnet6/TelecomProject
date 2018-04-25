@@ -88,7 +88,13 @@
         </activity>
         <activity
             android:name=".UpdateClient"
-            android:label="@string/string_Client">
+            android:label="@string/string_Client"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+            android:name=".EditListPackageForClient"
+            android:label="@string/string_Client"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
 

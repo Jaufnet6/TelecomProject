@@ -78,8 +78,7 @@ public class AddClient extends Activity {
 
     }
 
-    public void openListPackages(View v)
-    {
+    public void openListPackages(View v) {
         getUserInput();
         Intent intent = new Intent(AddClient.this, ListPackageForClient.class);
         intent.putExtra("clientName", clientName);
@@ -183,10 +182,6 @@ public class AddClient extends Activity {
                         }
                 );
     }
-
-
-
-
 
     public void cancelClientAdd(View view) {
 
