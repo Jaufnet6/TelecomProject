@@ -147,7 +147,10 @@ public class UpdatePackage extends Activity {
         try{
             pricePackage = Integer.parseInt(edtPrice.getText().toString());
         } catch (NumberFormatException ex){
-            pricePackage = 0;
+            int total = 0;
+            for(Service s : listService)
+                total =+ s.getPrice();
+            pricePackage = total;
         }
 
 
@@ -170,8 +173,9 @@ public class UpdatePackage extends Activity {
 
                 deleteLinkPackageToService();
 
-                Package pack = new Package(namePackage, pricePackage);
-                packageRepository.updatePackage(pack);
+                packages.setName(namePackage);
+                packages.setPrice(pricePackage);
+                packageRepository.updatePackage(packages);
                 e.onComplete();
                 addDataLinkService();
             }
@@ -202,7 +206,7 @@ public class UpdatePackage extends Activity {
                         }
                 );
 
-        this.finish();
+        this.finish();;
     }
 
     public void addDataLinkService(){
@@ -254,7 +258,7 @@ public class UpdatePackage extends Activity {
         intent.putExtra("serviceForPackage", (Serializable) listService);
         intent.putExtra("packageToEdit", packages);
         startActivity(intent);
-        finish();
+        finish();;
 
 
     }
@@ -262,7 +266,7 @@ public class UpdatePackage extends Activity {
     public void cancelPackageUpdate (View view){
         Intent intent = new Intent(UpdatePackage.this, ListPackages.class);
         startActivity(intent);
-        this.finish();
+        this.finish();;
     }
 
     public void deletePackageButton(View view){

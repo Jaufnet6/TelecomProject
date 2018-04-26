@@ -39,7 +39,7 @@ public class AddClient extends Activity {
     private EditText localityClient;
     private EditText countryClient;
 
-    //TextView ou l'on stocke le package
+
     private Package pack = new Package();
     private int idPackage;
 
@@ -73,6 +73,7 @@ public class AddClient extends Activity {
         if(pack != null){
             packTxt.setText(pack.getName());
             idPackage = pack.getId();
+
         }
 
 
@@ -89,7 +90,7 @@ public class AddClient extends Activity {
         intent.putExtra("clientLocality", clientLocality);
         startActivity(intent);
 
-        this.finish();
+        this.finish();;
     }
 
     public void getUserInput(){
@@ -177,7 +178,7 @@ public class AddClient extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(AddClient.this, ListClient.class);
                                 startActivity(intent);
-                                finish();
+                                finish();;
                             }
                         }
                 );
@@ -187,7 +188,7 @@ public class AddClient extends Activity {
 
         Intent intent = new Intent(AddClient.this, ListClient.class);
         startActivity(intent);
-        this.finish();
+        this.finish();;
     }
 
 

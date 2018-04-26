@@ -139,7 +139,7 @@ public class DetailsClient extends Activity {
         intent.putExtra("clientToModify", client);
         intent.putExtra("packageToClient", clientpack);
         startActivity(intent);
-        this.finish();
+        this.finish();;
 
     }
 
@@ -200,7 +200,7 @@ public class DetailsClient extends Activity {
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();
+        this.finish();;
 
 
     }

@@ -129,7 +129,7 @@ public class UpdateClient extends Activity {
         intent.putExtra("clientLocality", clientLocality);
         startActivity(intent);
 
-        this.finish();
+        this.finish();;
 
 
     }
@@ -153,10 +153,6 @@ public class UpdateClient extends Activity {
     }
 
     public void saveClientModified(View view) {
-
-        //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
 
         getUserInput();
         try {
@@ -192,8 +188,17 @@ public class UpdateClient extends Activity {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
 
-                Client client = new Client(clientName, clientPhone, clientAddress, clientNPA, clientLocality, clientCountry, packageClient.getId());
+                getUserInput();
+                client.setName(clientName);
+                client.setPhone(clientPhone);
+                client.setAddress(clientAddress);
+                client.setNpa(clientNPA);
+                client.setLocality(clientLocality);
+                client.setCountry(clientCountry);
+                client.setIdPackage(packageClient.getId());
+
                 clientRepository.updateClient(client);
+
                 e.onComplete();
             }
 
@@ -220,7 +225,8 @@ public class UpdateClient extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(UpdateClient.this, ListClient.class);
                                 startActivity(intent);
-                                finish();
+
+                                finish();;
                             }
                         }
                 );
@@ -230,7 +236,7 @@ public class UpdateClient extends Activity {
     public void cancelClientModified (View view){
         Intent intent = new Intent(UpdateClient.this, ListClient.class);
         startActivity(intent);
-        this.finish();
+        this.finish();;
 
     }
 
@@ -291,7 +297,7 @@ public class UpdateClient extends Activity {
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();
+        this.finish();;
 
 
     }

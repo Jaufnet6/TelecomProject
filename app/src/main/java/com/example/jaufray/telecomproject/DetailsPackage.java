@@ -126,7 +126,7 @@ public class DetailsPackage extends Activity {
         intent.putExtra("packageToModify", packages);
         intent.putExtra("serviceForPackage", (Serializable) listOfServices);
         startActivity(intent);
-        this.finish();
+        this.finish();;
 
     }
 

@@ -130,7 +130,7 @@ public class UpdateService extends Activity{
                             }
                         }
                 );
-        this.finish();
+        this.finish();;
     }
 
 
@@ -138,7 +138,7 @@ public class UpdateService extends Activity{
 
         Intent intent = new Intent(UpdateService.this, ListServices.class);
         startActivity(intent);
-        this.finish();
+        this.finish();;
 
     }
 
@@ -180,7 +180,7 @@ public class UpdateService extends Activity{
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();
+        this.finish();;
 
     }
 

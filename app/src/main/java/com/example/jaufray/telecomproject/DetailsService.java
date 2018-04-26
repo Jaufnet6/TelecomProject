@@ -124,7 +124,7 @@ public class DetailsService extends Activity{
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();
+        this.finish();;
 
     }
 

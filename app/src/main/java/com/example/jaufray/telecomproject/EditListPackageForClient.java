@@ -90,7 +90,7 @@ public class EditListPackageForClient extends Activity{
                 intent1.putExtra("clientCountry", clientCountry);
                 intent1.putExtra("clientLocality", clientLocality);
                 startActivity(intent1);
-                finish();
+                finish();;
             }
         });
     }

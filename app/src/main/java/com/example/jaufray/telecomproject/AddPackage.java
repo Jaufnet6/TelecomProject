@@ -97,7 +97,7 @@ public class AddPackage extends Activity {
         intent.putExtra("packageName", packageName);
         intent.putExtra("packagePrice", packagePrice);
         startActivity(intent);
-        finish();
+        finish();;
 
     }
 
@@ -115,7 +115,12 @@ public class AddPackage extends Activity {
         try{
             packagePrice = Integer.parseInt(pricePackage.getText().toString());
         } catch (NumberFormatException ex){
-            packagePrice = 0;
+            int total = 0;
+            for(Service s : servicesList)
+                total =+ s.getPrice();
+
+
+            packagePrice = total;
         }
 
 
@@ -167,7 +172,7 @@ public class AddPackage extends Activity {
                         }
                 );
 
-        this.finish();
+        this.finish();;
     }
 
     public void addDataLinkService(){
@@ -269,7 +274,7 @@ public class AddPackage extends Activity {
 
         Intent intent = new Intent(AddPackage.this, ListPackages.class);
         startActivity(intent);
-        this.finish();
+        this.finish();;
     }
 
 

@@ -121,14 +121,14 @@ public class AddService extends Activity {
                             }
                         }
                 );
-        this.finish();
+        this.finish();;
     }
 
     public void cancelServiceAdd(View view) {
 
         Intent intent = new Intent(AddService.this, ListServices.class);
         startActivity(intent);
-        this.finish();
+        this.finish();;
 
     }
 
