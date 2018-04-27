@@ -135,11 +135,6 @@ public class UpdatePackage extends Activity {
 
     public void savePackageUpdate(View view){
 
-        //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
-        packageServiceJoinRepository = PackageServiceJoinRepository.getInstance((IPackageServiceJoinDataSource) PackageServiceJoinDataSource.getInstance(telecomDatabase.packageServiceJoinDAO()));
-
 
         namePackage = edtName.getText().toString();
 

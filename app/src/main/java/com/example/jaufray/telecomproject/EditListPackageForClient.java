@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.jaufray.telecomproject.Database.PackageRepository;
 import com.example.jaufray.telecomproject.Local.PackageDataSource;
 import com.example.jaufray.telecomproject.Local.TelecomDatabase;
+import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
 
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class EditListPackageForClient extends Activity{
     private String clientLocality;
     private String clientCountry;
 
+    private Client client;
+
 
 
 
@@ -63,6 +66,7 @@ public class EditListPackageForClient extends Activity{
         clientNPA = (String) intent.getStringExtra("clientNPA");
         clientLocality = (String) intent.getStringExtra("clientLocality");
         clientCountry = (String) intent.getStringExtra("clientCountry");
+        client = (Client) intent.getSerializableExtra("clientToModify");
 
 
 
@@ -89,6 +93,7 @@ public class EditListPackageForClient extends Activity{
                 intent1.putExtra("clientNPA", clientNPA);
                 intent1.putExtra("clientCountry", clientCountry);
                 intent1.putExtra("clientLocality", clientLocality);
+                intent1.putExtra("clientToModify", client);
                 startActivity(intent1);
                 finish();;
             }

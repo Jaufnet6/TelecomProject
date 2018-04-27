@@ -127,6 +127,7 @@ public class UpdateClient extends Activity {
         intent.putExtra("clientNPA", clientNPA);
         intent.putExtra("clientCountry", clientCountry);
         intent.putExtra("clientLocality", clientLocality);
+        intent.putExtra("clientToModify", client);
         startActivity(intent);
 
         this.finish();;
@@ -135,13 +136,6 @@ public class UpdateClient extends Activity {
     }
 
     public void getUserInput(){
-
-        nameClient = (EditText) findViewById(R.id.et_name);
-        phoneClient = (EditText) findViewById(R.id.et_phoneNumber);
-        addressClient = (EditText) findViewById(R.id.et_street);
-        NPAClient = (EditText) findViewById(R.id.et_npa);
-        localityClient = (EditText) findViewById(R.id.et_city);
-        countryClient = (EditText) findViewById(R.id.et_country);
 
         clientName = nameClient.getText().toString();
         clientPhone = phoneClient.getText().toString();
@@ -154,10 +148,12 @@ public class UpdateClient extends Activity {
 
     public void saveClientModified(View view) {
 
-        getUserInput();
-        try {
-            Thread.sleep(30);
-        }catch (Exception ex){}
+        clientName = nameClient.getText().toString();
+        clientPhone = phoneClient.getText().toString();
+        clientAddress = addressClient.getText().toString();
+        clientNPA = NPAClient.getText().toString();
+        clientCountry = countryClient.getText().toString();
+        clientLocality = localityClient.getText().toString();
 
         if (TextUtils.isEmpty(clientName)) {
             nameClient.setError("Cannot be empty");
@@ -189,6 +185,9 @@ public class UpdateClient extends Activity {
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
 
                 getUserInput();
+                try {
+                    Thread.sleep(500);
+                } catch(Exception ex){}
                 client.setName(clientName);
                 client.setPhone(clientPhone);
                 client.setAddress(clientAddress);
