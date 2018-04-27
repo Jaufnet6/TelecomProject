@@ -41,6 +41,9 @@ public class EditListServiceForPackage extends AppCompatActivity {
 
     private Package packages;
 
+    private String namePackage;
+    private Integer pricePackage;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,9 @@ public class EditListServiceForPackage extends AppCompatActivity {
         final Intent intent = getIntent();
         listToPass = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
         packages = (Package) intent.getSerializableExtra("packageToEdit");
+        namePackage = (String) intent.getStringExtra("packageName");
+        pricePackage = (Integer) intent.getIntExtra("packagePrice", 0);
+
 
 
 
@@ -84,6 +90,8 @@ public class EditListServiceForPackage extends AppCompatActivity {
                 Intent intent1 = new Intent(EditListServiceForPackage.this, UpdatePackage.class);
                 intent1.putExtra("serviceForPackage", (Serializable) listToPass);
                 intent1.putExtra("packageToModify", packages);
+                intent1.putExtra("packageName", namePackage);
+                intent1.putExtra("packagePrice", pricePackage);
                 startActivity(intent1);
                 finish();
             }

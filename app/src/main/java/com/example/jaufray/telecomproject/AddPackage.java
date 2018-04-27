@@ -61,8 +61,6 @@ public class AddPackage extends AppCompatActivity {
         Intent intent = getIntent();
 
         listServices = (ListView) findViewById(R.id.full_list_service_package);
-
-
         namePackage = (EditText) findViewById(R.id.et_name_package);
         pricePackage = (EditText) findViewById(R.id.et_price_package);
 
@@ -70,6 +68,11 @@ public class AddPackage extends AppCompatActivity {
         servicesList = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
         packageName = (String) intent.getStringExtra("packageName");
         packagePrice = (Integer) intent.getIntExtra("packagePrice", 0);
+
+        if(packageName != null)
+            namePackage.setText(packageName);
+        if(packagePrice != null)
+            pricePackage.setText(String.valueOf(packagePrice));
 
         if(servicesList == null){
             servicesList = new ArrayList<Service>();

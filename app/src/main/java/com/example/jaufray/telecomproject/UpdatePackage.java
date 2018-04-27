@@ -67,22 +67,32 @@ public class UpdatePackage extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_edit);
-
         Intent intent = getIntent();
-        packages = (Package) intent.getSerializableExtra("packageToModify");
-        listService = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
 
         edtName = (EditText) findViewById(R.id.package_title);
         edtPrice = (EditText) findViewById(R.id.package_price_id);
         service_list = (ListView) findViewById(R.id.service_list_in_package);
+
+        packages = (Package) intent.getSerializableExtra("packageToModify");
+        listService = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
+        namePackage = (String) intent.getStringExtra("packageName");
+        pricePackage = (Integer) intent.getIntExtra("packagePrice", 0);
+
+        if(namePackage != null)
+            edtName.setText(namePackage);
+        else
+            edtName.setText(packages.getName());
+        if(pricePackage != 0)
+            edtPrice.setText(String.valueOf(pricePackage));
+        else
+            edtPrice.setText(String.valueOf(packages.getPrice()));
+
 
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listService);
         registerForContextMenu(service_list);
         service_list.setAdapter(adapter);
 
-        edtName.setText(packages.getName());
-        edtPrice.setText(String.valueOf(packages.getPrice()));
 
         // Init
         compositeDisposable = new CompositeDisposable();
@@ -103,7 +113,6 @@ public class UpdatePackage extends AppCompatActivity {
         menu.add(Menu.NONE,0, Menu.NONE, "Delete");
 
     }
-
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -251,9 +260,15 @@ public class UpdatePackage extends AppCompatActivity {
 
     public void addServicesToPackage(View view) {
 
+        namePackage = edtName.getText().toString();
+        pricePackage = Integer.parseInt(edtPrice.getText().toString());
+
         Intent intent = new Intent(UpdatePackage.this, EditListServiceForPackage.class);
         intent.putExtra("serviceForPackage", (Serializable) listService);
         intent.putExtra("packageToEdit", packages);
+        intent.putExtra("packageName", namePackage);
+        intent.putExtra("packagePrice", pricePackage);
+
         startActivity(intent);
         finish();
 

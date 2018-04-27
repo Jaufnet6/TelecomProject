@@ -53,6 +53,7 @@ public class ListServiceForPackage extends AppCompatActivity {
         packagePrice = (Integer) intent.getIntExtra("packagePrice", 0);
 
 
+
         if(listToPass == null)
             listToPass = new ArrayList<Service>();
 

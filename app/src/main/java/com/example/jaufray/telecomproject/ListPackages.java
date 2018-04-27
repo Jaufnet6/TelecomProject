@@ -5,6 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -36,7 +40,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class ListPackages extends AppCompatActivity {
+public class ListPackages extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ListView list_packages;
 
@@ -50,10 +54,24 @@ public class ListPackages extends AppCompatActivity {
 
     private ArrayList<Service> listService = new ArrayList<Service>();
 
+    //Drawer Menu
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_list);
         Intent intent = getIntent();
+
+        //Drawer Menu
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_package);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_package);
+        navigationView.setNavigationItemSelectedListener(this);
 
         // Init
         compositeDisposable = new CompositeDisposable();
@@ -84,6 +102,56 @@ public class ListPackages extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_language:
+                Intent intent1 = new Intent(ListPackages.this, Languages.class);
+                startActivity(intent1);
+                finish();
+                return true;
+
+            case R.id.nav_about:
+                Intent intent2 = new Intent(ListPackages.this, About.class);
+                startActivity(intent2);
+                return true;
+
+            case R.id.nav_client:
+                Intent intent3 = new Intent(ListPackages.this, ListClient.class);
+                startActivity(intent3);
+                return true;
+
+            case R.id.nav_main_menu:
+                Intent intent4 = new Intent(ListPackages.this, MainMenu.class);
+                startActivity(intent4);
+                return true;
+
+            case R.id.nav_package:
+                Toast.makeText(this,"You already are on the Package section", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.nav_service:
+                Intent intent5 = new Intent(ListPackages.this, ListServices.class);
+                startActivity(intent5);
+                return true;
+
+            default:
+                return false;
+
+        }
     }
 
     private void loadData() {

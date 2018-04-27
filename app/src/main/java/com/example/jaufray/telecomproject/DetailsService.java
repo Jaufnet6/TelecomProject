@@ -111,7 +111,7 @@ public class DetailsService extends AppCompatActivity {
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(DetailsService.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DetailsService.this, "Service in use in some packages. Delete those first.", Toast.LENGTH_SHORT).show();
                             }
                         },
 

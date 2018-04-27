@@ -65,7 +65,34 @@ public class AddClient extends AppCompatActivity {
         setContentView(R.layout.activity_client_add);
         Intent intent = getIntent();
 
+        nameClient = (EditText) findViewById(R.id.et_name);
+        phoneClient = (EditText) findViewById(R.id.et_phoneNumber);
+        addressClient = (EditText) findViewById(R.id.et_street);
+        NPAClient = (EditText) findViewById(R.id.et_npa);
+        localityClient = (EditText) findViewById(R.id.et_city);
+        countryClient = (EditText) findViewById(R.id.et_country);
+
         packTxt = (TextView) findViewById(R.id.name_package_client);
+        //Retrieve user inputs from creation frame
+        clientName = (String) intent.getStringExtra("clientName");
+        clientPhone = (String) intent.getStringExtra("clientPhone");
+        clientAddress = (String) intent.getStringExtra("clientAddress");
+        clientNPA = (String) intent.getStringExtra("clientNPA");
+        clientLocality = (String) intent.getStringExtra("clientLocality");
+        clientCountry = (String) intent.getStringExtra("clientCountry");
+
+        if(clientName != null)
+            nameClient.setText(clientName);
+        if(clientPhone != null)
+            phoneClient.setText(clientPhone);
+        if(clientAddress != null)
+            addressClient.setText(clientAddress);
+        if(clientNPA != null)
+            NPAClient.setText(clientNPA);
+        if(clientLocality != null)
+            localityClient.setText(clientLocality);
+        if(clientCountry != null)
+            countryClient.setText(clientCountry);
 
         //Ajouter le package
         //Retrieve package from list of package choice
@@ -95,13 +122,6 @@ public class AddClient extends AppCompatActivity {
     }
 
     public void getUserInput(){
-
-        nameClient = (EditText) findViewById(R.id.et_name);
-        phoneClient = (EditText) findViewById(R.id.et_phoneNumber);
-        addressClient = (EditText) findViewById(R.id.et_street);
-        NPAClient = (EditText) findViewById(R.id.et_npa);
-        localityClient = (EditText) findViewById(R.id.et_city);
-        countryClient = (EditText) findViewById(R.id.et_country);
 
         clientName = nameClient.getText().toString();
         clientPhone = phoneClient.getText().toString();

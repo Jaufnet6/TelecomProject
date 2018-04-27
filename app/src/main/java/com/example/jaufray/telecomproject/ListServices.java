@@ -5,6 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -33,7 +37,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class ListServices extends AppCompatActivity{
+public class ListServices extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ListView list_services;
 
@@ -45,6 +49,9 @@ public class ListServices extends AppCompatActivity{
     List<Service> serviceList = new ArrayList<>();
     ArrayAdapter adapter;
 
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,15 @@ public class ListServices extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_list);
         final Intent intent = getIntent();
+
+        //Drawer menu
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_services);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_services);
+        navigationView.setNavigationItemSelectedListener(this);
 
         // Init
         compositeDisposable = new CompositeDisposable();
@@ -83,8 +99,56 @@ public class ListServices extends AppCompatActivity{
         });
     }
 
+    //Drawer Menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
 
+    }
+
+    //Drawer Menu Buttons
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_language:
+                Intent intent1 = new Intent(ListServices.this, Languages.class);
+                startActivity(intent1);
+                finish();
+                return true;
+
+            case R.id.nav_about:
+                Intent intent2 = new Intent(ListServices.this, About.class);
+                startActivity(intent2);
+                return true;
+
+            case R.id.nav_client:
+                Intent intent3 = new Intent(ListServices.this, ListClient.class);
+                startActivity(intent3);
+                return true;
+
+            case R.id.nav_main_menu:
+                Intent intent5 = new Intent(ListServices.this, MainMenu.class);
+                startActivity(intent5);
+                return true;
+
+            case R.id.nav_package:
+                Intent intent4 = new Intent(ListServices.this, ListPackages.class);
+                startActivity(intent4);
+                return true;
+
+            case R.id.nav_service:
+                Toast.makeText(this, "You are already in the Service section", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                return false;
+
+        }
+    }
 
 
     private void loadData() {
@@ -198,7 +262,7 @@ public class ListServices extends AppCompatActivity{
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListServices.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ListServices.this, "Service in use in some packages. Delete those first.", Toast.LENGTH_LONG).show();
                             }
                         },
 
