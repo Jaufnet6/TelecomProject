@@ -3,6 +3,7 @@ package com.example.jaufray.telecomproject;
 import android.app.*;
 import android.content.Intent;
 import android.os.*;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.*;
 
@@ -24,7 +25,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by danie on 24.04.2018.
  */
 
-public class ListPackageForClient extends Activity{
+public class ListPackageForClient extends AppCompatActivity {
 
     private ListView list_package;
     //Database

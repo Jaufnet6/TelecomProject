@@ -3,6 +3,7 @@ package com.example.jaufray.telecomproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -29,7 +30,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class AddClient extends Activity {
+public class AddClient extends AppCompatActivity {
 
 
     private EditText nameClient;

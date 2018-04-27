@@ -3,6 +3,7 @@ package com.example.jaufray.telecomproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -35,7 +36,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddPackage extends Activity {
+public class AddPackage extends AppCompatActivity {
 
     private EditText namePackage;
     private EditText pricePackage;

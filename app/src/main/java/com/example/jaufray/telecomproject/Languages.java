@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.content.Intent;
 import android.preference.ListPreference;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,7 @@ import android.widget.ImageButton;
 import java.util.Locale;
 
 
-public class Languages extends Activity implements View.OnClickListener {
+public class Languages extends AppCompatActivity implements View.OnClickListener {
     private ImageButton francais;
     private ImageButton english;
     private Locale myLocale;

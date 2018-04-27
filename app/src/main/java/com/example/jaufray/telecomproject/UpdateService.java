@@ -3,6 +3,7 @@ package com.example.jaufray.telecomproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +28,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class UpdateService extends Activity{
+public class UpdateService extends AppCompatActivity {
 
     private EditText edtName;
     private EditText edtDescription;

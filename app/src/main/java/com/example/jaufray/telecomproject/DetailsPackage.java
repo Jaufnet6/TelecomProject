@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -40,7 +41,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by danie on 24.04.2018.
  */
 
-public class DetailsPackage extends Activity {
+public class DetailsPackage extends AppCompatActivity {
 
     private TextView packageName;
     private TextView packagePrice;

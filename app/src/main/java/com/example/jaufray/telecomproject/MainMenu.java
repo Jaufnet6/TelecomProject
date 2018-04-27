@@ -70,6 +70,7 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_language:
                 Intent intent1 = new Intent(MainMenu.this, Languages.class);
                 startActivity(intent1);
+                finish();
                 return true;
 
             case R.id.nav_about:
