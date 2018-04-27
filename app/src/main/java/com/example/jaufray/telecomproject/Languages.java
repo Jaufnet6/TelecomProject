@@ -91,7 +91,7 @@ public class Languages extends Activity implements View.OnClickListener {
         changeLang(lang);
         Intent intent = new Intent(Languages.this, MainMenu.class);
         startActivity(intent);
-        this.finish();;
+        finish();
 
     }
 

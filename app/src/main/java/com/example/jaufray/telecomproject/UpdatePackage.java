@@ -197,11 +197,12 @@ public class UpdatePackage extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(UpdatePackage.this, ListPackages.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                 );
 
-        this.finish();;
+        this.finish();
     }
 
     public void addDataLinkService(){
@@ -253,7 +254,7 @@ public class UpdatePackage extends Activity {
         intent.putExtra("serviceForPackage", (Serializable) listService);
         intent.putExtra("packageToEdit", packages);
         startActivity(intent);
-        finish();;
+        finish();
 
 
     }
@@ -261,7 +262,7 @@ public class UpdatePackage extends Activity {
     public void cancelPackageUpdate (View view){
         Intent intent = new Intent(UpdatePackage.this, ListPackages.class);
         startActivity(intent);
-        this.finish();;
+        this.finish();
     }
 
     public void deletePackageButton(View view){
@@ -319,6 +320,7 @@ public class UpdatePackage extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(UpdatePackage.this, ListPackages.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
 

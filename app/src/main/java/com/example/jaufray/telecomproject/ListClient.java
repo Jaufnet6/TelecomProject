@@ -75,6 +75,7 @@ public class ListClient extends Activity {
 
                 Intent intent1 = new Intent(ListClient.this, DetailsClient.class);
                 intent1.putExtra("DetailsClient", client);
+                finish();
                 startActivity(intent1);
             }
         });

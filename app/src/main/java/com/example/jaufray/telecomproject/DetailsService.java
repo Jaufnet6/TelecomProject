@@ -83,6 +83,7 @@ public class DetailsService extends Activity{
         Intent intent = new Intent(DetailsService.this, UpdateService.class);
         intent.putExtra("serviceToModify", service);
         startActivity(intent);
+        finish();
 
     }
 
@@ -118,13 +119,15 @@ public class DetailsService extends Activity{
                             public void run() throws Exception {
                                 Intent intent = new Intent(DetailsService.this, ListServices.class);
                                 startActivity(intent);
+                                finish();
+
                             }
                         }
 
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();;
+        //this.finish();
 
     }
 

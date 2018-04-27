@@ -95,7 +95,7 @@ public class EditListPackageForClient extends Activity{
                 intent1.putExtra("clientLocality", clientLocality);
                 intent1.putExtra("clientToModify", client);
                 startActivity(intent1);
-                finish();;
+                finish();
             }
         });
     }

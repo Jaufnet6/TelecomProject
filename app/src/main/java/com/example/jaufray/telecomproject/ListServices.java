@@ -77,6 +77,7 @@ public class ListServices extends Activity{
                 Intent intent1 = new Intent(ListServices.this, DetailsService.class);
                 intent1.putExtra("DetailsService", service);
                 startActivity(intent1);
+                finish();
             }
         });
     }
@@ -118,7 +119,7 @@ public class ListServices extends Activity{
     public void changeToCreateService(View view){
         Intent intent = new Intent(ListServices.this, AddService.class);
         startActivity(intent);
-        this.finish();
+       finish();
     }
 
     @Override
@@ -148,6 +149,7 @@ public class ListServices extends Activity{
                 Intent intent = new Intent(ListServices.this, UpdateService.class);
                 intent.putExtra("serviceToModify", service);
                 startActivity(intent);
+                finish();
 
             }
             break;

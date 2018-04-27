@@ -97,7 +97,7 @@ public class AddPackage extends Activity {
         intent.putExtra("packageName", packageName);
         intent.putExtra("packagePrice", packagePrice);
         startActivity(intent);
-        finish();;
+        finish();
 
     }
 
@@ -168,11 +168,12 @@ public class AddPackage extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(AddPackage.this, ListPackages.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                 );
 
-        this.finish();;
+        this.finish();
     }
 
     public void addDataLinkService(){
@@ -274,7 +275,7 @@ public class AddPackage extends Activity {
 
         Intent intent = new Intent(AddPackage.this, ListPackages.class);
         startActivity(intent);
-        this.finish();;
+        this.finish();
     }
 
 

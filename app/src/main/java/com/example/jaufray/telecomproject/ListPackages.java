@@ -79,6 +79,7 @@ public class ListPackages extends Activity{
                 Intent intent1 = new Intent(ListPackages.this, DetailsPackage.class);
                 intent1.putExtra("DetailPackages", packages);
                 startActivity(intent1);
+                finish();
             }
         });
 

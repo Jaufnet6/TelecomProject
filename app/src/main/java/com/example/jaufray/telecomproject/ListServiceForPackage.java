@@ -90,7 +90,7 @@ public class ListServiceForPackage extends Activity{
                 intent1.putExtra("packagePrice", packagePrice);
                 intent1.putExtra("packageName", packageName);
                 startActivity(intent1);
-                finish();;
+                finish();
             }
         });
     }

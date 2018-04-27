@@ -84,7 +84,7 @@ public class EditListServiceForPackage extends Activity{
                 intent1.putExtra("serviceForPackage", (Serializable) listToPass);
                 intent1.putExtra("packageToModify", packages);
                 startActivity(intent1);
-                finish();;
+                finish();
             }
         });
     }

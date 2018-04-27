@@ -130,7 +130,7 @@ public class UpdateClient extends Activity {
         intent.putExtra("clientToModify", client);
         startActivity(intent);
 
-        this.finish();;
+        this.finish();
 
 
     }
@@ -225,7 +225,7 @@ public class UpdateClient extends Activity {
                                 Intent intent = new Intent(UpdateClient.this, ListClient.class);
                                 startActivity(intent);
 
-                                finish();;
+                                finish();
                             }
                         }
                 );
@@ -234,8 +234,9 @@ public class UpdateClient extends Activity {
 
     public void cancelClientModified (View view){
         Intent intent = new Intent(UpdateClient.this, ListClient.class);
+        finish();
         startActivity(intent);
-        this.finish();;
+        this.finish();
 
     }
 
@@ -290,13 +291,14 @@ public class UpdateClient extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(UpdateClient.this, ListClient.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
 
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();;
+        this.finish();
 
 
     }

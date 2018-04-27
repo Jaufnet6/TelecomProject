@@ -127,10 +127,11 @@ public class UpdateService extends Activity{
                             public void run() throws Exception {
                                 Intent intent = new Intent(UpdateService.this, ListServices.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                 );
-        this.finish();;
+        this.finish();
     }
 
 
@@ -138,7 +139,7 @@ public class UpdateService extends Activity{
 
         Intent intent = new Intent(UpdateService.this, ListServices.class);
         startActivity(intent);
-        this.finish();;
+        this.finish();
 
     }
 
@@ -173,6 +174,7 @@ public class UpdateService extends Activity{
                             public void run() throws Exception {
                                 Intent intent = new Intent(UpdateService.this, ListServices.class);
                                 startActivity(intent);
+                                finish();
 
                             }
                         }
@@ -180,7 +182,7 @@ public class UpdateService extends Activity{
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();;
+        this.finish();
 
     }
 

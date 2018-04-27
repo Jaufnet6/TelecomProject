@@ -42,11 +42,13 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
     public void changeToService(View view){
         Intent intent = new Intent(MainMenu.this, ListServices.class);
         startActivity(intent);
+
     }
 
     public void changeToPackage(View view){
         Intent intent = new Intent(MainMenu.this, ListPackages.class);
         startActivity(intent);
+
     }
 
 

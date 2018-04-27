@@ -90,7 +90,7 @@ public class AddClient extends Activity {
         intent.putExtra("clientLocality", clientLocality);
         startActivity(intent);
 
-        this.finish();;
+        finish();
     }
 
     public void getUserInput(){
@@ -178,7 +178,7 @@ public class AddClient extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(AddClient.this, ListClient.class);
                                 startActivity(intent);
-                                finish();;
+                                finish();
                             }
                         }
                 );
@@ -188,7 +188,7 @@ public class AddClient extends Activity {
 
         Intent intent = new Intent(AddClient.this, ListClient.class);
         startActivity(intent);
-        this.finish();;
+        this.finish();
     }
 
 

@@ -126,7 +126,7 @@ public class DetailsPackage extends Activity {
         intent.putExtra("packageToModify", packages);
         intent.putExtra("serviceForPackage", (Serializable) listOfServices);
         startActivity(intent);
-        this.finish();;
+        this.finish();
 
     }
 
@@ -188,6 +188,7 @@ public class DetailsPackage extends Activity {
                             public void run() throws Exception {
                                 Intent intent = new Intent(DetailsPackage.this, ListPackages.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
 

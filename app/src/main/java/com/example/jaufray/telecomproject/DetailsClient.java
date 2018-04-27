@@ -138,8 +138,9 @@ public class DetailsClient extends Activity {
         Intent intent = new Intent(DetailsClient.this, UpdateClient.class);
         intent.putExtra("clientToModify", client);
         intent.putExtra("packageToClient", clientpack);
+        finish();
         startActivity(intent);
-        this.finish();;
+        this.finish();
 
     }
 
@@ -200,7 +201,7 @@ public class DetailsClient extends Activity {
                 );
 
         compositeDisposable.add(disposable);
-        this.finish();;
+        this.finish();
 
 
     }
