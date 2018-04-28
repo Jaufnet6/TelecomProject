@@ -1,3 +1,7 @@
+/*
+Author : Daniela Lourenço and Jaufray Sornette
+Date : mars - avril 2018
+ */
 package com.example.jaufray.telecomproject;
 
 import android.support.annotation.NonNull;
@@ -15,6 +19,8 @@ import android.widget.Toast;
 public class MainMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout mDrawerLayout;
+    //Class to tie the functionnality of DraweLayout and the framework ActionBar
+    //to implement the recommended design for navigation drawers
     private ActionBarDrawerToggle mToggle;
 
     @Override

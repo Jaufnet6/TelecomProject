@@ -1,3 +1,7 @@
+/*
+Author : Daniela Lourenço and Jaufray Sornette
+Date : mars - avril 2018
+ */
 package com.example.jaufray.telecomproject;
 
 import android.annotation.SuppressLint;
@@ -17,8 +21,12 @@ import java.util.Locale;
 
 
 public class Languages extends AppCompatActivity implements View.OnClickListener {
+
+    //Creation of buttons to make the link with the buttons of the layout "Languages"
     private ImageButton francais;
     private ImageButton english;
+
+
     private Locale myLocale;
 
 
@@ -62,8 +70,10 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
     {
         if (lang.equalsIgnoreCase(""))
             return;
+        //If lang == fr, my locale is french and not the language by default.
         myLocale = new Locale(lang);
         saveLocale(lang);
+        //This method sets the default locale
         Locale.setDefault(myLocale);
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
@@ -76,6 +86,7 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
+        //If we choose, for example, "en" in lang, we call the method "ChangeLang"
         String lang ="en";
         switch (v.getId())
         {
@@ -90,6 +101,7 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
                 break;
         }
         changeLang(lang);
+        //We close the Languages layout an we redirect the user to the main menu
         Intent intent = new Intent(Languages.this, MainMenu.class);
         startActivity(intent);
         finish();
@@ -97,6 +109,7 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
     }
 
     @Override
+    //Methode to change the configuaration of our application. Updating the resources used in our interface
     public void onConfigurationChanged(android.content.res.Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (myLocale != null){

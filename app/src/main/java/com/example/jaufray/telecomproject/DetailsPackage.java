@@ -43,7 +43,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DetailsPackage extends AppCompatActivity {
 
-    
+
     private TextView packageName;
     private TextView packagePrice;
     private ListView service_List;
