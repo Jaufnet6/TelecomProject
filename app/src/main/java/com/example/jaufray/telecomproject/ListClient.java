@@ -131,7 +131,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
                 return true;
 
             case R.id.nav_client:
-                Toast.makeText(this, "You already are on the Client section", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.al_main_client), Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.nav_main_menu:

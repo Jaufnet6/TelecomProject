@@ -145,7 +145,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
                 return true;
 
             case R.id.nav_service:
-                Toast.makeText(this, "You are already in the Service section", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.al_main_service), Toast.LENGTH_LONG).show();
                 return true;
 
             default:

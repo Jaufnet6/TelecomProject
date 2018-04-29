@@ -72,7 +72,7 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
                 return true;
 
             case R.id.nav_about:
-                android.widget.Toast.makeText(this, "You already are on the About section", Toast.LENGTH_LONG).show();
+                android.widget.Toast.makeText(this, getString(R.string.al_main_about), Toast.LENGTH_LONG).show();
                 finish();
                 return true;
 

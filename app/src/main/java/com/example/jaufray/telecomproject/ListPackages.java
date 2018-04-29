@@ -143,7 +143,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
                 return true;
 
             case R.id.nav_package:
-                Toast.makeText(this,"You already are on the Package section", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,getString(R.string.al_main_package), Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.nav_service:

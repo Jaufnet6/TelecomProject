@@ -23,6 +23,13 @@
     <string name="totalPrice">"Prix total : "</string>
     <string name="discount">Rabais</string>
     <string name="al_main_menu">Vous êtes déjà sur le menu principal</string>
+    <string name="al_main_about">Vous êtes déjà dans la section À propos</string>
+    <string name="al_main_languages">Vous êtes déjà dans la section Langues</string>
+    <string name="al_main_client">Vous êtes déjà dans la section Clients</string>
+    <string name="al_main_service">Vous êtes déjà dans la section Services</string>
+    <string name="al_main_package">Vous êtes déjà dans la section Abonnements</string>
+
+
     <string name="enter_price">Rentrer un prix</string>
     <string name="main_menu">Menu principal</string>
 </resources>

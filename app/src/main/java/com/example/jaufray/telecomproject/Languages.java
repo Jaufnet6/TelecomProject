@@ -82,7 +82,7 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_language:
-                android.widget.Toast.makeText(this, "You already are in the Language section", android.widget.Toast.LENGTH_LONG).show();
+                android.widget.Toast.makeText(this, getString(R.string.al_main_languages), android.widget.Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.nav_about:
