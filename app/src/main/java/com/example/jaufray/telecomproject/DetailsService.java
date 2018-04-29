@@ -24,7 +24,13 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class DetailsService extends AppCompatActivity {
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.MenuItem;
+
+public class DetailsService extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private TextView serviceName;
     private TextView serviceDescription;
@@ -36,11 +42,27 @@ public class DetailsService extends AppCompatActivity {
     private CompositeDisposable compositeDisposable;
     private ServiceRepository serviceRepository;
 
+     private DrawerLayout mDrawerLayout;
+    //Class to tie the functionnality of DraweLayout and the framework ActionBar
+    //to implement the recommended design for navigation drawers
+    private ActionBarDrawerToggle mToggle;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_description);
 
         Intent intent = getIntent();
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_details_service);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_details_service);
+        navigationView.setNavigationItemSelectedListener(this);
+
         service = (Service) intent.getSerializableExtra("DetailsService");
 
         serviceName = (TextView) findViewById(R.id.id_service_name);
@@ -59,6 +81,62 @@ public class DetailsService extends AppCompatActivity {
         serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
 
 
+    }
+
+     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mToggle.onOptionsItemSelected(item)) {
+           return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_language:
+                Intent intent1 = new Intent(DetailsService.this, Languages.class);
+                startActivity(intent1);
+                finish();
+                return true;
+
+            case R.id.nav_about:
+                Intent intent2 = new Intent(DetailsService.this, About.class);
+                startActivity(intent2);
+                finish();
+                return true;
+
+            case R.id.nav_client:
+                Intent intent6 = new Intent(DetailsService.this, ListClient.class);
+                startActivity(intent6);
+                finish();
+                return true;
+
+            case R.id.nav_main_menu:
+                Intent intent3 = new Intent(DetailsService.this, MainMenu.class);
+                startActivity(intent3);
+                finish();
+                return true;
+
+            case R.id.nav_package:
+                Intent intent4 = new Intent(DetailsService.this, ListPackages.class);
+                startActivity(intent4);
+                finish();
+                return true;
+
+            case R.id.nav_service:
+                Intent intent5 = new Intent(DetailsService.this, ListServices.class);
+                startActivity(intent5);
+                finish();
+                return true;
+
+            default:
+                return false;
+
+        }
     }
 
     public void deleteServiceDetails(View view){

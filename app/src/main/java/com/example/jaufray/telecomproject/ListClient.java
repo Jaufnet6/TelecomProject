@@ -127,6 +127,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
             case R.id.nav_about:
                 Intent intent2 = new Intent(ListClient.this, About.class);
                 startActivity(intent2);
+                finish();
                 return true;
 
             case R.id.nav_client:
@@ -136,16 +137,19 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
             case R.id.nav_main_menu:
                 Intent intent3 = new Intent(ListClient.this, MainMenu.class);
                 startActivity(intent3);
+                finish();
                 return true;
 
             case R.id.nav_package:
                 Intent intent4 = new Intent(ListClient.this, ListPackages.class);
                 startActivity(intent4);
+                finish();
                 return true;
 
             case R.id.nav_service:
                 Intent intent5 = new Intent(ListClient.this, ListServices.class);
                 startActivity(intent5);
+                finish();
                 return true;
 
             default:

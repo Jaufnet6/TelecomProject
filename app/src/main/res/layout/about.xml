@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/drawer_about"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".About">
@@ -65,6 +66,19 @@
 
 
     </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view_about"
+        app:headerLayout="@layout/nav_header"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:background="#E2E2E2"
+        app:itemTextColor="#33808F"
+        app:menu="@menu/navigation_items"
+        android:layout_gravity="start"
+        android:foregroundGravity="center">
+
+    </android.support.design.widget.NavigationView>
 
 
 </android.support.v4.widget.DrawerLayout>

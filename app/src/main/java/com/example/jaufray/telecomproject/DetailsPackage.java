@@ -36,12 +36,13 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.MenuItem;
 
-/**
- * Created by danie on 24.04.2018.
- */
-
-public class DetailsPackage extends AppCompatActivity {
+public class DetailsPackage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private TextView packageName;
@@ -58,12 +59,27 @@ public class DetailsPackage extends AppCompatActivity {
     private PackageRepository packageRepository;
     private PackageServiceJoinRepository packageServiceJoinRepository;
 
+    private DrawerLayout mDrawerLayout;
+    //Class to tie the functionnality of DraweLayout and the framework ActionBar
+    //to implement the recommended design for navigation drawers
+    private ActionBarDrawerToggle mToggle;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_description);
 
         Intent intent = getIntent();
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_details_package);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_details_package);
+        navigationView.setNavigationItemSelectedListener(this);
+
         packages = (Package) intent.getSerializableExtra("DetailPackages");
 
         packageName = (TextView) findViewById(R.id.package_title);
@@ -92,6 +108,62 @@ public class DetailsPackage extends AppCompatActivity {
 
 
 
+    }
+
+      @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mToggle.onOptionsItemSelected(item)) {
+           return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_language:
+                Intent intent1 = new Intent(DetailsPackage.this, Languages.class);
+                startActivity(intent1);
+                finish();
+                return true;
+
+            case R.id.nav_about:
+                Intent intent2 = new Intent(DetailsPackage.this, About.class);
+                startActivity(intent2);
+                finish();
+                return true;
+
+            case R.id.nav_client:
+                Intent intent6 = new Intent(DetailsPackage.this, ListClient.class);
+                startActivity(intent6);
+                finish();
+                return true;
+
+            case R.id.nav_main_menu:
+                Intent intent3 = new Intent(DetailsPackage.this, MainMenu.class);
+                startActivity(intent3);
+                finish();
+                return true;
+
+            case R.id.nav_package:
+                Intent intent4 = new Intent(DetailsPackage.this, ListPackages.class);
+                startActivity(intent4);
+                finish();
+                return true;
+
+            case R.id.nav_service:
+                Intent intent5 = new Intent(DetailsPackage.this, ListServices.class);
+                startActivity(intent5);
+                finish();
+                return true;
+
+            default:
+                return false;
+
+        }
     }
 
     private void loadData() {

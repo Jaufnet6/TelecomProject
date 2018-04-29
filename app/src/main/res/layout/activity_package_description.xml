@@ -1,139 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_details_package"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="507dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="507dp">
 
-
-
-            <TextView
-                android:id="@+id/package_title"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Vivo XS"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:fontFamily="@font/trebuc"
-                android:textSize="23sp"
-                android:textColor="#000000"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/list_services"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="@string/listservice"
-                android:gravity="center"
-                android:textStyle="normal"
-                android:fontFamily="@font/trebuc"
-                android:textSize="20sp"
-                android:textColor="#000000"
-                android:paddingLeft="20dp"/>
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/package_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Vivo XS"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/trebuc"
+                    android:textSize="23sp"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:id="@+id/list_services"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/listservice"
+                    android:gravity="center"
+                    android:textStyle="normal"
+                    android:fontFamily="@font/trebuc"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:paddingLeft="20dp"/>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="250dp"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/list_of_services_in_package"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp">
+
+
+                        </ListView>
+
+
+                    </LinearLayout>
+                </ScrollView>
+
+
+                <View
+                    android:layout_width="350dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="17dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <RelativeLayout
+                    android:id="@+id/discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="250dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="20dp">
 
-                    <ListView
-                        android:id="@+id/list_of_services_in_package"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
+                    <TextView
+                        android:id="@+id/discount_box"
+                        android:layout_width="180dp"
+                        android:layout_height="70dp"
+                        android:fontFamily="@font/trebuc"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="@string/totalPrice"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/package_price"
+                        android:layout_width="132dp"
+                        android:layout_height="60dp"
+                        android:layout_toRightOf="@id/discount_box"
+                        android:buttonTint="#000000"
+                        android:fontFamily="@font/trebuc"
+                        android:gravity="center"
+                        android:paddingRight="10dp"
+                        android:text="2 CHF"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:textStyle="italic" />
 
-                    </ListView>
+                </RelativeLayout>
 
-
-                </LinearLayout>
-            </ScrollView>
-
-
-            <View
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:layout_marginLeft="17dp"
-                android:background="@android:color/darker_gray"/>
-
-            <RelativeLayout
-                android:id="@+id/discount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-                <TextView
-                    android:id="@+id/discount_box"
-                    android:layout_width="180dp"
+                <RelativeLayout
+                    android:id="@+id/delete_new_panel"
+                    android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:fontFamily="@font/trebuc"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="@string/totalPrice"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="30dp"
+                    android:paddingTop="20dp">
 
-                <TextView
-                    android:id="@+id/package_price"
-                    android:layout_width="132dp"
-                    android:layout_height="60dp"
-                    android:layout_toRightOf="@id/discount_box"
-                    android:buttonTint="#000000"
-                    android:fontFamily="@font/trebuc"
-                    android:gravity="center"
-                    android:paddingRight="10dp"
-                    android:text="2 CHF"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
+                    <Button
+                        android:id="@+id/delete_button"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/delete"
+                        android:layout_marginStart="100dp"
+                        android:onClick="deletePackage"/>
 
-            </RelativeLayout>
+                    <Button
+                        android:id="@+id/edit_button"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="100dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editPackage"/>
 
-            <RelativeLayout
-                android:id="@+id/delete_new_panel"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="30dp"
-                android:paddingTop="20dp">
+                </RelativeLayout>
 
-                <Button
-                    android:id="@+id/delete_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/delete"
-                    android:layout_marginStart="100dp"
-                    android:onClick="deletePackage"/>
+            </LinearLayout>
 
-                <Button
-                    android:id="@+id/edit_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="100dp"
-                    android:background="@drawable/edit"
-                    android:onClick="editPackage"/>
+        </ScrollView>
 
-            </RelativeLayout>
+    </LinearLayout>
 
-        </LinearLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view_details_package"
+        app:headerLayout="@layout/nav_header"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:background="#E2E2E2"
+        app:itemTextColor="#33808F"
+        app:menu="@menu/navigation_items"
+        android:layout_gravity="start"
+        android:foregroundGravity="center">
 
-    </ScrollView>
+    </android.support.design.widget.NavigationView>
 
 
 
-</LinearLayout>
+
+
+
+</android.support.v4.widget.DrawerLayout>

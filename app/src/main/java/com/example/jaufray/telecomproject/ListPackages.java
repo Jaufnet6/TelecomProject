@@ -127,16 +127,19 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
             case R.id.nav_about:
                 Intent intent2 = new Intent(ListPackages.this, About.class);
                 startActivity(intent2);
+                finish();
                 return true;
 
             case R.id.nav_client:
                 Intent intent3 = new Intent(ListPackages.this, ListClient.class);
                 startActivity(intent3);
+                finish();
                 return true;
 
             case R.id.nav_main_menu:
                 Intent intent4 = new Intent(ListPackages.this, MainMenu.class);
                 startActivity(intent4);
+                finish();
                 return true;
 
             case R.id.nav_package:
@@ -146,6 +149,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
             case R.id.nav_service:
                 Intent intent5 = new Intent(ListPackages.this, ListServices.class);
                 startActivity(intent5);
+                finish();
                 return true;
 
             default:

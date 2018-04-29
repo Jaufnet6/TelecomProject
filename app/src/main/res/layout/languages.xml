@@ -2,6 +2,8 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_languages"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Languages">
 
@@ -31,5 +33,18 @@
 
 
     </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view_languages"
+        app:headerLayout="@layout/nav_header"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:background="#E2E2E2"
+        app:itemTextColor="#33808F"
+        app:menu="@menu/navigation_items"
+        android:layout_gravity="start"
+        android:foregroundGravity="center">
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

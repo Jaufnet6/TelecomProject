@@ -123,21 +123,25 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
             case R.id.nav_about:
                 Intent intent2 = new Intent(ListServices.this, About.class);
                 startActivity(intent2);
+                finish();
                 return true;
 
             case R.id.nav_client:
                 Intent intent3 = new Intent(ListServices.this, ListClient.class);
                 startActivity(intent3);
+                finish();
                 return true;
 
             case R.id.nav_main_menu:
                 Intent intent5 = new Intent(ListServices.this, MainMenu.class);
                 startActivity(intent5);
+                finish();
                 return true;
 
             case R.id.nav_package:
                 Intent intent4 = new Intent(ListServices.this, ListPackages.class);
                 startActivity(intent4);
+                finish();
                 return true;
 
             case R.id.nav_service:
