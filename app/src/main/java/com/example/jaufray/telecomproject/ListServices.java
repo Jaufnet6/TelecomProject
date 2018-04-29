@@ -198,7 +198,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
         menu.setHeaderTitle("Select action :");
 
-        menu.add(Menu.NONE,0, Menu.NONE, "Update");
+        menu.add(Menu.NONE,0, Menu.NONE, "Edit");
         menu.add(Menu.NONE,1, Menu.NONE, "Delete");
 
 

@@ -29,6 +29,7 @@
     <string name="al_main_service">Vous êtes déjà dans la section Services</string>
     <string name="al_main_package">Vous êtes déjà dans la section Abonnements</string>
     <string name="al_service_delete">Service utilisé par certains abonnements. Veuillez les supprimer en premier.</string>
+    <string name="al_client_add">Aucun abonnement lié au client. Veuillez créer un package ou assigner un au client.</string>
 
 
     <string name="enter_price">Rentrer un prix</string>

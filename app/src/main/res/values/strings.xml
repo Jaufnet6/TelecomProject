@@ -54,6 +54,7 @@
     <string name="al_main_package">You already are in the Package section</string>
 
     <string name="al_service_delete">Service in use in some packages. Delete those first.</string>
+    <string name="al_client_add">No Packages assigned. Either add a package or create one first.</string>
 
 
 

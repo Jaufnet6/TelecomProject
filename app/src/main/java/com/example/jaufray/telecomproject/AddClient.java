@@ -190,7 +190,7 @@ public class AddClient extends AppCompatActivity {
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(AddClient.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddClient.this, getString(R.string.al_client_add), Toast.LENGTH_SHORT).show();
                             }
                         }
                         ,

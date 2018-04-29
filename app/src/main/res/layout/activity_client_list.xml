@@ -33,8 +33,6 @@
 
             </LinearLayout>
 
-
-
         </ScrollView>
         <Button
             android:id="@+id/add_client_button"
