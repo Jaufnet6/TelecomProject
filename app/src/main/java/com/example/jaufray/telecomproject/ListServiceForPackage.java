@@ -48,10 +48,11 @@ public class ListServiceForPackage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_choice_for_package);
         final Intent intent = getIntent();
+
+        //retrieving arraylist with previous services on this package
         listToPass = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
         packageName = (String) intent.getStringExtra("packageName");
         packagePrice = (Integer) intent.getIntExtra("packagePrice", 0);
-
 
 
         if(listToPass == null)
@@ -81,7 +82,7 @@ public class ListServiceForPackage extends AppCompatActivity {
         //Load all data from DB
         loadData();
 
-
+        //click on one service
         list_services.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -97,6 +98,7 @@ public class ListServiceForPackage extends AppCompatActivity {
         });
     }
 
+    //load service from DB
     private void loadData() {
 
         //Use RxJava
@@ -119,6 +121,7 @@ public class ListServiceForPackage extends AppCompatActivity {
         compositeDisposable.add(disposable);
     }
 
+    //notify arraylist and listview
     private void onGetAllServiceSuccess(List<Service> services) {
         serviceList.clear();
         serviceList.addAll(services);

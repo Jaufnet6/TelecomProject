@@ -52,7 +52,7 @@ public class AddService extends AppCompatActivity  {
 
     }
 
-
+    //save new service
     public void saveService(View view) {
 
         //Database
@@ -87,7 +87,7 @@ public class AddService extends AppCompatActivity  {
         }
 
 
-
+        //add into DB
         Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
@@ -125,7 +125,7 @@ public class AddService extends AppCompatActivity  {
                 );
         this.finish();
     }
-
+    //cancel new service
     public void cancelServiceAdd(View view) {
 
         Intent intent = new Intent(AddService.this, ListServices.class);

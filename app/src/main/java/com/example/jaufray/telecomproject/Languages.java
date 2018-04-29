@@ -68,6 +68,7 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
         loadLocale();
     }
 
+    //drawer top button
      @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -78,6 +79,7 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
 
     }
 
+    //Drawer
         @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -156,7 +158,7 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
     }
 
 
-
+    //Click on language buttons
     @Override
     public void onClick(View v) {
 
@@ -183,7 +185,7 @@ public class Languages extends AppCompatActivity implements View.OnClickListener
     }
 
     @Override
-    //Methode to change the configuaration of our application. Updating the resources used in our interface
+    //Methode to change the configuration of our application. Updating the resources used in our interface
     public void onConfigurationChanged(android.content.res.Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (myLocale != null){

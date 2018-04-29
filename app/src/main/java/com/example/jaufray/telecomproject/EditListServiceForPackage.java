@@ -25,7 +25,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
+//Class to chosose services for 1 package
 public class EditListServiceForPackage extends AppCompatActivity {
 
     private ListView list_services;
@@ -43,7 +43,6 @@ public class EditListServiceForPackage extends AppCompatActivity {
 
     private String namePackage;
     private Integer pricePackage;
-
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +80,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
         //Load all data from DB
         loadData();
 
-
+        //Click on one service
         list_services.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -98,6 +97,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
         });
     }
 
+    //Get list of services the user can choose for the package
     private void loadData() {
 
         //Use RxJava
@@ -119,7 +119,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
                 );
         compositeDisposable.add(disposable);
     }
-
+    //Put list service in arraylist
     private void onGetAllServiceSuccess(List<Service> services) {
         serviceList.clear();
         serviceList.addAll(services);

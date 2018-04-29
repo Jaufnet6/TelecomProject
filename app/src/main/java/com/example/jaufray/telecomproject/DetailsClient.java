@@ -181,7 +181,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         }
     }
 
-
+    //Load package for client
     private void loadPackage() {
 
         //Use RxJava
@@ -204,13 +204,13 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
                 );
         compositeDisposable.add(disposable);
     }
-
+    //put package in package and to view for the user
     public void onGetPackageSuccess(Package pack) {
         clientpack = pack;
         namePackage.setText(clientpack.getName());
         pricePackage.setText(clientpack.getPrice() + " CHF");
     }
-
+    //Go to edit client
     public void editClient (View view){
 
         Intent intent = new Intent(DetailsClient.this, UpdateClient.class);
@@ -221,7 +221,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         this.finish();
 
     }
-
+    //delete Client button
     public void deleteClient(View view){
 
         new AlertDialog.Builder(DetailsClient.this)
@@ -240,7 +240,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
 
     }
-
+    //Delete client in DB
     private void deleteClientDB(final Client client) {
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {

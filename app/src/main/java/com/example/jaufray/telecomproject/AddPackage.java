@@ -84,6 +84,7 @@ public class AddPackage extends AppCompatActivity {
 
     }
 
+    //Go and choose service for package
     public void openListServices(View view){
 
 
@@ -105,7 +106,7 @@ public class AddPackage extends AppCompatActivity {
 
     }
 
-
+    //Save button
     public void savePackage(View view) {
 
         //Database
@@ -179,7 +180,7 @@ public class AddPackage extends AppCompatActivity {
 
         this.finish();
     }
-
+    //Create rows into join table
     public void addDataLinkService(){
 
         int id = retrieveLastIDPackage();
@@ -222,7 +223,7 @@ public class AddPackage extends AppCompatActivity {
 
         }
     }
-
+    //Get previously added package
     private int retrieveLastIDPackage() {
 
         final ArrayList<Package> allPackages = new ArrayList<Package>();
@@ -274,7 +275,7 @@ public class AddPackage extends AppCompatActivity {
 
     }
 
-
+    //Cancel package creation
     public void cancelPackageAdd(View view) {
 
         Intent intent = new Intent(AddPackage.this, ListPackages.class);

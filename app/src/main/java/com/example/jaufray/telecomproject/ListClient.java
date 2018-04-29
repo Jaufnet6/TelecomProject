@@ -114,7 +114,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
-
+    //Drawer buttons
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -158,6 +158,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
+    //load all clients from db
     private void loadData() {
 
         //Use RxJava
@@ -179,7 +180,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
                 );
         compositeDisposable.add(disposable);
     }
-
+    //put client in arraylist
     private void onGetAllClientSuccess(List<Client> clients) {
         clientList.clear();
         clientList.addAll(clients);
@@ -187,7 +188,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
-
+    //create new client
     public void changeToCreateClient(View view) {
         Intent intent = new Intent(ListClient.this, AddClient.class);
         startActivity(intent);
@@ -195,19 +196,18 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
-
+    //long click on one client (delete quick)
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
         menu.setHeaderTitle("Select action :");
 
-        menu.add(Menu.NONE,0, Menu.NONE, "Update");
-        menu.add(Menu.NONE,1, Menu.NONE, "Delete");
+        menu.add(Menu.NONE,0, Menu.NONE, "Delete");
 
     }
 
-
+    //Delete quick button
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
@@ -215,17 +215,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
 
         switch (item.getItemId())
         {
-            case 0: //Update
-            {
-                /*
-                Intent intent = new Intent(ListPackages.this, UpdateService.class);
-                intent.putExtra("serviceToModify", packages);
-                startActivity(intent);
-                */
-
-            }
-            break;
-            case 1: //Delete
+            case 0: //Delete
             {
                 new AlertDialog.Builder(ListClient.this)
                         .setMessage("Do you want to delete ? " + clients.getName().toString())
@@ -245,7 +235,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
         }
         return true;
     }
-
+    //Delete client
     private void deleteClient(final Client clients) {
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 

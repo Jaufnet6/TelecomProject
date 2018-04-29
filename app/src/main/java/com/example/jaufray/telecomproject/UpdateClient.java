@@ -149,13 +149,10 @@ public class UpdateClient extends AppCompatActivity {
 
     public void saveClientModified(View view) {
 
-        clientName = nameClient.getText().toString();
-        clientPhone = phoneClient.getText().toString();
-        clientAddress = addressClient.getText().toString();
-        clientNPA = NPAClient.getText().toString();
-        clientCountry = countryClient.getText().toString();
-        clientLocality = localityClient.getText().toString();
+        //get values from user
+        getUserInput();
 
+        //No edit text can be null
         if (TextUtils.isEmpty(clientName)) {
             nameClient.setError("Cannot be empty");
             return;
@@ -185,7 +182,9 @@ public class UpdateClient extends AppCompatActivity {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
 
+                //Rechecking to make sure the values were taken
                 getUserInput();
+
                 try {
                     Thread.sleep(500);
                 } catch(Exception ex){}
@@ -197,6 +196,7 @@ public class UpdateClient extends AppCompatActivity {
                 client.setCountry(clientCountry);
                 client.setIdPackage(packageClient.getId());
 
+                //Update client
                 clientRepository.updateClient(client);
 
                 e.onComplete();
@@ -260,6 +260,7 @@ public class UpdateClient extends AppCompatActivity {
 
     }
 
+    //Delete the client in the DB
     private void deleteClientDB(final Client client) {
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {

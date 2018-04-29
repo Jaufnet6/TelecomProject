@@ -25,6 +25,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+//class to choose 1 package for a client
 public class EditListPackageForClient extends AppCompatActivity {
 
     private ListView list_package;
@@ -82,6 +83,8 @@ public class EditListPackageForClient extends AppCompatActivity {
         //Load all data from DB
         loadData();
 
+
+        //Click on 1 package
         list_package.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -103,7 +106,7 @@ public class EditListPackageForClient extends AppCompatActivity {
 
 
 
-
+    //load packages the user can choose for client
     private void loadData() {
 
         //Use RxJava
@@ -125,7 +128,7 @@ public class EditListPackageForClient extends AppCompatActivity {
                 );
         compositeDisposable.add(disposable);
     }
-
+    //put packages in arraylist
     private void onGetAllPackageSuccess(List<Package> packages) {
         packageList.clear();
         packageList.addAll(packages);

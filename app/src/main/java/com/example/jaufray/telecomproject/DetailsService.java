@@ -83,6 +83,7 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
 
     }
 
+    //Drawer top button
      @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -93,7 +94,7 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
 
     }
 
-
+    //Drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -139,6 +140,7 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
         }
     }
 
+    //Delete service button
     public void deleteServiceDetails(View view){
 
         new AlertDialog.Builder(DetailsService.this)
@@ -156,7 +158,7 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
         }).create().show();
 
     }
-
+    //go to edit view
     public void editServiceDetails(View view){
 
         Intent intent = new Intent(DetailsService.this, UpdateService.class);
@@ -165,7 +167,7 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
         finish();
 
     }
-
+    //delete service
     private void deleteService(final Service service) {
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
@@ -189,7 +191,8 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(DetailsService.this, "Service in use in some packages. Delete those first.", Toast.LENGTH_SHORT).show();
+                                //banner if service already in use
+                                Toast.makeText(DetailsService.this, getString(R.string.al_service_delete), Toast.LENGTH_SHORT).show();
                             }
                         },
 

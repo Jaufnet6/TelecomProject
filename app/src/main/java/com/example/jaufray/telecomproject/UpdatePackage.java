@@ -73,11 +73,13 @@ public class UpdatePackage extends AppCompatActivity {
         edtPrice = (EditText) findViewById(R.id.package_price_id);
         service_list = (ListView) findViewById(R.id.service_list_in_package);
 
+        //retrieve needed data
         packages = (Package) intent.getSerializableExtra("packageToModify");
         listService = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
         namePackage = (String) intent.getStringExtra("packageName");
         pricePackage = (Integer) intent.getIntExtra("packagePrice", 0);
 
+        //check for non null values
         if(namePackage != null)
             edtName.setText(namePackage);
         else
@@ -215,6 +217,7 @@ public class UpdatePackage extends AppCompatActivity {
         this.finish();
     }
 
+    //Create a row in the table between package and service for the many to many relation
     public void addDataLinkService(){
 
         int id = packages.getId();
@@ -297,6 +300,7 @@ public class UpdatePackage extends AppCompatActivity {
         }).create().show();
     }
 
+    //delete package
     private void deletePackage(){
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
@@ -304,7 +308,9 @@ public class UpdatePackage extends AppCompatActivity {
 
             @Override
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
+                //Call method to delete all the rows in the table linking the package to the service where there is the idPackage
                 deleteLinkPackageToService();
+                //Give some time to delete to the DB
                 try{
                     Thread.sleep(50);
                 }catch (Exception ex){
@@ -346,6 +352,7 @@ public class UpdatePackage extends AppCompatActivity {
 
     }
 
+    //Method to delete all rows in the middle table between package and service where the idPackage is present
     private void deleteLinkPackageToService() {
 
         for(Service s : listService){

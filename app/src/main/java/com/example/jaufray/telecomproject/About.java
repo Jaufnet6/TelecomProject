@@ -51,6 +51,8 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
 
     }
 
+
+    //Drawer top button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -61,7 +63,7 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
 
     }
 
-
+    //Drawer button
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

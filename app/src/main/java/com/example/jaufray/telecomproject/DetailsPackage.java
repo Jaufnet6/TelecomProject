@@ -110,7 +110,8 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
     }
 
-      @Override
+    //Drawer top button
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (mToggle.onOptionsItemSelected(item)) {
@@ -120,7 +121,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
     }
 
-
+    //drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -165,7 +166,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
         }
     }
-
+    //Get all services for the package
     private void loadData() {
         //Use RxJava
         Disposable disposable = packageServiceJoinRepository.getServicesForPackage(packages.getId())
@@ -186,14 +187,14 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                 );
         compositeDisposable.add(disposable);
     }
-
+    //Put services in arraylist
     private void onGetAllServiceSuccess(List<Service> services) {
         listOfServices.clear();
         listOfServices.addAll(services);
         adapter.notifyDataSetChanged();
 
     }
-
+    //Go to edit view
     public void editPackage(View view){
 
         Intent intent = new Intent(DetailsPackage.this, UpdatePackage.class);
@@ -203,7 +204,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
         this.finish();
 
     }
-
+    //Delete package button
     public void deletePackage(View view){
 
         new AlertDialog.Builder(DetailsPackage.this)
@@ -222,7 +223,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
 
     }
-
+    //Delete from DB
     private void deletePackage(){
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
@@ -271,7 +272,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
         compositeDisposable.add(disposable);
 
     }
-
+    //Delete all rows in join table where idPackage exists
     private void deleteLinkPackageToService() {
 
         for(Service s : listOfServices){

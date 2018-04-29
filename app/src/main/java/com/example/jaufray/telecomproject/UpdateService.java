@@ -72,7 +72,7 @@ public class UpdateService extends AppCompatActivity {
     }
 
 
-
+    //Update the service in the DB
     public void saveServiceUpdate(View view) {
 
 
@@ -135,7 +135,7 @@ public class UpdateService extends AppCompatActivity {
         this.finish();
     }
 
-
+    //cancel the update
     public void cancelServiceUpdate(View view) {
 
         Intent intent = new Intent(UpdateService.this, ListServices.class);
@@ -144,6 +144,7 @@ public class UpdateService extends AppCompatActivity {
 
     }
 
+    //Method calling the service repository to delete the service
     public void deleteService(View view){
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
@@ -166,6 +167,7 @@ public class UpdateService extends AppCompatActivity {
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                //if error in delete chain, it means that the service is in use some package (idService used)
                                 Toast.makeText(UpdateService.this, "Service in use in some packages. Delete those first.", Toast.LENGTH_SHORT).show();
                             }
                         },

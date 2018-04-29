@@ -28,6 +28,7 @@
     <string name="al_main_client">Vous êtes déjà dans la section Clients</string>
     <string name="al_main_service">Vous êtes déjà dans la section Services</string>
     <string name="al_main_package">Vous êtes déjà dans la section Abonnements</string>
+    <string name="al_service_delete">Service utilisé par certains abonnements. Veuillez les supprimer en premier.</string>
 
 
     <string name="enter_price">Rentrer un prix</string>

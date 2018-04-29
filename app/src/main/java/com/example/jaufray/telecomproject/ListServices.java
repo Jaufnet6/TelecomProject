@@ -154,7 +154,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
+    //Retrieve all services from db
     private void loadData() {
 
         //Use RxJava
@@ -176,7 +176,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
                 );
         compositeDisposable.add(disposable);
     }
-
+    //put retrieve services in list connected to adapter and listview
     private void onGetAllServiceSuccess(List<Service> services) {
         serviceList.clear();
         serviceList.addAll(services);
@@ -184,13 +184,14 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
 
     }
 
-
+    //Add a service button
     public void changeToCreateService(View view){
         Intent intent = new Intent(ListServices.this, AddService.class);
         startActivity(intent);
        finish();
     }
 
+    //Update and delete long click
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -205,7 +206,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
 
     }
 
-
+    //pressing on delete or update
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
@@ -243,6 +244,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    //Delete service in DB
     private void deleteService(final Service service) {
 
         Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
@@ -266,7 +268,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListServices.this, "Service in use in some packages. Delete those first.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ListServices.this, getString(R.string.al_service_delete), Toast.LENGTH_LONG).show();
                             }
                         },
 

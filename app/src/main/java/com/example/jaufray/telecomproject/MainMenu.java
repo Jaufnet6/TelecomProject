@@ -27,6 +27,8 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        //Drawer menu init
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_main);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -59,6 +61,7 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
 
 
+    //Drawer back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -69,7 +72,7 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
     }
 
-
+    //drawer menu buttons
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -108,8 +111,5 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
         }
     }
-
-
-
 
 }

@@ -107,6 +107,7 @@ public class AddClient extends AppCompatActivity {
 
     }
 
+    //go to list of packages to choose 1
     public void openListPackages(View v) {
         getUserInput();
         Intent intent = new Intent(AddClient.this, ListPackageForClient.class);
@@ -121,6 +122,7 @@ public class AddClient extends AppCompatActivity {
         finish();
     }
 
+
     public void getUserInput(){
 
         clientName = nameClient.getText().toString();
@@ -133,7 +135,7 @@ public class AddClient extends AppCompatActivity {
     }
 
 
-
+    //Save client button
     public void saveClient(View view) {
 
         //Database
@@ -204,7 +206,7 @@ public class AddClient extends AppCompatActivity {
                         }
                 );
     }
-
+    //Cancel client creation
     public void cancelClientAdd(View view) {
 
         Intent intent = new Intent(AddClient.this, ListClient.class);

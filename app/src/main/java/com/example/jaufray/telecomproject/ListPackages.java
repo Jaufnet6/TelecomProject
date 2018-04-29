@@ -90,6 +90,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
         //Load all data from DB
         loadData();
 
+        //Click on one package
         list_packages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -103,7 +104,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
         });
 
     }
-
+    //button top drawer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -114,7 +115,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
 
     }
 
-
+    //Drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -157,7 +158,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
 
         }
     }
-
+    //Load all packages available in DB
     private void loadData() {
 
         //Use RxJava
@@ -180,14 +181,14 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
         compositeDisposable.add(disposable);
     }
 
-
+    //put them in arraylist
     private void onGetAllPackageSuccess(List<Package> packages) {
         packageList.clear();
         packageList.addAll(packages);
         adapter.notifyDataSetChanged();
 
     }
-
+    //create new package
     public void changeToCreatePackage(View view){
         Intent intent = new Intent(ListPackages.this, AddPackage.class);
         startActivity(intent);

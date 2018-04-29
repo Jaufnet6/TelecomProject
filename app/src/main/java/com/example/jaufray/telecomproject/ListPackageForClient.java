@@ -25,6 +25,8 @@ import io.reactivex.schedulers.Schedulers;
  * Created by danie on 24.04.2018.
  */
 
+
+//Class to fetch a package for lient when creating client
 public class ListPackageForClient extends AppCompatActivity {
 
     private ListView list_package;
@@ -66,10 +68,7 @@ public class ListPackageForClient extends AppCompatActivity {
         clientLocality = (String) intent.getStringExtra("clientLocality");
         clientCountry = (String) intent.getStringExtra("clientCountry");
 
-
-
-
-
+        //Adapter for packageList arraylist
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, packageList);
         registerForContextMenu(list_package);
         list_package.setAdapter(adapter);
@@ -81,6 +80,7 @@ public class ListPackageForClient extends AppCompatActivity {
         //Load all data from DB
         loadData();
 
+        //Click on one package
         list_package.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -101,7 +101,7 @@ public class ListPackageForClient extends AppCompatActivity {
 
 
 
-
+    //Load pacakges from DB
     private void loadData() {
 
         //Use RxJava
@@ -123,7 +123,7 @@ public class ListPackageForClient extends AppCompatActivity {
                 );
         compositeDisposable.add(disposable);
     }
-
+    //Put packages in arraylist
     private void onGetAllPackageSuccess(List<Package> packages) {
         packageList.clear();
         packageList.addAll(packages);
