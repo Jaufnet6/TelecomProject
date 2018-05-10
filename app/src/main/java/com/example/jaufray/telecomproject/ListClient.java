@@ -19,9 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ClientRepository;
-import com.example.jaufray.telecomproject.Local.ClientDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Service;
 
@@ -44,7 +41,6 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
 
     //Database
     private CompositeDisposable compositeDisposable;
-    private ClientRepository clientRepository;
 
     //Adapter
     List<Client> clientList = new ArrayList<>();
@@ -82,8 +78,6 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
         list_client.setAdapter(adapter);
 
         //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
 
         //Load all data from DB
         loadData();
@@ -162,7 +156,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
     private void loadData() {
 
         //Use RxJava
-        Disposable disposable = clientRepository.getAllClients()
+     /*   Disposable disposable = clientRepository.getAllClients()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<List<Client>>() {
@@ -178,7 +172,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
                             }
                         }
                 );
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
     }
     //put client in arraylist
     private void onGetAllClientSuccess(List<Client> clients) {
@@ -237,15 +231,15 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
     }
     //Delete client
     private void deleteClient(final Client clients) {
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
+      //  Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
 
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
+           /*  @Override
+           public void subscribe(ObservableEmitter<Object> e) throws Exception {
                 clientRepository.deleteClient(clients);
                 e.onComplete();
-            }
-        })
+            }*/
+      /*  })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer() {
@@ -271,7 +265,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
 
                 );
 
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
 
     }
 

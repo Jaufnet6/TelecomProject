@@ -10,9 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ServiceRepository;
-import com.example.jaufray.telecomproject.Local.ServiceDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.Service;
 
@@ -32,7 +29,6 @@ public class EditListServiceForPackage extends AppCompatActivity {
 
     //Database
     private CompositeDisposable compositeDisposable;
-    private ServiceRepository serviceRepository;
 
     //Adapter
     private List<Service> serviceList = new ArrayList<Service>();
@@ -74,8 +70,6 @@ public class EditListServiceForPackage extends AppCompatActivity {
         list_services.setAdapter(adapter);
 
         //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
 
         //Load all data from DB
         loadData();
@@ -101,7 +95,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
     private void loadData() {
 
         //Use RxJava
-        Disposable disposable = serviceRepository.getAllServices()
+    /*    Disposable disposable = serviceRepository.getAllServices()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<List<Service>>() {
@@ -117,7 +111,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
                             }
                         }
                 );
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
     }
     //Put list service in arraylist
     private void onGetAllServiceSuccess(List<Service> services) {

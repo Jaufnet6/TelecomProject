@@ -7,10 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.*;
 
-import com.example.jaufray.telecomproject.Database.PackageRepository;
-import com.example.jaufray.telecomproject.Local.PackageDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
-
 import com.example.jaufray.telecomproject.Model.Package;
 
 import java.io.Serializable;
@@ -32,7 +28,6 @@ public class ListPackageForClient extends AppCompatActivity {
     private ListView list_package;
     //Database
     private CompositeDisposable compositeDisposable;
-    private PackageRepository packageRepository;
 
     //Adapter
     private List<Package> packageList = new ArrayList<Package>();
@@ -74,8 +69,6 @@ public class ListPackageForClient extends AppCompatActivity {
         list_package.setAdapter(adapter);
 
         //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
 
         //Load all data from DB
         loadData();
@@ -105,7 +98,7 @@ public class ListPackageForClient extends AppCompatActivity {
     private void loadData() {
 
         //Use RxJava
-        Disposable disposable = packageRepository.getAllPackages()
+     /*   Disposable disposable = packageRepository.getAllPackages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<List<Package>>() {
@@ -121,7 +114,7 @@ public class ListPackageForClient extends AppCompatActivity {
                             }
                         }
                 );
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
     }
     //Put packages in arraylist
     private void onGetAllPackageSuccess(List<Package> packages) {

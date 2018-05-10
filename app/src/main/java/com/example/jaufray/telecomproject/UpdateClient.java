@@ -13,11 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ClientRepository;
-import com.example.jaufray.telecomproject.Database.PackageRepository;
-import com.example.jaufray.telecomproject.Local.ClientDataSource;
-import com.example.jaufray.telecomproject.Local.PackageDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
 
@@ -43,7 +38,6 @@ public class UpdateClient extends AppCompatActivity {
     private TextView namePackage;
     private TextView pricePackage;
 
-    private ClientRepository clientRepository;
     private CompositeDisposable compositeDisposable;
 
     private Package packageClient;
@@ -108,8 +102,6 @@ public class UpdateClient extends AppCompatActivity {
 
         //Database
         //Instantiate connection to database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this);
-        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
 
         // Init
         compositeDisposable = new CompositeDisposable();
@@ -197,7 +189,7 @@ public class UpdateClient extends AppCompatActivity {
                 client.setIdPackage(packageClient.getId());
 
                 //Update client
-                clientRepository.updateClient(client);
+                updateClient(client);
 
                 e.onComplete();
             }
@@ -232,6 +224,9 @@ public class UpdateClient extends AppCompatActivity {
                 );
     }
 
+    private void updateClient(Client client) {
+    }
+
 
     public void cancelClientModified (View view){
         Intent intent = new Intent(UpdateClient.this, ListClient.class);
@@ -263,7 +258,7 @@ public class UpdateClient extends AppCompatActivity {
     //Delete the client in the DB
     private void deleteClientDB(final Client client) {
 
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
+        /*Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
 
             @Override
@@ -299,7 +294,7 @@ public class UpdateClient extends AppCompatActivity {
 
                 );
 
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
         this.finish();
 
 

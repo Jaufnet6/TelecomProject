@@ -11,10 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ServiceRepository;
-import com.example.jaufray.telecomproject.Local.ServiceDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import io.reactivex.Observable;
@@ -40,8 +39,10 @@ public class UpdateService extends AppCompatActivity {
 
     private Service service;
 
-    private CompositeDisposable compositeDisposable;
-    private ServiceRepository serviceRepository;
+
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
 
@@ -61,12 +62,7 @@ public class UpdateService extends AppCompatActivity {
         edtDescription.setText(service.getDescription(), TextView.BufferType.EDITABLE);
         edtPrice.setText(String.valueOf(service.getPrice()), TextView.BufferType.EDITABLE);
 
-        //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
 
-        // Init
-        compositeDisposable = new CompositeDisposable();
 
 
     }
@@ -94,46 +90,22 @@ public class UpdateService extends AppCompatActivity {
         }
 
 
+        updateService(service);
 
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                service.setName(nameEdt);
-                service.setDescription(descriptionEdt);
-                service.setPrice(priceEdt);
 
-                serviceRepository.updateService(service);
-                e.onComplete();
-            }
-
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-                                   Toast.makeText(UpdateService.this, "Service updated!", Toast.LENGTH_SHORT).show();
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(UpdateService.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        ,
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(UpdateService.this, ListServices.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                );
         this.finish();
     }
+
+     private void updateService(Service service)
+     {
+
+         mDatabaseReference.child("services").child(String.valueOf(service.getId())).child("name").setValue(service.getName());
+         mDatabaseReference.child("services").child(String.valueOf(service.getId())).child("description").setValue(service.getDescription());
+         mDatabaseReference.child("services").child(String.valueOf(service.getId())).child("price").setValue(service.getPrice());
+
+     }
+
 
     //cancel the update
     public void cancelServiceUpdate(View view) {
@@ -147,44 +119,7 @@ public class UpdateService extends AppCompatActivity {
     //Method calling the service repository to delete the service
     public void deleteService(View view){
 
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
-
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                serviceRepository.deleteService(service);
-                e.onComplete();
-            }
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                //if error in delete chain, it means that the service is in use some package (idService used)
-                                Toast.makeText(UpdateService.this, "Service in use in some packages. Delete those first.", Toast.LENGTH_SHORT).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(UpdateService.this, ListServices.class);
-                                startActivity(intent);
-                                finish();
-
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);
+        mDatabaseReference.child("service").child(String.valueOf(service.getId())).removeValue();
         this.finish();
 
     }

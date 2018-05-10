@@ -10,13 +10,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ServiceRepository;
-import com.example.jaufray.telecomproject.Local.ServiceDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.List;
+import java.util.UUID;
 
 import io.reactivex.functions.Consumer;
 
@@ -30,6 +31,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AddService extends AppCompatActivity  {
 
+
+
     private EditText nameService;
     private EditText descriptionService;
     private EditText priceService;
@@ -38,9 +41,12 @@ public class AddService extends AppCompatActivity  {
     private String serviceDescription;
     private Integer servicePrice;
 
-    private Service service;
+  //  private Service service;
+  //  private ServiceRepository serviceRepository;
 
-    private ServiceRepository serviceRepository;
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +60,6 @@ public class AddService extends AppCompatActivity  {
 
     //save new service
     public void saveService(View view) {
-
-        //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
-
 
         nameService = (EditText) findViewById(R.id.et_name_service);
         descriptionService = (EditText) findViewById(R.id.et_description_service);
@@ -87,15 +88,25 @@ public class AddService extends AppCompatActivity  {
         }
 
 
+        Service service = new Service(serviceName,serviceDescription,servicePrice);
+        //add le service
+        //id du service
+        String serviceId = (String.valueOf(service.getId()));
+        mDatabaseReference.child("services").child(serviceId).setValue(service);
+
+
+
+
+
         //add into DB
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+       /*Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
                 service = new Service(serviceName, serviceDescription, servicePrice);
 
-                serviceRepository.insertService(service);
-                e.onComplete();
-            }
+             /*   serviceRepository.insertService(service);
+                e.onComplete();*/
+           /* }
 
         })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -122,7 +133,7 @@ public class AddService extends AppCompatActivity  {
                                 finish();
                             }
                         }
-                );
+                );*/
         this.finish();
     }
     //cancel new service

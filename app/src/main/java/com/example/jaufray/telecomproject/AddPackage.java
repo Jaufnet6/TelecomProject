@@ -11,12 +11,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.IPackageServiceJoinDataSource;
-import com.example.jaufray.telecomproject.Database.PackageRepository;
-import com.example.jaufray.telecomproject.Database.PackageServiceJoinRepository;
-import com.example.jaufray.telecomproject.Local.PackageDataSource;
-import com.example.jaufray.telecomproject.Local.PackageServiceJoinDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
@@ -49,10 +43,6 @@ public class AddPackage extends AppCompatActivity {
 
     private ListView listServices;
     ArrayAdapter adapter;
-
-    private PackageRepository packageRepository;
-    private PackageServiceJoinRepository packageServiceJoinRepository;
-
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +100,6 @@ public class AddPackage extends AppCompatActivity {
     public void savePackage(View view) {
 
         //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
-        packageServiceJoinRepository = PackageServiceJoinRepository.getInstance((IPackageServiceJoinDataSource) PackageServiceJoinDataSource.getInstance(telecomDatabase.packageServiceJoinDAO()));
-
 
         packageName = namePackage.getText().toString();
 
@@ -142,7 +128,7 @@ public class AddPackage extends AppCompatActivity {
 
 
 
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+       /* Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
                 Package pack = new Package(packageName, packagePrice);
@@ -166,7 +152,7 @@ public class AddPackage extends AppCompatActivity {
                                 Toast.makeText(AddPackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
-                        ,
+                        ,/*
 
                         new Action() {
                             @Override
@@ -176,21 +162,21 @@ public class AddPackage extends AppCompatActivity {
                                 finish();
                             }
                         }
-                );
+                );*/
 
         this.finish();
     }
     //Create rows into join table
     public void addDataLinkService(){
 
-        int id = retrieveLastIDPackage();
+      //  int id = retrieveLastIDPackage();
 
 
         for(Service s : servicesList){
-            final PackageServiceJoin packServ = new PackageServiceJoin(id, s.getId());
+           // final PackageServiceJoin packServ = new PackageServiceJoin(id, s.getId());
 
 
-            Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+          /*  Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
                 public void subscribe(ObservableEmitter<Object> e) throws Exception {
                     packageServiceJoinRepository.insert(packServ);
@@ -221,17 +207,17 @@ public class AddPackage extends AppCompatActivity {
                             }
                     );
 
-        }
+        }*/
     }
     //Get previously added package
-    private int retrieveLastIDPackage() {
+  /*  private int retrieveLastIDPackage() {
 
         final ArrayList<Package> allPackages = new ArrayList<Package>();
 
         CompositeDisposable compositeDisposable = new CompositeDisposable();
 
         //Use RxJava
-        Disposable disposable = packageRepository.getAllPackages()
+    /*    Disposable disposable = packageRepository.getAllPackages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<List<Package>>() {
@@ -248,9 +234,9 @@ public class AddPackage extends AppCompatActivity {
                             }
                         }
                 );
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
 
-        try {
+     /*   try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -270,7 +256,7 @@ public class AddPackage extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return id;
+        return id;*/
 
 
     }

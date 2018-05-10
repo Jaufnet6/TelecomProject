@@ -14,11 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.PackageRepository;
-import com.example.jaufray.telecomproject.Database.PackageServiceJoinRepository;
-import com.example.jaufray.telecomproject.Local.PackageDataSource;
-import com.example.jaufray.telecomproject.Local.PackageServiceJoinDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
@@ -56,9 +51,6 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
     private Package packages;
 
     private CompositeDisposable compositeDisposable;
-    private PackageRepository packageRepository;
-    private PackageServiceJoinRepository packageServiceJoinRepository;
-
     private DrawerLayout mDrawerLayout;
     //Class to tie the functionnality of DraweLayout and the framework ActionBar
     //to implement the recommended design for navigation drawers
@@ -98,10 +90,6 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
         compositeDisposable = new CompositeDisposable();
 
         //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
-        packageServiceJoinRepository = PackageServiceJoinRepository.getInstance(PackageServiceJoinDataSource.getInstance(telecomDatabase.packageServiceJoinDAO()));
-
 
 
         loadData();
@@ -169,7 +157,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
     //Get all services for the package
     private void loadData() {
         //Use RxJava
-        Disposable disposable = packageServiceJoinRepository.getServicesForPackage(packages.getId())
+      /*  Disposable disposable = packageServiceJoinRepository.getServicesForPackage(packages.getId())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<List<Service>>() {
@@ -185,7 +173,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                             }
                         }
                 );
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
     }
     //Put services in arraylist
     private void onGetAllServiceSuccess(List<Service> services) {
@@ -226,50 +214,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
     //Delete from DB
     private void deletePackage(){
 
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
-
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                deleteLinkPackageToService();
-                try{
-                    Thread.sleep(50);
-                }catch (Exception ex){
-
-                }
-                packageRepository.deletePackage(packages);
-                e.onComplete();
-
-            }
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(DetailsPackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(DetailsPackage.this, ListPackages.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);
 
     }
     //Delete all rows in join table where idPackage exists
@@ -284,7 +229,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
                 @Override
                 public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                    packageServiceJoinRepository.deletePackageServiceJoin(packServ);
+                  //  packageServiceJoinRepository.deletePackageServiceJoin(packServ);
                     e.onComplete();
                 }
             })

@@ -10,10 +10,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ServiceRepository;
-import com.example.jaufray.telecomproject.Local.ServiceDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -38,9 +37,10 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
 
     private Service service;
 
-    //Database
-    private CompositeDisposable compositeDisposable;
-    private ServiceRepository serviceRepository;
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+
 
      private DrawerLayout mDrawerLayout;
     //Class to tie the functionnality of DraweLayout and the framework ActionBar
@@ -72,13 +72,6 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
         serviceName.setText(service.getName());
         serviceDescription.setText(service.getDescription());
         servicePrice.setText(String.valueOf(service.getPrice()));
-
-        // Init
-        compositeDisposable = new CompositeDisposable();
-
-        //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
 
 
     }
@@ -170,46 +163,10 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
     //delete service
     private void deleteService(final Service service) {
 
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
-
-
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                serviceRepository.deleteService(service);
-                e.onComplete();
-            }
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                //banner if service already in use
-                                Toast.makeText(DetailsService.this, getString(R.string.al_service_delete), Toast.LENGTH_SHORT).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(DetailsService.this, ListServices.class);
-                                startActivity(intent);
-                                finish();
-
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);
-        //this.finish();
+      mDatabaseReference.child("service").child(String.valueOf(service.getId())).removeValue();
+      Intent intent = new Intent(DetailsService.this, ListServices.class);
+      startActivity(intent);
+      finish();
 
     }
 

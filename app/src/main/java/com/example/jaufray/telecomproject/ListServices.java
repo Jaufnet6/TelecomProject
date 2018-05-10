@@ -10,7 +10,9 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +21,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ServiceRepository;
-import com.example.jaufray.telecomproject.Local.ServiceDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,18 +44,22 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ListServices extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+
     private ListView list_services;
 
-    //Database
-    private CompositeDisposable compositeDisposable;
-    private ServiceRepository serviceRepository;
 
+    Activity activity;
+    LayoutInflater inflater;
     //Adapter
     List<Service> serviceList = new ArrayList<>();
     ArrayAdapter adapter;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
 
@@ -69,9 +78,6 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_services);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Init
-        compositeDisposable = new CompositeDisposable();
-
         // Init View
         list_services = (ListView) findViewById(R.id.full_service_list);
 
@@ -79,12 +85,10 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         registerForContextMenu(list_services);
         list_services.setAdapter(adapter);
 
-        //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        serviceRepository = ServiceRepository.getInstance(ServiceDataSource.getInstance(telecomDatabase.serviceDAO()));
 
-        //Load all data from DB
-        loadData();
+        //Firebase
+        initFirebase();
+        addFirebaseListener();
 
         list_services.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,6 +101,41 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
                 finish();
             }
         });
+    }
+
+    private void addFirebaseListener() {
+        mDatabaseReference.child("services").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Retrieve data from firebase
+            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(serviceList.size() > 0)
+                {
+                    serviceList.clear();
+                    for(DataSnapshot postSnapshot:dataSnapshot.getChildren())
+                    {
+                        Service service = postSnapshot.getValue(Service.class);
+                        serviceList.add(service);
+                    }
+
+                    //ListView du tuto ???
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    //Initialisation de la Firebase
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
+
     }
 
     //Drawer Menu
@@ -154,33 +193,14 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //Retrieve all services from db
-    private void loadData() {
 
-        //Use RxJava
-        Disposable disposable = serviceRepository.getAllServices()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<Service>>() {
-                               @Override
-                               public void accept(List<Service> services) throws Exception{
-                                   onGetAllServiceSuccess(services);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListServices.this, "" + throwable.getMessage() , Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);
-    }
     //put retrieve services in list connected to adapter and listview
     private void onGetAllServiceSuccess(List<Service> services) {
         serviceList.clear();
         serviceList.addAll(services);
         adapter.notifyDataSetChanged();
+
+      
 
     }
 
@@ -188,7 +208,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
     public void changeToCreateService(View view){
         Intent intent = new Intent(ListServices.this, AddService.class);
         startActivity(intent);
-       finish();
+        finish();
     }
 
     //Update and delete long click
@@ -230,7 +250,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                deleteService(service);
+                                 deleteService(service);
                             }
                         }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
@@ -244,45 +264,15 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    //Delete service in DB
+
+    //delete service
     private void deleteService(final Service service) {
 
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
+        mDatabaseReference.child("service").child(String.valueOf(service.getId())).removeValue();
 
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                serviceRepository.deleteService(service);
-                e.onComplete();
-            }
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListServices.this, getString(R.string.al_service_delete), Toast.LENGTH_LONG).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                loadData();
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);
 
     }
+
 
 }

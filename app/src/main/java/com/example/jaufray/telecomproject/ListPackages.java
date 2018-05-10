@@ -19,11 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.PackageRepository;
-import com.example.jaufray.telecomproject.Database.PackageServiceJoinRepository;
-import com.example.jaufray.telecomproject.Local.PackageDataSource;
-import com.example.jaufray.telecomproject.Local.PackageServiceJoinDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
@@ -46,7 +41,6 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
 
     //Database
     private CompositeDisposable compositeDisposable;
-    private PackageRepository packageRepository;
 
     //Adapter
     List<Package> packageList = new ArrayList<>();
@@ -84,8 +78,6 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
         list_packages.setAdapter(adapter);
 
         //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
 
         //Load all data from DB
         loadData();
@@ -162,7 +154,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
     private void loadData() {
 
         //Use RxJava
-        Disposable disposable = packageRepository.getAllPackages()
+     /*   Disposable disposable = packageRepository.getAllPackages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<List<Package>>() {
@@ -178,7 +170,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
                             }
                         }
                 );
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
     }
 
     //put them in arraylist

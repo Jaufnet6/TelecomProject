@@ -10,11 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ClientRepository;
-import com.example.jaufray.telecomproject.Database.PackageRepository;
-import com.example.jaufray.telecomproject.Local.ClientDataSource;
-import com.example.jaufray.telecomproject.Local.PackageDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
 
@@ -55,8 +50,6 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
     private Client client;
     private Package clientpack = new Package();
 
-    private ClientRepository clientRepository;
-    private PackageRepository packageRepository;
     private CompositeDisposable compositeDisposable;
 
     private DrawerLayout mDrawerLayout;
@@ -82,9 +75,6 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
         //Database
         //Instantiate connection to database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this);
-        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
-        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
 
         // Init
         compositeDisposable = new CompositeDisposable();
@@ -185,7 +175,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
     private void loadPackage() {
 
         //Use RxJava
-        Disposable disposable = packageRepository.getPackageById(idPack)
+      /*  Disposable disposable = packageRepository.getPackageById(idPack)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<Package>() {
@@ -202,7 +192,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
                             }
                         }
                 );
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
     }
     //put package in package and to view for the user
     public void onGetPackageSuccess(Package pack) {
@@ -243,42 +233,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
     //Delete client in DB
     private void deleteClientDB(final Client client) {
 
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
-
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                clientRepository.deleteClient(client);
-                e.onComplete();
-            }
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(DetailsClient.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(DetailsClient.this, ListClient.class);
-                                startActivity(intent);
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);
         this.finish();
 
 

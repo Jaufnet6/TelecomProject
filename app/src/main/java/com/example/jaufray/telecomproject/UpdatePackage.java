@@ -19,13 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.IPackageServiceJoinDataSource;
-import com.example.jaufray.telecomproject.Database.PackageRepository;
-import com.example.jaufray.telecomproject.Database.PackageServiceJoinRepository;
-import com.example.jaufray.telecomproject.Database.ServiceRepository;
-import com.example.jaufray.telecomproject.Local.PackageDataSource;
-import com.example.jaufray.telecomproject.Local.PackageServiceJoinDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
@@ -58,9 +51,6 @@ public class UpdatePackage extends AppCompatActivity {
     private ArrayAdapter adapter;
 
     private CompositeDisposable compositeDisposable;
-    private PackageRepository packageRepository;
-    private PackageServiceJoinRepository packageServiceJoinRepository;
-
 
 
     @Override
@@ -100,9 +90,6 @@ public class UpdatePackage extends AppCompatActivity {
         compositeDisposable = new CompositeDisposable();
 
         //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        packageRepository = PackageRepository.getInstance(PackageDataSource.getInstance(telecomDatabase.packageDAO()));
-        packageServiceJoinRepository = PackageServiceJoinRepository.getInstance(PackageServiceJoinDataSource.getInstance(telecomDatabase.packageServiceJoinDAO()));
 
 
     }
@@ -174,7 +161,7 @@ public class UpdatePackage extends AppCompatActivity {
 
 
 
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+     /*   Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
             public void subscribe(ObservableEmitter<Object> e) throws Exception {
 
@@ -182,7 +169,7 @@ public class UpdatePackage extends AppCompatActivity {
 
                 packages.setName(namePackage);
                 packages.setPrice(pricePackage);
-                packageRepository.updatePackage(packages);
+              //  packageRepository.updatePackage(packages);
                 e.onComplete();
                 addDataLinkService();
             }
@@ -213,7 +200,7 @@ public class UpdatePackage extends AppCompatActivity {
                             }
                         }
                 );
-
+*/
         this.finish();
     }
 
@@ -227,7 +214,7 @@ public class UpdatePackage extends AppCompatActivity {
             final PackageServiceJoin packServ = new PackageServiceJoin(id, s.getId());
 
 
-            Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+            /*Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
                 public void subscribe(ObservableEmitter<Object> e) throws Exception {
                     packageServiceJoinRepository.insert(packServ);
@@ -256,7 +243,7 @@ public class UpdatePackage extends AppCompatActivity {
                                 public void run() throws Exception {
                                 }
                             }
-                    );
+                    );*/
 
         }
     }
@@ -303,7 +290,7 @@ public class UpdatePackage extends AppCompatActivity {
     //delete package
     private void deletePackage(){
 
-        Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
+      /*  Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
 
             @Override
@@ -348,7 +335,7 @@ public class UpdatePackage extends AppCompatActivity {
 
                 );
 
-        compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);*/
 
     }
 
@@ -359,7 +346,7 @@ public class UpdatePackage extends AppCompatActivity {
 
             final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
 
-            Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
+           /* Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
 
                 @Override
@@ -392,7 +379,7 @@ public class UpdatePackage extends AppCompatActivity {
 
                     );
 
-            compositeDisposable.add(disposable);
+            compositeDisposable.add(disposable);*/
 
         }
 

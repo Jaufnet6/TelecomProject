@@ -10,10 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jaufray.telecomproject.Database.ClientRepository;
-import com.example.jaufray.telecomproject.Database.PackageRepository;
-import com.example.jaufray.telecomproject.Local.ClientDataSource;
-import com.example.jaufray.telecomproject.Local.TelecomDatabase;
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
 
@@ -51,9 +47,7 @@ public class AddClient extends AppCompatActivity {
     private String clientLocality;
     private String clientCountry;
 
-  //  private Integer idPackage;
 
-    private ClientRepository clientRepository;
     private TextView packTxt;
 
 
@@ -139,8 +133,6 @@ public class AddClient extends AppCompatActivity {
     public void saveClient(View view) {
 
         //Database
-        TelecomDatabase telecomDatabase = TelecomDatabase.getInstance(this); //Create database
-        clientRepository = ClientRepository.getInstance(ClientDataSource.getInstance(telecomDatabase.clientDAO()));
 
         getUserInput();
 
@@ -169,42 +161,7 @@ public class AddClient extends AppCompatActivity {
             return;
         }
 
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-
-                Client client = new Client(clientName, clientPhone, clientAddress, clientNPA, clientLocality, clientCountry, idPackage);
-                clientRepository.insertClient(client);
-                e.onComplete();
-            }
-
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-                                   Toast.makeText(AddClient.this, "Client added!", Toast.LENGTH_SHORT).show();
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(AddClient.this, getString(R.string.al_client_add), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        ,
-
-                        new Action() {
-
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(AddClient.this, ListClient.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                );
     }
     //Cancel client creation
     public void cancelClientAdd(View view) {
