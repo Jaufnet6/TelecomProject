@@ -10,29 +10,29 @@ import java.io.Serializable;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity(tableName = "services")
+//@Entity(tableName = "services")
 public class Service implements Serializable {
 
 
-    @NonNull
+  /*  @NonNull
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idService")
+    @ColumnInfo(name = "idService")*/
     private int id;
 
-    @ColumnInfo(name = "name")
+   // @ColumnInfo(name = "name")
     private String name;
 
-    @ColumnInfo(name = "description")
+  //  @ColumnInfo(name = "description")
     private String description;
 
-    @ColumnInfo(name = "price")
+    //@ColumnInfo(name = "price")
     private int price;
 
     public Service(){
 
     }
 
-    @Ignore
+ //   @Ignore
     public Service(String name, String description, int price) {
         this.name = name;
         this.description = description;
@@ -71,7 +71,7 @@ public class Service implements Serializable {
         this.price = price;
     }
 
-    @Override
+  //  @Override
     public String toString() {
         return name;
     }

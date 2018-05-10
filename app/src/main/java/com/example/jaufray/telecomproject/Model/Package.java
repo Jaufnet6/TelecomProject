@@ -11,26 +11,26 @@ import java.io.Serializable;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity(tableName = "packages")
+//@Entity(tableName = "packages")
 public class Package implements Serializable {
 
 
-    @NonNull
+   /* @NonNull
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idPackage")
+    @ColumnInfo(name = "idPackage")*/
     private int id;
 
-    @ColumnInfo(name = "name")
+   // @ColumnInfo(name = "name")
     private String name;
 
-    @ColumnInfo(name = "price")
+   // @ColumnInfo(name = "price")
     private int price;
 
     public Package(){
 
     }
 
-    @Ignore
+  //  @Ignore
     public Package(String name, int price) {
         this.name = name;
         this.price = price;
@@ -60,7 +60,7 @@ public class Package implements Serializable {
         this.price = price;
     }
 
-    @Override
+   // @Override
     public String toString() {
         return name;
     }

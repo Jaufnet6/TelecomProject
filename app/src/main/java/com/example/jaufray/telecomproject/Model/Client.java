@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity(tableName = "clients",
+/*@Entity(tableName = "clients",
         foreignKeys = {
                 @ForeignKey(entity = Package.class,
                         parentColumns = "idPackage",
@@ -21,40 +21,42 @@ import io.reactivex.annotations.NonNull;
                         }
                         , indices = {@Index(value = {"idpackage"})}
 
-)
+)*/
 public class Client implements Serializable {
 
-    @NonNull
+    //On enlève tous les @... car c'est spécifique à la Room
+
+  /*  @NonNull
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idClient")
+    @ColumnInfo(name = "idClient")*/
     private int id;
 
-    @ColumnInfo(name = "name")
+  //  @ColumnInfo(name = "name")
     private String name;
 
-    @ColumnInfo(name = "phone")
+   // @ColumnInfo(name = "phone")
     private String phone;
 
-    @ColumnInfo(name = "address")
+   // @ColumnInfo(name = "address")
     private String address;
 
-    @ColumnInfo(name = "npa")
+   // @ColumnInfo(name = "npa")
     private String npa;
 
-    @ColumnInfo(name = "locality")
+   // @ColumnInfo(name = "locality")
     private String locality;
 
-    @ColumnInfo(name = "country")
+    //@ColumnInfo(name = "country")
     private String country;
 
-    @ColumnInfo(name = "idpackage")
+   // @ColumnInfo(name = "idpackage")
     private int idPackage;
 
     public Client(){
 
     }
 
-    @Ignore
+  //  @Ignore
     public Client(String name, String phone, String address, String npa, String locality, String country, int idPackage) {
         this.name = name;
         this.phone = phone;
@@ -128,7 +130,7 @@ public class Client implements Serializable {
         this.idPackage = idPackage;
     }
 
-
+//Pas de méthode toMap car on a rien qui est Exclude de notre bd
 
 
     @Override
