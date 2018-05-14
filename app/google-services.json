@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "942704496183",
+    "firebase_url": "https://telecomprojectjd.firebaseio.com",
+    "project_id": "telecomprojectjd",
+    "storage_bucket": "telecomprojectjd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942704496183:android:a67fd2914e319bf1",
+        "android_client_info": {
+          "package_name": "com.example.jaufray.telecomproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942704496183-59341ea4c49g1meik2rm8afokk1nhrgk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jaufray.telecomproject",
+            "certificate_hash": "b9cb3d7e3b6850c98a2caa5b9c38535a3383ffde"
+          }
+        },
+        {
+          "client_id": "942704496183-18lgcfccn3i9bd71ktclrfkdltahij3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgMP9Yk5-ccXr3nKVA8K7yACQbwaOQ-MQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942704496183-18lgcfccn3i9bd71ktclrfkdltahij3s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
