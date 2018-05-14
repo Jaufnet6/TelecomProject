@@ -12,8 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import io.reactivex.Observable;
@@ -63,7 +67,19 @@ public class UpdateService extends AppCompatActivity {
         edtPrice.setText(String.valueOf(service.getPrice()), TextView.BufferType.EDITABLE);
 
 
+        //Firebase
+        initFirebase();
 
+    }
+
+
+
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
 
     }
 
@@ -97,12 +113,13 @@ public class UpdateService extends AppCompatActivity {
         this.finish();
     }
 
+    //Update the database
      private void updateService(Service service)
      {
 
-         mDatabaseReference.child("services").child(String.valueOf(service.getId())).child("name").setValue(service.getName());
-         mDatabaseReference.child("services").child(String.valueOf(service.getId())).child("description").setValue(service.getDescription());
-         mDatabaseReference.child("services").child(String.valueOf(service.getId())).child("price").setValue(service.getPrice());
+         mDatabaseReference.child("services").child(service.getId()).child("name").setValue(service.getName());
+         mDatabaseReference.child("services").child(service.getId()).child("description").setValue(service.getDescription());
+         mDatabaseReference.child("services").child(service.getId()).child("price").setValue(service.getPrice());
 
      }
 
@@ -119,7 +136,7 @@ public class UpdateService extends AppCompatActivity {
     //Method calling the service repository to delete the service
     public void deleteService(View view){
 
-        mDatabaseReference.child("service").child(String.valueOf(service.getId())).removeValue();
+        mDatabaseReference.child("service").child(service.getId()).removeValue();
         this.finish();
 
     }

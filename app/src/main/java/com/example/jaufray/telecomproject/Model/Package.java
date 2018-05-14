@@ -18,7 +18,7 @@ public class Package implements Serializable {
    /* @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "idPackage")*/
-    private int id;
+    private String id;
 
    // @ColumnInfo(name = "name")
     private String name;
@@ -36,11 +36,11 @@ public class Package implements Serializable {
         this.price = price;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

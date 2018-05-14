@@ -17,7 +17,7 @@ public class Service implements Serializable {
   /*  @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "idService")*/
-    private int id;
+    private String id;
 
    // @ColumnInfo(name = "name")
     private String name;
@@ -40,11 +40,11 @@ public class Service implements Serializable {
         this.price = price;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

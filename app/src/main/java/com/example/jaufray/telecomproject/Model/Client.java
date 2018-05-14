@@ -29,7 +29,7 @@ public class Client implements Serializable {
   /*  @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "idClient")*/
-    private int id;
+    private String id;
 
   //  @ColumnInfo(name = "name")
     private String name;
@@ -50,14 +50,14 @@ public class Client implements Serializable {
     private String country;
 
    // @ColumnInfo(name = "idpackage")
-    private int idPackage;
+    private String idPackage;
 
     public Client(){
 
     }
 
   //  @Ignore
-    public Client(String name, String phone, String address, String npa, String locality, String country, int idPackage) {
+    public Client(String name, String phone, String address, String npa, String locality, String country, String idPackage) {
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -67,11 +67,11 @@ public class Client implements Serializable {
         this.idPackage = idPackage;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getName() {
@@ -122,11 +122,11 @@ public class Client implements Serializable {
         this.country = country;
     }
 
-    public int getIdPackage() {
+    public String getIdPackage() {
         return idPackage;
     }
 
-    public void setIdPackage(int idPackage) {
+    public void setIdPackage(String idPackage) {
         this.idPackage = idPackage;
     }
 

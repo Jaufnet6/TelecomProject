@@ -118,7 +118,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
                         serviceList.add(service);
                     }
 
-                    //ListView du tuto ???
+                    
                 }
             }
 
@@ -129,7 +129,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    //Initialisation de la Firebase
+    //Firebase initialization
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
         //Get firebase instance
@@ -267,11 +267,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
 
     //delete service
     private void deleteService(final Service service) {
-
-
         mDatabaseReference.child("service").child(String.valueOf(service.getId())).removeValue();
-
-
     }
 
 

@@ -41,9 +41,6 @@ public class AddService extends AppCompatActivity  {
     private String serviceDescription;
     private Integer servicePrice;
 
-  //  private Service service;
-  //  private ServiceRepository serviceRepository;
-
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -55,6 +52,17 @@ public class AddService extends AppCompatActivity  {
 
         Intent intent = getIntent();
 
+        //Firebase
+        initFirebase();
+
+    }
+
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
 
     }
 
@@ -90,50 +98,8 @@ public class AddService extends AppCompatActivity  {
 
         Service service = new Service(serviceName,serviceDescription,servicePrice);
         //add le service
-        //id du service
-        String serviceId = (String.valueOf(service.getId()));
-        mDatabaseReference.child("services").child(serviceId).setValue(service);
+        mDatabaseReference.child("services").child(service.getId()).setValue(service);
 
-
-
-
-
-        //add into DB
-       /*Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
-
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                service = new Service(serviceName, serviceDescription, servicePrice);
-
-             /*   serviceRepository.insertService(service);
-                e.onComplete();*/
-           /* }
-
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-                                   Toast.makeText(AddService.this, "Service added!", Toast.LENGTH_SHORT).show();
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(AddService.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        ,
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(AddService.this, ListServices.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                );*/
         this.finish();
     }
     //cancel new service

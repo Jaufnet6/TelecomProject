@@ -20,12 +20,12 @@ public class PackageServiceJoin implements Serializable {
 
 
 //    @ColumnInfo(name = "packageJoinID")
-    public final int packageID;
+    public final String packageID;
 
   //  @ColumnInfo(name = "serviceJoinID")
-    public final int serviceID;
+    public final String serviceID;
 
-    public PackageServiceJoin(final int packageID, final int serviceID) {
+    public PackageServiceJoin(final String packageID, final String serviceID) {
         this.packageID = packageID;
         this.serviceID = serviceID;
     }
