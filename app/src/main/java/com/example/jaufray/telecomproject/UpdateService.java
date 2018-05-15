@@ -106,19 +106,19 @@ public class UpdateService extends AppCompatActivity {
         }
 
 
-        updateService(service);
+        updateService(nameEdt, descriptionEdt, priceEdt);
 
 
 
     }
 
     //Update the database
-     private void updateService(Service service)
+     private void updateService(String name, String description, int price)
      {
 
-         mDatabaseReference.child("services").child(service.getId()).child("name").setValue(service.getName());
-         mDatabaseReference.child("services").child(service.getId()).child("description").setValue(service.getDescription());
-         mDatabaseReference.child("services").child(service.getId()).child("price").setValue(service.getPrice());
+         mDatabaseReference.child("services").child(service.getId()).child("name").setValue(name);
+         mDatabaseReference.child("services").child(service.getId()).child("description").setValue(description);
+         mDatabaseReference.child("services").child(service.getId()).child("price").setValue(price);
          Intent intent = new Intent(UpdateService.this, ListServices.class);
          startActivity(intent);
          finish();
@@ -137,7 +137,7 @@ public class UpdateService extends AppCompatActivity {
     //Method calling the service repository to delete the service
     public void deleteService(Service service){
 
-        mDatabaseReference.child("service").child(service.getId()).removeValue();
+        mDatabaseReference.child("services").child(service.getId()).removeValue();
         Intent intent = new Intent(UpdateService.this, ListServices.class);
         startActivity(intent);
         finish();

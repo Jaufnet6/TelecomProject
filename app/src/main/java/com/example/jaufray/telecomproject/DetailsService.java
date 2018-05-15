@@ -6,11 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -73,7 +76,17 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
         serviceDescription.setText(service.getDescription());
         servicePrice.setText(String.valueOf(service.getPrice()));
 
+        initFirebase();
 
+
+    }
+
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
     }
 
     //Drawer top button
@@ -163,10 +176,10 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
     //delete service
     private void deleteService(final Service service) {
 
-      mDatabaseReference.child("service").child(service.getId()).removeValue();
-      Intent intent = new Intent(DetailsService.this, ListServices.class);
-      startActivity(intent);
-      finish();
+        mDatabaseReference.child("services").child(service.getId()).removeValue();
+        Intent intent = new Intent(DetailsService.this, ListServices.class);
+        startActivity(intent);
+        finish();
 
     }
 
