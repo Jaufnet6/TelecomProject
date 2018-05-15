@@ -45,7 +45,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
     private TextView pricePackage;
 
 
-    private int idPack;
+    private String idPack;
 
     private Client client;
     private Package clientpack = new Package();

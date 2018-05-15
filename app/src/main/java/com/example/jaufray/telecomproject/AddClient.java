@@ -38,7 +38,7 @@ public class AddClient extends AppCompatActivity {
 
 
     private Package pack = new Package();
-    private int idPackage;
+    private String idPackage;
 
     private String clientName;
     private String clientPhone;

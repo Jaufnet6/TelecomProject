@@ -207,7 +207,7 @@ public class UpdatePackage extends AppCompatActivity {
     //Create a row in the table between package and service for the many to many relation
     public void addDataLinkService(){
 
-        int id = packages.getId();
+        String id = packages.getId();
 
 
         for(Service s : listService){
