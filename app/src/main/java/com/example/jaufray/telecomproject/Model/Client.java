@@ -29,6 +29,7 @@ public class Client implements Serializable {
   /*  @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "idClient")*/
+
     private String id;
 
   //  @ColumnInfo(name = "name")

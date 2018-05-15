@@ -6,6 +6,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 
 import io.reactivex.annotations.NonNull;
@@ -17,6 +19,7 @@ public class Service implements Serializable {
   /*  @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "idService")*/
+    @Exclude
     private String id;
 
    // @ColumnInfo(name = "name")

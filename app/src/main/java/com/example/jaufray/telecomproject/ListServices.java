@@ -33,8 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-public class ListServices extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ListServices extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private ListView list_services;
@@ -52,7 +51,6 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +83,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         list_services.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final Service service = (Service)adapterView.getAdapter().getItem(i);
+                final Service service = (Service) adapterView.getAdapter().getItem(i);
 
                 Intent intent1 = new Intent(ListServices.this, DetailsService.class);
                 intent1.putExtra("DetailsService", service);
@@ -101,17 +99,17 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
             //Retrieve data from firebase
             //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(serviceList.size() > 0)
-                {
+                if (serviceList.size() > 0) {
                     serviceList.clear();
-                    for(DataSnapshot postSnapshot:dataSnapshot.getChildren())
-                    {
-                        Service service = postSnapshot.getValue(Service.class);
-                        serviceList.add(service);
-                    }
-                    adapter.notifyDataSetChanged();
-
                 }
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Service service = postSnapshot.getValue(Service.class);
+                    serviceList.add(service);
+                }
+                adapter.notifyDataSetChanged();
+
+
             }
 
             @Override
@@ -191,12 +189,11 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         serviceList.addAll(services);
         adapter.notifyDataSetChanged();
 
-      
 
     }
 
     //Add a service button
-    public void changeToCreateService(View view){
+    public void changeToCreateService(View view) {
         Intent intent = new Intent(ListServices.this, AddService.class);
         startActivity(intent);
         finish();
@@ -206,13 +203,11 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         menu.setHeaderTitle("Select action :");
 
-        menu.add(Menu.NONE,0, Menu.NONE, "Edit");
-        menu.add(Menu.NONE,1, Menu.NONE, "Delete");
-
-
+        menu.add(Menu.NONE, 0, Menu.NONE, "Edit");
+        menu.add(Menu.NONE, 1, Menu.NONE, "Delete");
 
 
     }
@@ -220,11 +215,10 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
     //pressing on delete or update
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         final Service service = serviceList.get(info.position);
 
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case 0: //Update
             {
                 Intent intent = new Intent(ListServices.this, UpdateService.class);
@@ -241,7 +235,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                 deleteService(service);
+                                deleteService(service);
                             }
                         }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override

@@ -163,7 +163,7 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
     //delete service
     private void deleteService(final Service service) {
 
-      mDatabaseReference.child("service").child(String.valueOf(service.getId())).removeValue();
+      mDatabaseReference.child("service").child(service.getId()).removeValue();
       Intent intent = new Intent(DetailsService.this, ListServices.class);
       startActivity(intent);
       finish();

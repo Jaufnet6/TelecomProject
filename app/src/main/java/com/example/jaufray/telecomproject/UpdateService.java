@@ -110,7 +110,6 @@ public class UpdateService extends AppCompatActivity {
 
 
 
-        this.finish();
     }
 
     //Update the database
@@ -120,7 +119,9 @@ public class UpdateService extends AppCompatActivity {
          mDatabaseReference.child("services").child(service.getId()).child("name").setValue(service.getName());
          mDatabaseReference.child("services").child(service.getId()).child("description").setValue(service.getDescription());
          mDatabaseReference.child("services").child(service.getId()).child("price").setValue(service.getPrice());
-
+         Intent intent = new Intent(UpdateService.this, ListServices.class);
+         startActivity(intent);
+         finish();
      }
 
 
@@ -134,10 +135,12 @@ public class UpdateService extends AppCompatActivity {
     }
 
     //Method calling the service repository to delete the service
-    public void deleteService(View view){
+    public void deleteService(Service service){
 
         mDatabaseReference.child("service").child(service.getId()).removeValue();
-        this.finish();
+        Intent intent = new Intent(UpdateService.this, ListServices.class);
+        startActivity(intent);
+        finish();
 
     }
 
