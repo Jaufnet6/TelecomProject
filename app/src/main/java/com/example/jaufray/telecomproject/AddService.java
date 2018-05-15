@@ -96,11 +96,15 @@ public class AddService extends AppCompatActivity  {
         }
 
 
-        Service service = new Service(serviceName,serviceDescription,servicePrice);
+        Service service = new Service(UUID.randomUUID().toString(),serviceName,serviceDescription,servicePrice);
         //add le service
         mDatabaseReference.child("services").child(service.getId()).setValue(service);
-
+        Intent intent = new Intent(AddService.this, ListServices.class);
+        startActivity(intent);
         this.finish();
+
+
+
     }
     //cancel new service
     public void cancelServiceAdd(View view) {

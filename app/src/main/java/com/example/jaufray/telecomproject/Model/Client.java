@@ -57,7 +57,8 @@ public class Client implements Serializable {
     }
 
   //  @Ignore
-    public Client(String name, String phone, String address, String npa, String locality, String country, String idPackage) {
+    public Client(String UID, String name, String phone, String address, String npa, String locality, String country, String idPackage) {
+        this.id = UID;
         this.name = name;
         this.phone = phone;
         this.address = address;

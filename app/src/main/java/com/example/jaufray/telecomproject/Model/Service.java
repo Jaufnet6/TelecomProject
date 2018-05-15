@@ -33,8 +33,8 @@ public class Service implements Serializable {
     }
 
  //   @Ignore
-    public Service(String name, String description, int price) {
-
+    public Service(String UID, String name, String description, int price) {
+        this.id = UID;
         this.name = name;
         this.description = description;
         this.price = price;

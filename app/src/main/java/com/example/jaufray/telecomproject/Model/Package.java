@@ -31,7 +31,8 @@ public class Package implements Serializable {
     }
 
   //  @Ignore
-    public Package(String name, int price) {
+    public Package(String UID, String name, int price) {
+        this.id = UID;
         this.name = name;
         this.price = price;
     }

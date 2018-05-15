@@ -109,7 +109,7 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
                         Service service = postSnapshot.getValue(Service.class);
                         serviceList.add(service);
                     }
-
+                    adapter.notifyDataSetChanged();
 
                 }
             }
@@ -127,7 +127,6 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         //Get firebase instance
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference();
-
     }
 
     //Drawer Menu
