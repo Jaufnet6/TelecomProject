@@ -236,7 +236,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
     }
 
     private void deleteServiceForPackage(){
-        
+
     }
 
     //Delete from DB
