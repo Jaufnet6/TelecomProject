@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,6 +18,12 @@ import android.widget.Toast;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,13 +51,15 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
     private TextView packagePrice;
     private ListView service_List;
 
-    private String namePackage;
-    private String pricePackage;
     private List<Service> listOfServices;
     private ArrayAdapter adapter;
     private Package packages;
 
-    private CompositeDisposable compositeDisposable;
+
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+
     private DrawerLayout mDrawerLayout;
     //Class to tie the functionnality of DraweLayout and the framework ActionBar
     //to implement the recommended design for navigation drawers
@@ -86,15 +95,48 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
         registerForContextMenu(service_List);
         service_List.setAdapter(adapter);
 
-        // Init
-        compositeDisposable = new CompositeDisposable();
+        initFirebase();
 
-        //Database
-
-
-        loadData();
+        loadServicesForPackage();
 
 
+
+    }
+
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
+    }
+
+    //Get all services for the package
+    private void loadServicesForPackage() {
+
+        mDatabaseReference.child("serviceForPackages").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Retrieve data from firebase
+            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (listOfServices.size() > 0) {
+                    listOfServices.clear();
+                }
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Service service = postSnapshot.getValue(Service.class);
+                    listOfServices.add(service);
+                }
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
 
     }
 
@@ -154,27 +196,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
         }
     }
-    //Get all services for the package
-    private void loadData() {
-        //Use RxJava
-      /*  Disposable disposable = packageServiceJoinRepository.getServicesForPackage(packages.getId())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<Service>>() {
-                               @Override
-                               public void accept(List<Service> services) throws Exception{
-                                   onGetAllServiceSuccess(services);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(DetailsPackage.this, "" + throwable.getMessage() , Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);*/
-    }
+
     //Put services in arraylist
     private void onGetAllServiceSuccess(List<Service> services) {
         listOfServices.clear();
@@ -200,6 +222,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteServiceForPackage();
                         deletePackage();
                     }
                 }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -211,12 +234,18 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
 
     }
+
+    private void deleteServiceForPackage(){
+        
+    }
+
     //Delete from DB
     private void deletePackage(){
 
 
 
     }
+
     //Delete all rows in join table where idPackage exists
     private void deleteLinkPackageToService() {
 
@@ -224,40 +253,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
             final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
 
-            Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
-
-                @Override
-                public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                  //  packageServiceJoinRepository.deletePackageServiceJoin(packServ);
-                    e.onComplete();
-                }
-            })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Consumer() {
-                                   @Override
-                                   public void accept(Object o) throws Exception {
-
-                                   }
-                               },
-
-                            new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    Toast.makeText(DetailsPackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            },
-
-                            new Action() {
-                                @Override
-                                public void run() throws Exception {
-                                }
-                            }
-
-                    );
-
-            compositeDisposable.add(disposable);
 
         }
 

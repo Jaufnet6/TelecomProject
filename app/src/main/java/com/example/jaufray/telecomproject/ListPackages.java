@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,12 @@ import android.widget.Toast;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +46,9 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
 
     private ListView list_packages;
 
-    //Database
-    private CompositeDisposable compositeDisposable;
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     //Adapter
     List<Package> packageList = new ArrayList<>();
@@ -51,6 +59,8 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
     //Drawer Menu
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +77,6 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_package);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Init
-        compositeDisposable = new CompositeDisposable();
 
         // Init View
         list_packages = (ListView) findViewById(R.id.full_package_list);
@@ -77,10 +85,10 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
         registerForContextMenu(list_packages);
         list_packages.setAdapter(adapter);
 
-        //Database
+        //Firebase
+        initFirebase();
+        addFirebaseListener();
 
-        //Load all data from DB
-        loadData();
 
         //Click on one package
         list_packages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,6 +113,40 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    private void addFirebaseListener() {
+        mDatabaseReference.child("packages").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Retrieve data from firebase
+            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (packageList.size() > 0) {
+                    packageList.clear();
+                }
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Package aPackage = postSnapshot.getValue(Package.class);
+                    packageList.add(aPackage);
+                }
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get Firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
     }
 
     //Drawer
@@ -150,36 +192,7 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
 
         }
     }
-    //Load all packages available in DB
-    private void loadData() {
 
-        //Use RxJava
-     /*   Disposable disposable = packageRepository.getAllPackages()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<Package>>() {
-                               @Override
-                               public void accept(List<Package> packages) throws Exception{
-                                   onGetAllPackageSuccess(packages);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListPackages.this, "" + throwable.getMessage() , Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);*/
-    }
-
-    //put them in arraylist
-    private void onGetAllPackageSuccess(List<Package> packages) {
-        packageList.clear();
-        packageList.addAll(packages);
-        adapter.notifyDataSetChanged();
-
-    }
     //create new package
     public void changeToCreatePackage(View view){
         Intent intent = new Intent(ListPackages.this, AddPackage.class);
