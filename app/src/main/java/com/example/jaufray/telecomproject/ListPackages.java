@@ -54,7 +54,6 @@ public class ListPackages extends AppCompatActivity implements NavigationView.On
     List<Package> packageList = new ArrayList<>();
     ArrayAdapter adapter;
 
-    private ArrayList<Service> listService = new ArrayList<Service>();
 
     //Drawer Menu
     private DrawerLayout mDrawerLayout;
