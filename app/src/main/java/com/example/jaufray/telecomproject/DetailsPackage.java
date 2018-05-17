@@ -114,7 +114,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
     //Get all services for the package
     private void loadServicesForPackage() {
 
-        mDatabaseReference.child("serviceForPackages").addValueEventListener(new ValueEventListener() {
+        mDatabaseReference.child("packageServiceJoin").addValueEventListener(new ValueEventListener() {
             @Override
             //Retrieve data from firebase
             //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
@@ -124,8 +124,12 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                 }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Service service = postSnapshot.getValue(Service.class);
-                    listOfServices.add(service);
+                    PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
+                    if(packageServiceJoin.packageID == packages.getId()){
+
+                        //listOfServices.add(service);
+                    }
+
                 }
                 adapter.notifyDataSetChanged();
 
