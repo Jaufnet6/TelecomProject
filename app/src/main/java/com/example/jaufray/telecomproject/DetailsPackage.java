@@ -109,6 +109,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
         //Get firebase instance
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference();
+
     }
 
     //Get all services for the package
