@@ -251,8 +251,9 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
 
 
     //delete service
-    private void deleteService(final Service service) {
-        mDatabaseReference.child("service").child(String.valueOf(service.getId())).removeValue();
+    private void deleteService(Service service) {
+        mDatabaseReference.child("services").child(service.getId()).removeValue();
+        adapter.notifyDataSetChanged();
     }
 
 

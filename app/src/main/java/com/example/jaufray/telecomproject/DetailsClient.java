@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.List;
@@ -56,7 +59,9 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
     //Class to tie the functionnality of DraweLayout and the framework ActionBar
     //to implement the recommended design for navigation drawers
     private ActionBarDrawerToggle mToggle;
-
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +78,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_client);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Database
-        //Instantiate connection to database
-
-        // Init
-        compositeDisposable = new CompositeDisposable();
+        initFirebase();
 
 
         //get the client that was given when clicked in the list
@@ -85,8 +86,6 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         idPack = client.getIdPackage();
 
 
-        //retrieve package from the client
-        loadPackage();
         try {
             Thread.sleep(30);
         } catch (Exception ex){}
@@ -114,7 +113,13 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
 
     }
-
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
+    }
      @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -171,29 +176,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         }
     }
 
-    //Load package for client
-    private void loadPackage() {
 
-        //Use RxJava
-      /*  Disposable disposable = packageRepository.getPackageById(idPack)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<Package>() {
-
-                               @Override
-                               public void accept(Package pack) throws Exception {
-                                   onGetPackageSuccess(pack);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(DetailsClient.this, "" + throwable.getMessage() , Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);*/
-    }
     //put package in package and to view for the user
     public void onGetPackageSuccess(Package pack) {
         clientpack = pack;

@@ -14,11 +14,15 @@ import android.widget.Toast;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -43,6 +47,10 @@ public class AddPackage extends AppCompatActivity {
 
     private ListView listServices;
     ArrayAdapter adapter;
+
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,17 @@ public class AddPackage extends AppCompatActivity {
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, servicesList);
         registerForContextMenu(listServices);
         listServices.setAdapter(adapter);
+
+        //Firebase
+        initFirebase();
+    }
+
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
 
     }
 
@@ -114,8 +133,6 @@ public class AddPackage extends AppCompatActivity {
             packagePrice = total;
         }
 
-
-
         if(TextUtils.isEmpty(packageName)) {
             namePackage.setError("Cannot be empty");
             return;
@@ -126,139 +143,25 @@ public class AddPackage extends AppCompatActivity {
             return;
         }
 
-
-
-       /* Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
-
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                Package pack = new Package(packageName, packagePrice);
-                packageRepository.insertPackage(pack);
-                e.onComplete();
-                addDataLinkService();
-            }
-
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-                                   Toast.makeText(AddPackage.this, "Package added!", Toast.LENGTH_SHORT).show();
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(AddPackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        ,/*
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(AddPackage.this, ListPackages.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                );*/
-
-        this.finish();
+        Package packages = new Package(UUID.randomUUID().toString(),packageName,packagePrice);
+        //add package to database
+        mDatabaseReference.child("packages").child(packages.getId()).setValue(packages);
+        Intent intent = new Intent(AddPackage.this, ListPackages.class);
+        startActivity(intent);
+        finish();
+        addDataLinkService(packages);
     }
-    //Create rows into join table
-    public void addDataLinkService(){
 
-      //  int id = retrieveLastIDPackage();
-
-
+    public void addDataLinkService(Package packages)
+    {
         for(Service s : servicesList){
-           // final PackageServiceJoin packServ = new PackageServiceJoin(id, s.getId());
+           String idService = s.getId();
 
 
-          /*  Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
+        PackageServiceJoin packageServiceJoin = new PackageServiceJoin(UUID.randomUUID().toString(), packages.getId(), s.getId());
+        mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).setValue(packageServiceJoin);
 
-                public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                    packageServiceJoinRepository.insert(packServ);
-                    e.onComplete();
-                }
-
-            })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Consumer() {
-                                   @Override
-                                   public void accept(Object o) throws Exception {
-                                       Toast.makeText(AddPackage.this, "Package added!", Toast.LENGTH_SHORT).show();
-                                   }
-                               },
-                            new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    Toast.makeText(AddPackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            ,
-
-                            new Action() {
-                                @Override
-                                public void run() throws Exception {
-                                }
-                            }
-                    );
-
-        }*/
-    }
-    //Get previously added package
-  /*  private int retrieveLastIDPackage() {
-
-        final ArrayList<Package> allPackages = new ArrayList<Package>();
-
-        CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-        //Use RxJava
-    /*    Disposable disposable = packageRepository.getAllPackages()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<Package>>() {
-                               @Override
-                               public void accept(List<Package> packages) throws Exception{
-                                   for(Package p : packages)
-                                       allPackages.add(p);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);*/
-
-     /*   try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-
-        int size = allPackages.size();
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        int id = allPackages.get(size-1).getId();
-
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return id;*/
-
-
     }
 
     //Cancel package creation

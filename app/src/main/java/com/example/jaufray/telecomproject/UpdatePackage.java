@@ -211,7 +211,7 @@ public class UpdatePackage extends AppCompatActivity {
 
 
         for(Service s : listService){
-            final PackageServiceJoin packServ = new PackageServiceJoin(id, s.getId());
+         //   final PackageServiceJoin packServ = new PackageServiceJoin(id, s.getId());
 
 
             /*Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
@@ -344,7 +344,7 @@ public class UpdatePackage extends AppCompatActivity {
 
         for(Service s : listService){
 
-            final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
+          //  final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
 
            /* Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 

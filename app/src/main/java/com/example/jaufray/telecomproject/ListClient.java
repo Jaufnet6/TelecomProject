@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.*;
@@ -21,6 +22,12 @@ import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +45,9 @@ import io.reactivex.schedulers.Schedulers;
 public class ListClient extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ListView list_client;
-
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
     //Database
     private CompositeDisposable compositeDisposable;
 
@@ -66,9 +75,10 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
         navigationView.setNavigationItemSelectedListener(this);
 
 
+//Firebase
+        initFirebase();
+        addFirebaseListener();
 
-        // Init
-        compositeDisposable = new CompositeDisposable();
 
         // Init View
         list_client = (ListView) findViewById(R.id.full_client_liste);
@@ -77,10 +87,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
         registerForContextMenu(list_client);
         list_client.setAdapter(adapter);
 
-        //Database
 
-        //Load all data from DB
-        loadData();
 
         list_client.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -95,6 +102,41 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
         });
 
 
+    }
+
+
+    private void addFirebaseListener() {
+        mDatabaseReference.child("clients").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Retrieve data from firebase
+            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (clientList.size() > 0) {
+                    clientList.clear();
+                }
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Client client = postSnapshot.getValue(Client.class);
+                    clientList.add(client);
+                }
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
     }
 
     //Menu Drawer
@@ -152,28 +194,7 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
-    //load all clients from db
-    private void loadData() {
 
-        //Use RxJava
-     /*   Disposable disposable = clientRepository.getAllClients()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<Client>>() {
-                               @Override
-                               public void accept(List<Client> clients) throws Exception {
-                                   onGetAllClientSuccess(clients);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListClient.this, "" + throwable.getMessage() , Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);*/
-    }
     //put client in arraylist
     private void onGetAllClientSuccess(List<Client> clients) {
         clientList.clear();
@@ -231,41 +252,8 @@ public class ListClient extends AppCompatActivity implements NavigationView.OnNa
     }
     //Delete client
     private void deleteClient(final Client clients) {
-      //  Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
-
-
-           /*  @Override
-           public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                clientRepository.deleteClient(clients);
-                e.onComplete();
-            }*/
-      /*  })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListClient.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                loadData();
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);*/
+        mDatabaseReference.child("clients").child(clients.getId()).removeValue();
+        adapter.notifyDataSetChanged();
 
     }
 

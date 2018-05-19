@@ -115,7 +115,9 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
     //Get all services for the package
     private void loadServicesForPackage() {
 
-        mDatabaseReference.child("packageServiceJoin").addValueEventListener(new ValueEventListener() {
+
+
+        mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
             @Override
             //Retrieve data from firebase
             //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
@@ -128,7 +130,28 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                     PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
                     if(packageServiceJoin.packageID == packages.getId()){
 
-                        //listOfServices.add(service);
+                        final String idService = packageServiceJoin.serviceID;
+                        //Search in the Service
+                        mDatabaseReference.child("services").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot postSnapshot : dataSnapshot.getChildren())
+                                {
+                                    Service service = postSnapshot.getValue(Service.class);
+                                    if(service.getId() == idService)
+                                    {
+                                        ;
+                                        listOfServices.add(service);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
 
                 }
@@ -142,6 +165,33 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                 Log.w("LoadPost:onCancelled", databaseError.toException());
             }
         });
+
+    }
+
+    public void getService(final String idService)
+    {
+
+        mDatabaseReference.child("services").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren())
+                {
+                    Service service = postSnapshot.getValue(Service.class);
+                    if(service.getId() == idService)
+                    {
+                        final String nameService = service.getName();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
     }
 
@@ -256,7 +306,7 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
         for(Service s : listOfServices){
 
-            final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
+            //final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
 
 
 

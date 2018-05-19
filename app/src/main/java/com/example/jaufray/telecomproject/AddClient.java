@@ -12,8 +12,13 @@ import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
+
+import java.util.UUID;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -51,6 +56,9 @@ public class AddClient extends AppCompatActivity {
     private TextView packTxt;
 
 
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
 
@@ -97,10 +105,19 @@ public class AddClient extends AppCompatActivity {
             idPackage = pack.getId();
 
         }
+        //Firebase
+        initFirebase();
 
 
     }
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
 
+    }
     //go to list of packages to choose 1
     public void openListPackages(View v) {
         getUserInput();
@@ -161,7 +178,11 @@ public class AddClient extends AppCompatActivity {
             return;
         }
 
-
+        Client client = new Client(UUID.randomUUID().toString(), clientName,clientPhone, clientAddress, clientNPA,clientLocality,clientCountry,idPackage);
+        mDatabaseReference.child("clients").child(client.getId()).setValue(client);
+        Intent intent = new Intent(AddClient.this, ListClient.class);
+        startActivity(intent);
+        finish();
     }
     //Cancel client creation
     public void cancelClientAdd(View view) {

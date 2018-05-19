@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -49,7 +52,9 @@ public class UpdateClient extends AppCompatActivity {
     private String clientNPA;
     private String clientLocality;
     private String clientCountry;
-
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,17 +104,20 @@ public class UpdateClient extends AppCompatActivity {
         namePackage.setText(packageClient.getName());
 
 
-
-        //Database
-        //Instantiate connection to database
-
-        // Init
-        compositeDisposable = new CompositeDisposable();
+//Firebase
+        initFirebase();
 
 
 
     }
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
 
+    }
     public void modifyClientPackage(View view){
 
         getUserInput();
@@ -170,9 +178,7 @@ public class UpdateClient extends AppCompatActivity {
             return;
         }
 
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
 
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
 
                 //Rechecking to make sure the values were taken
                 getUserInput();
@@ -189,42 +195,22 @@ public class UpdateClient extends AppCompatActivity {
                 client.setIdPackage(packageClient.getId());
 
                 //Update client
-                updateClient(client);
-
-                e.onComplete();
-            }
-
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-                                   Toast.makeText(UpdateClient.this, "Client added!", Toast.LENGTH_SHORT).show();
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(UpdateClient.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        ,
-
-                        new Action() {
-
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(UpdateClient.this, ListClient.class);
-                                startActivity(intent);
-
-                                finish();
-                            }
-                        }
-                );
+                updateClient(clientName, clientPhone, clientAddress, clientNPA, clientLocality,clientCountry,packageClient.getId());
     }
 
-    private void updateClient(Client client) {
+    private void updateClient(String name, String phone, String adress, String npa, String locality, String country, String idpackage) {
+
+        mDatabaseReference.child("clients").child(client.getId()).child("name").setValue(name);
+        mDatabaseReference.child("clients").child(client.getId()).child("phone").setValue(phone);
+        mDatabaseReference.child("clients").child(client.getId()).child("adress").setValue(adress);
+        mDatabaseReference.child("clients").child(client.getId()).child("npa").setValue(npa);
+        mDatabaseReference.child("clients").child(client.getId()).child("locality").setValue(locality);
+        mDatabaseReference.child("clients").child(client.getId()).child("country").setValue(country);
+        mDatabaseReference.child("clients").child(client.getId()).child("idpackage").setValue(idpackage);
+
+        Intent intent = new Intent(UpdateClient.this, ListClient.class);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -258,44 +244,10 @@ public class UpdateClient extends AppCompatActivity {
     //Delete the client in the DB
     private void deleteClientDB(final Client client) {
 
-        /*Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
-
-
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                clientRepository.deleteClient(client);
-                e.onComplete();
-            }
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(UpdateClient.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(UpdateClient.this, ListClient.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);*/
-        this.finish();
+        mDatabaseReference.child("clients").child(client.getId()).removeValue();
+        Intent intent = new Intent(UpdateClient.this, ListClient.class);
+        startActivity(intent);
+        finish();
 
 
     }

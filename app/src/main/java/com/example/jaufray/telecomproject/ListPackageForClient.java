@@ -1,21 +1,24 @@
 package com.example.jaufray.telecomproject;
 
-import android.app.*;
+
 import android.content.Intent;
 import android.os.*;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
 import com.example.jaufray.telecomproject.Model.Package;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.*;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.*;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by danie on 24.04.2018.
@@ -26,8 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ListPackageForClient extends AppCompatActivity {
 
     private ListView list_package;
-    //Database
-    private CompositeDisposable compositeDisposable;
+
 
     //Adapter
     private List<Package> packageList = new ArrayList<Package>();
@@ -40,7 +42,9 @@ public class ListPackageForClient extends AppCompatActivity {
     private String clientLocality;
     private String clientCountry;
 
-
+//Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,6 @@ public class ListPackageForClient extends AppCompatActivity {
         final Intent intent = getIntent();
         //intent.putExtra("PackageForClient", (Serializable) packages);
 
-        compositeDisposable = new CompositeDisposable();
 
         //Init View
         list_package = (ListView) findViewById(R.id.package_list_client);
@@ -68,10 +71,9 @@ public class ListPackageForClient extends AppCompatActivity {
         registerForContextMenu(list_package);
         list_package.setAdapter(adapter);
 
-        //Database
-
-        //Load all data from DB
-        loadData();
+        //Firebase
+        initFirebase();
+        addFirebaseListener();
 
         //Click on one package
         list_package.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,28 +96,39 @@ public class ListPackageForClient extends AppCompatActivity {
 
 
 
-    //Load pacakges from DB
-    private void loadData() {
+    private void addFirebaseListener() {
+        mDatabaseReference.child("packages").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Retrieve data from firebase
+            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (packageList.size() > 0) {
+                    packageList.clear();
+                }
 
-        //Use RxJava
-     /*   Disposable disposable = packageRepository.getAllPackages()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<Package>>() {
-                               @Override
-                               public void accept(List<Package> packages) throws Exception{
-                                   onGetAllPackageSuccess(packages);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(ListPackageForClient.this, "" + throwable.getMessage() , Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);*/
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Package aPackage = postSnapshot.getValue(Package.class);
+                    packageList.add(aPackage);
+                }
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
     }
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
+    }
+
     //Put packages in arraylist
     private void onGetAllPackageSuccess(List<Package> packages) {
         packageList.clear();

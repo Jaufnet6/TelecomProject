@@ -6,29 +6,23 @@ import android.arch.persistence.room.Ignore;
 
 import java.io.Serializable;
 
-/*@Entity(tableName = "package_service_join",
-        primaryKeys = { "packageJoinID", "serviceJoinID" },
-        foreignKeys = {
-                @ForeignKey(entity = Package.class,
-                        parentColumns = "idPackage",
-                        childColumns = "packageJoinID"),
-                @ForeignKey(entity = Service.class,
-                        parentColumns = "idService",
-                        childColumns = "serviceJoinID")
-        })*/
+
 public class PackageServiceJoin implements Serializable {
 
+    public String id;
 
-//    @ColumnInfo(name = "packageJoinID")
     public final String packageID;
 
-  //  @ColumnInfo(name = "serviceJoinID")
+
     public final String serviceID;
 
-    public PackageServiceJoin(final String packageID, final String serviceID) {
+    public PackageServiceJoin(String id, final String packageID, final String serviceID) {
+        this.id = id;
         this.packageID = packageID;
         this.serviceID = serviceID;
     }
-
+    public String getId() {
+        return id;
+    }
 
 }

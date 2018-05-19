@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,12 @@ import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +49,9 @@ public class EditListPackageForClient extends AppCompatActivity {
     private String clientCountry;
 
     private Client client;
-
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
 
@@ -73,10 +82,10 @@ public class EditListPackageForClient extends AppCompatActivity {
         registerForContextMenu(list_package);
         list_package.setAdapter(adapter);
 
-        //Database
 
-        //Load all data from DB
-        loadData();
+        //Firebase
+        initFirebase();
+        addFirebaseListener();
 
 
         //Click on 1 package
@@ -99,30 +108,40 @@ public class EditListPackageForClient extends AppCompatActivity {
         });
     }
 
+    private void addFirebaseListener() {
+        mDatabaseReference.child("packages").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Retrieve data from firebase
+            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (packageList.size() > 0) {
+                    packageList.clear();
+                }
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Package aPackage = postSnapshot.getValue(Package.class);
+                    packageList.add(aPackage);
+                }
+                adapter.notifyDataSetChanged();
 
 
-    //load packages the user can choose for client
-    private void loadData() {
+            }
 
-        //Use RxJava
-   /*     Disposable disposable = packageRepository.getAllPackages()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<Package>>() {
-                               @Override
-                               public void accept(List<Package> packages) throws Exception{
-                                   onGetAllPackageSuccess(packages);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(EditListPackageForClient.this, "" + throwable.getMessage() , Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);*/
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
     }
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
+    }
+
+
     //put packages in arraylist
     private void onGetAllPackageSuccess(List<Package> packages) {
         packageList.clear();
