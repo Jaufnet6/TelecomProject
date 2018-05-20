@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,12 @@ import android.widget.Toast;
 
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,8 +34,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
 
     private ListView list_services;
 
-    //Database
-    private CompositeDisposable compositeDisposable;
+
 
     //Adapter
     private List<Service> serviceList = new ArrayList<Service>();
@@ -39,6 +45,10 @@ public class EditListServiceForPackage extends AppCompatActivity {
 
     private String namePackage;
     private Integer pricePackage;
+
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +69,6 @@ public class EditListServiceForPackage extends AppCompatActivity {
 
 
 
-        // Init
-        compositeDisposable = new CompositeDisposable();
 
         // Init View
         list_services = (ListView) findViewById(R.id.service_list_package);
@@ -69,10 +77,11 @@ public class EditListServiceForPackage extends AppCompatActivity {
         registerForContextMenu(list_services);
         list_services.setAdapter(adapter);
 
-        //Database
 
-        //Load all data from DB
-        loadData();
+        //Firebase
+        initFirebase();
+        addFirebaseListener();
+
 
         //Click on one service
         list_services.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,33 +101,38 @@ public class EditListServiceForPackage extends AppCompatActivity {
     }
 
     //Get list of services the user can choose for the package
-    private void loadData() {
+    private void addFirebaseListener() {
+        mDatabaseReference.child("services").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Retrieve data from firebase
+            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (serviceList.size() > 0) {
+                    serviceList.clear();
+                }
 
-        //Use RxJava
-    /*    Disposable disposable = serviceRepository.getAllServices()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<Service>>() {
-                               @Override
-                               public void accept(List<Service> services) throws Exception{
-                                   onGetAllServiceSuccess(services);
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(EditListServiceForPackage.this, "" + throwable.getMessage() , Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);*/
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Service service = postSnapshot.getValue(Service.class);
+                    serviceList.add(service);
+                }
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
     }
-    //Put list service in arraylist
-    private void onGetAllServiceSuccess(List<Service> services) {
-        serviceList.clear();
-        serviceList.addAll(services);
-        adapter.notifyDataSetChanged();
 
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
     }
 
 

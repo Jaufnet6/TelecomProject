@@ -50,7 +50,6 @@ public class UpdatePackage extends AppCompatActivity {
 
     private ArrayAdapter adapter;
 
-    private CompositeDisposable compositeDisposable;
 
 
     @Override
@@ -86,50 +85,8 @@ public class UpdatePackage extends AppCompatActivity {
         service_list.setAdapter(adapter);
 
 
-        // Init
-        compositeDisposable = new CompositeDisposable();
-
-        //Database
 
 
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-        menu.setHeaderTitle("Select action :");
-        menu.add(Menu.NONE,0, Menu.NONE, "Delete");
-
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        final Service service = listService.get(info.position);
-
-        switch (item.getItemId())
-        {
-            case 0: //Delete
-            {
-                new AlertDialog.Builder(UpdatePackage.this)
-                        .setMessage("Do you want to delete ? " + service.getName().toString())
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                listService.remove(service);
-                                adapter.notifyDataSetChanged();
-                            }
-                        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).create().show();
-            }
-            break;
-        }
-        return true;
     }
 
     public void savePackageUpdate(View view){
@@ -159,48 +116,9 @@ public class UpdatePackage extends AppCompatActivity {
             return;
         }
 
+        //SavePackage
 
 
-     /*   Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
-
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-
-                deleteLinkPackageToService();
-
-                packages.setName(namePackage);
-                packages.setPrice(pricePackage);
-              //  packageRepository.updatePackage(packages);
-                e.onComplete();
-                addDataLinkService();
-            }
-
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-                                   Toast.makeText(UpdatePackage.this, "Package added!", Toast.LENGTH_SHORT).show();
-                               }
-                           },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(UpdatePackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        ,
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(UpdatePackage.this, ListPackages.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                );
-*/
         this.finish();
     }
 
@@ -211,39 +129,7 @@ public class UpdatePackage extends AppCompatActivity {
 
 
         for(Service s : listService){
-         //   final PackageServiceJoin packServ = new PackageServiceJoin(id, s.getId());
 
-
-            /*Disposable disposable = Observable.create(new ObservableOnSubscribe<Object>() {
-
-                public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                    packageServiceJoinRepository.insert(packServ);
-                    e.onComplete();
-                }
-
-            })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Consumer() {
-                                   @Override
-                                   public void accept(Object o) throws Exception {
-                                       Toast.makeText(UpdatePackage.this, "Package added!", Toast.LENGTH_SHORT).show();
-                                   }
-                               },
-                            new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    Toast.makeText(UpdatePackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            ,
-
-                            new Action() {
-                                @Override
-                                public void run() throws Exception {
-                                }
-                            }
-                    );*/
 
         }
     }
@@ -290,52 +176,7 @@ public class UpdatePackage extends AppCompatActivity {
     //delete package
     private void deletePackage(){
 
-      /*  Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
 
-
-            @Override
-            public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                //Call method to delete all the rows in the table linking the package to the service where there is the idPackage
-                deleteLinkPackageToService();
-                //Give some time to delete to the DB
-                try{
-                    Thread.sleep(50);
-                }catch (Exception ex){
-
-                }
-                packageRepository.deletePackage(packages);
-                e.onComplete();
-
-            }
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer() {
-                               @Override
-                               public void accept(Object o) throws Exception {
-
-                               }
-                           },
-
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(UpdatePackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        },
-
-                        new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                Intent intent = new Intent(UpdatePackage.this, ListPackages.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-
-                );
-
-        compositeDisposable.add(disposable);*/
 
     }
 
@@ -344,42 +185,7 @@ public class UpdatePackage extends AppCompatActivity {
 
         for(Service s : listService){
 
-          //  final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
 
-           /* Disposable disposable = io.reactivex.Observable.create(new ObservableOnSubscribe<Object>() {
-
-
-                @Override
-                public void subscribe(ObservableEmitter<Object> e) throws Exception {
-                    packageServiceJoinRepository.deletePackageServiceJoin(packServ);
-                    e.onComplete();
-                }
-            })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Consumer() {
-                                   @Override
-                                   public void accept(Object o) throws Exception {
-
-                                   }
-                               },
-
-                            new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    Toast.makeText(UpdatePackage.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            },
-
-                            new Action() {
-                                @Override
-                                public void run() throws Exception {
-                                }
-                            }
-
-                    );
-
-            compositeDisposable.add(disposable);*/
 
         }
 

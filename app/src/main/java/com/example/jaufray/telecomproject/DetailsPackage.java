@@ -99,8 +99,6 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
         loadServicesForPackage();
 
-
-
     }
 
     //Firebase initialization
@@ -115,8 +113,6 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
     //Get all services for the package
     private void loadServicesForPackage() {
 
-
-
         mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
             @Override
             //Retrieve data from firebase
@@ -127,21 +123,20 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                 }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
+                    final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
                     if(packageServiceJoin.packageID == packages.getId()){
 
-                        final String idService = packageServiceJoin.serviceID;
                         //Search in the Service
                         mDatabaseReference.child("services").addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for(DataSnapshot postSnapshot : dataSnapshot.getChildren())
+                            public void onDataChange(DataSnapshot dataSnapshot2) {
+                                for(DataSnapshot postSnapshot2 : dataSnapshot2.getChildren())
                                 {
-                                    Service service = postSnapshot.getValue(Service.class);
-                                    if(service.getId() == idService)
+                                    Service service = postSnapshot2.getValue(Service.class);
+                                    if(service.getId() == packageServiceJoin.serviceID)
                                     {
-                                        ;
                                         listOfServices.add(service);
+                                        break;
                                     }
                                 }
                             }
@@ -168,32 +163,6 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
     }
 
-    public void getService(final String idService)
-    {
-
-        mDatabaseReference.child("services").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren())
-                {
-                    Service service = postSnapshot.getValue(Service.class);
-                    if(service.getId() == idService)
-                    {
-                        final String nameService = service.getName();
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-    }
 
     //Drawer top button
     @Override

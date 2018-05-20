@@ -1,36 +1,21 @@
 package com.example.jaufray.telecomproject.Model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
-
 import java.io.Serializable;
 
-import io.reactivex.annotations.NonNull;
-
-//@Entity(tableName = "packages")
 public class Package implements Serializable {
 
-
-   /* @NonNull
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idPackage")*/
     private String id;
 
-   // @ColumnInfo(name = "name")
+
     private String name;
 
-   // @ColumnInfo(name = "price")
+
     private int price;
 
     public Package(){
 
     }
 
-  //  @Ignore
     public Package(String UID, String name, int price) {
         this.id = UID;
         this.name = name;
@@ -61,7 +46,8 @@ public class Package implements Serializable {
         this.price = price;
     }
 
-   // @Override
+
+    @Override
     public String toString() {
         return name;
     }

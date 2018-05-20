@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,20 +14,11 @@ import android.widget.Toast;
 import com.example.jaufray.telecomproject.Model.Client;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.Serializable;
-import java.util.List;
-
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import com.google.firebase.database.ValueEventListener;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -52,8 +44,6 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
     private Client client;
     private Package clientpack = new Package();
-
-    private CompositeDisposable compositeDisposable;
 
     private DrawerLayout mDrawerLayout;
     //Class to tie the functionnality of DraweLayout and the framework ActionBar
@@ -83,12 +73,11 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
         //get the client that was given when clicked in the list
         client = (Client) intent.getSerializableExtra("DetailsClient");
-        idPack = client.getIdPackage();
+        //idPack = client.getIdPackage();
+
+        getPackageOfClient(client.getIdPackage());
 
 
-        try {
-            Thread.sleep(30);
-        } catch (Exception ex){}
 
         //Link to TextViews in the activity
         nameClient = (TextView)findViewById(R.id.dt_name);
@@ -107,9 +96,8 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         NPAClient.setText(client.getNpa());
         localityClient.setText(client.getLocality());
         countryClient.setText(client.getCountry());
-
-        // Init
-        compositeDisposable = new CompositeDisposable();
+        pricePackage.setText(clientpack.getPrice());
+        namePackage.setText(clientpack.getName());
 
 
     }
@@ -128,6 +116,37 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    private void getPackageOfClient(final String id) {
+
+        mDatabaseReference.child("packages").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Retrieve data from firebase
+            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    Package aPackage = postSnapshot.getValue(Package.class);
+                    if(aPackage.getId() == id){
+                        assignPackage(aPackage);
+                        break;
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    public void assignPackage(Package thePackage){
+        clientpack = thePackage;
     }
 
 
@@ -215,9 +234,10 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
     }
     //Delete client in DB
     private void deleteClientDB(final Client client) {
-
-
-        this.finish();
+        mDatabaseReference.child("clients").child(client.getId()).removeValue();
+        Intent intent = new Intent(DetailsClient.this, ListClient.class);
+        startActivity(intent);
+        finish();
 
 
     }

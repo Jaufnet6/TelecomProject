@@ -55,6 +55,7 @@ public class UpdateClient extends AppCompatActivity {
     //Firebase
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,29 +71,29 @@ public class UpdateClient extends AppCompatActivity {
         clientLocality = (String) intent.getStringExtra("clientLocality");
         clientCountry = (String) intent.getStringExtra("clientCountry");
 
-        if(clientName == null)
+        if (clientName == null)
             clientName = client.getName();
-        if(clientPhone == null)
+        if (clientPhone == null)
             clientPhone = client.getPhone();
-        if(clientAddress == null)
+        if (clientAddress == null)
             clientAddress = client.getAddress();
-        if(clientNPA == null)
+        if (clientNPA == null)
             clientNPA = client.getNpa();
-        if(clientLocality == null)
+        if (clientLocality == null)
             clientLocality = client.getLocality();
-        if(clientCountry == null)
+        if (clientCountry == null)
             clientCountry = client.getCountry();
 
 
         //Connect to Activity
-        nameClient = (EditText)findViewById(R.id.et_name);
-        phoneClient = (EditText)findViewById(R.id.et_phoneNumber);
-        addressClient = (EditText)findViewById(R.id.et_street);
-        NPAClient = (EditText)findViewById(R.id.et_npa);
-        localityClient = (EditText)findViewById(R.id.et_city);
-        countryClient = (EditText)findViewById(R.id.et_country);
-        pricePackage = (TextView)findViewById(R.id.dt_price_package);
-        namePackage = (TextView)findViewById(R.id.dt_name_package) ;
+        nameClient = (EditText) findViewById(R.id.et_name);
+        phoneClient = (EditText) findViewById(R.id.et_phoneNumber);
+        addressClient = (EditText) findViewById(R.id.et_street);
+        NPAClient = (EditText) findViewById(R.id.et_npa);
+        localityClient = (EditText) findViewById(R.id.et_city);
+        countryClient = (EditText) findViewById(R.id.et_country);
+        pricePackage = (TextView) findViewById(R.id.dt_price_package);
+        namePackage = (TextView) findViewById(R.id.dt_name_package);
 
         nameClient.setText(clientName);
         phoneClient.setText(clientPhone);
@@ -108,8 +109,8 @@ public class UpdateClient extends AppCompatActivity {
         initFirebase();
 
 
-
     }
+
     //Firebase initialization
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
@@ -118,7 +119,8 @@ public class UpdateClient extends AppCompatActivity {
         mDatabaseReference = mFirebaseDatabase.getReference();
 
     }
-    public void modifyClientPackage(View view){
+
+    public void modifyClientPackage(View view) {
 
         getUserInput();
         Intent intent = new Intent(UpdateClient.this, EditListPackageForClient.class);
@@ -136,7 +138,7 @@ public class UpdateClient extends AppCompatActivity {
 
     }
 
-    public void getUserInput(){
+    public void getUserInput() {
 
         clientName = nameClient.getText().toString();
         clientPhone = phoneClient.getText().toString();
@@ -179,23 +181,23 @@ public class UpdateClient extends AppCompatActivity {
         }
 
 
+        //Rechecking to make sure the values were taken
+        getUserInput();
 
-                //Rechecking to make sure the values were taken
-                getUserInput();
+        try {
+            Thread.sleep(500);
+        } catch (Exception ex) {
+        }
+        client.setName(clientName);
+        client.setPhone(clientPhone);
+        client.setAddress(clientAddress);
+        client.setNpa(clientNPA);
+        client.setLocality(clientLocality);
+        client.setCountry(clientCountry);
+        client.setIdPackage(packageClient.getId());
 
-                try {
-                    Thread.sleep(500);
-                } catch(Exception ex){}
-                client.setName(clientName);
-                client.setPhone(clientPhone);
-                client.setAddress(clientAddress);
-                client.setNpa(clientNPA);
-                client.setLocality(clientLocality);
-                client.setCountry(clientCountry);
-                client.setIdPackage(packageClient.getId());
-
-                //Update client
-                updateClient(clientName, clientPhone, clientAddress, clientNPA, clientLocality,clientCountry,packageClient.getId());
+        //Update client
+        updateClient(clientName, clientPhone, clientAddress, clientNPA, clientLocality, clientCountry, packageClient.getId());
     }
 
     private void updateClient(String name, String phone, String adress, String npa, String locality, String country, String idpackage) {
@@ -214,7 +216,7 @@ public class UpdateClient extends AppCompatActivity {
     }
 
 
-    public void cancelClientModified (View view){
+    public void cancelClientModified(View view) {
         Intent intent = new Intent(UpdateClient.this, ListClient.class);
         finish();
         startActivity(intent);
@@ -222,7 +224,7 @@ public class UpdateClient extends AppCompatActivity {
 
     }
 
-    public void deleteClientModified(View view){
+    public void deleteClientModified(View view) {
 
         new AlertDialog.Builder(UpdateClient.this)
                 .setMessage("Do you want to delete ? " + client.getName().toString())
@@ -251,8 +253,6 @@ public class UpdateClient extends AppCompatActivity {
 
 
     }
-
-
 
 
 }
