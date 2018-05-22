@@ -122,26 +122,21 @@ public class AddPackage extends AppCompatActivity {
 
         packageName = namePackage.getText().toString();
 
-        try {
-            packagePrice = Integer.parseInt(pricePackage.getText().toString());
-        } catch (NumberFormatException ex) {
+        if (packagePrice == 0){
             int total = 0;
             for (Service s : servicesList)
-                total = +s.getPrice();
-
-
+                total += s.getPrice();
             packagePrice = total;
+        } else {
+            packagePrice = Integer.parseInt(pricePackage.getText().toString());
         }
+
 
         if (TextUtils.isEmpty(packageName)) {
             namePackage.setError("Cannot be empty");
             return;
         }
 
-        if (packagePrice == 0) {
-            Toast.makeText(AddPackage.this, "Please enter a price", Toast.LENGTH_LONG).show();
-            return;
-        }
 
         Package packages = new Package(UUID.randomUUID().toString(), packageName, packagePrice);
         //add package to database

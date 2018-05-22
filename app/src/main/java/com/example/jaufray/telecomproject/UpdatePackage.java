@@ -76,7 +76,8 @@ public class UpdatePackage extends AppCompatActivity {
         //retrieve needed data
         packages = (Package) intent.getSerializableExtra("packageToModify");
         listService = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
-        removedServices = (ArrayList<Service>) intent.getSerializableExtra("removedServiceForPackage");
+        if((ArrayList<Service>) intent.getSerializableExtra("removedServiceForPackage") != null)
+            removedServices = (ArrayList<Service>) intent.getSerializableExtra("removedServiceForPackage");
         namePackage = (String) intent.getStringExtra("packageName");
         pricePackage = (Integer) intent.getIntExtra("packagePrice", 0);
 
@@ -111,11 +112,7 @@ public class UpdatePackage extends AppCompatActivity {
     }
 
     public void savePackageUpdate(View view){
-
-
         namePackage = edtName.getText().toString();
-
-
         try{
             pricePackage = Integer.parseInt(edtPrice.getText().toString());
         } catch (NumberFormatException ex){
@@ -124,8 +121,6 @@ public class UpdatePackage extends AppCompatActivity {
                 total =+ s.getPrice();
             pricePackage = total;
         }
-
-
 
         if(TextUtils.isEmpty(namePackage)) {
             edtName.setError("Cannot be empty");
@@ -148,43 +143,67 @@ public class UpdatePackage extends AppCompatActivity {
 
     private void removeDeletedServices(){
 
-        for(Service s: removedServices){
-            final String sId = s.getId();
+        if(removedServices.size()>0){
+            for(Service s: removedServices){
+                final String sId = s.getId();
 
-            mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
-                @Override
-                //Go to join table and delete
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
-                        if(packageServiceJoin.serviceID.equals(sId)){
-                            mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).removeValue();
+                mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    //Go to join table and delete
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
+                            if(packageServiceJoin.serviceID.equals(sId)){
+                                mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).removeValue();
+                            }
+
                         }
 
                     }
 
-                }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("LoadPost:onCancelled", databaseError.toException());
+                    }
+                });
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.w("LoadPost:onCancelled", databaseError.toException());
-                }
-            });
-
-
-
+            }
         }
+
+
 
     }
 
     private void addJoinEntry(){
 
-        for (Service s : listService) {
-            String idService = s.getId();
-            PackageServiceJoin packageServiceJoin = new PackageServiceJoin(UUID.randomUUID().toString(), packages.getId(), s.getId());
-            mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).setValue(packageServiceJoin);
+        final ArrayList<String> oldList = new ArrayList<>();
+        mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    PackageServiceJoin join = postSnapshot.getValue(PackageServiceJoin.class);
+                    if(packages.getId().equals(join.packageID))
+                        oldList.add(join.serviceID);
+                }
+                outerloop:
+                for (Service s : listService) {
+                    for(String id : oldList){
+                        if(s.getId().equals(id)){
+                            listService.remove(s);
+                            continue outerloop;
+                        }
+                    }
+                    PackageServiceJoin packageServiceJoin = new PackageServiceJoin(UUID.randomUUID().toString(), packages.getId(), s.getId());
+                    mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).setValue(packageServiceJoin);
+                }
 
-        }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -222,7 +241,7 @@ public class UpdatePackage extends AppCompatActivity {
 
     }
 
-    //pressing on delete or update
+    //pressing on delete
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -239,6 +258,7 @@ public class UpdatePackage extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 removedServices.add(service);
                                 listService.remove(service);
+                                adapter.notifyDataSetChanged();
                             }
                         }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override

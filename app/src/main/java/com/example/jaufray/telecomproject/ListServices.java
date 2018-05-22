@@ -182,16 +182,6 @@ public class ListServices extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
-    //put retrieve services in list connected to adapter and listview
-    private void onGetAllServiceSuccess(List<Service> services) {
-        serviceList.clear();
-        serviceList.addAll(services);
-        adapter.notifyDataSetChanged();
-
-
-    }
-
     //Add a service button
     public void changeToCreateService(View view) {
         Intent intent = new Intent(ListServices.this, AddService.class);
