@@ -67,12 +67,12 @@ public class AddPackage extends AppCompatActivity {
         packageName = (String) intent.getStringExtra("packageName");
         packagePrice = (Integer) intent.getIntExtra("packagePrice", 0);
 
-        if(packageName != null)
+        if (packageName != null)
             namePackage.setText(packageName);
-        if(packagePrice != null)
+        if (packagePrice != null)
             pricePackage.setText(String.valueOf(packagePrice));
 
-        if(servicesList == null){
+        if (servicesList == null) {
             servicesList = new ArrayList<Service>();
         }
 
@@ -94,14 +94,14 @@ public class AddPackage extends AppCompatActivity {
     }
 
     //Go and choose service for package
-    public void openListServices(View view){
+    public void openListServices(View view) {
 
 
         packageName = namePackage.getText().toString();
 
-        try{
+        try {
             packagePrice = Integer.parseInt(pricePackage.getText().toString());
-        } catch (NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             packagePrice = 0;
         }
 
@@ -122,28 +122,28 @@ public class AddPackage extends AppCompatActivity {
 
         packageName = namePackage.getText().toString();
 
-        try{
+        try {
             packagePrice = Integer.parseInt(pricePackage.getText().toString());
-        } catch (NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             int total = 0;
-            for(Service s : servicesList)
-                total =+ s.getPrice();
+            for (Service s : servicesList)
+                total = +s.getPrice();
 
 
             packagePrice = total;
         }
 
-        if(TextUtils.isEmpty(packageName)) {
+        if (TextUtils.isEmpty(packageName)) {
             namePackage.setError("Cannot be empty");
             return;
         }
 
-        if(packagePrice == 0){
+        if (packagePrice == 0) {
             Toast.makeText(AddPackage.this, "Please enter a price", Toast.LENGTH_LONG).show();
             return;
         }
 
-        Package packages = new Package(UUID.randomUUID().toString(),packageName,packagePrice);
+        Package packages = new Package(UUID.randomUUID().toString(), packageName, packagePrice);
         //add package to database
         mDatabaseReference.child("packages").child(packages.getId()).setValue(packages);
         Intent intent = new Intent(AddPackage.this, ListPackages.class);
@@ -152,14 +152,11 @@ public class AddPackage extends AppCompatActivity {
         addDataLinkService(packages);
     }
 
-    public void addDataLinkService(Package packages)
-    {
-        for(Service s : servicesList){
-           String idService = s.getId();
-
-
-        PackageServiceJoin packageServiceJoin = new PackageServiceJoin(UUID.randomUUID().toString(), packages.getId(), s.getId());
-        mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).setValue(packageServiceJoin);
+    public void addDataLinkService(Package packages) {
+        for (Service s : servicesList) {
+            String idService = s.getId();
+            PackageServiceJoin packageServiceJoin = new PackageServiceJoin(UUID.randomUUID().toString(), packages.getId(), s.getId());
+            mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).setValue(packageServiceJoin);
 
         }
     }

@@ -208,7 +208,7 @@ public class UpdateClient extends AppCompatActivity {
         mDatabaseReference.child("clients").child(client.getId()).child("npa").setValue(npa);
         mDatabaseReference.child("clients").child(client.getId()).child("locality").setValue(locality);
         mDatabaseReference.child("clients").child(client.getId()).child("country").setValue(country);
-        mDatabaseReference.child("clients").child(client.getId()).child("idpackage").setValue(idpackage);
+        mDatabaseReference.child("clients").child(client.getId()).child("idPackage").setValue(idpackage);
 
         Intent intent = new Intent(UpdateClient.this, ListClient.class);
         startActivity(intent);

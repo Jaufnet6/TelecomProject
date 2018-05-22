@@ -124,21 +124,15 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
-                    if(packageServiceJoin.packageID == packages.getId()){
+                    if(packageServiceJoin.packageID.equals(packages.getId())){
 
-                        //Search in the Service
-                        mDatabaseReference.child("services").addValueEventListener(new ValueEventListener() {
+
+                        mDatabaseReference.child("services").child(packageServiceJoin.serviceID).addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onDataChange(DataSnapshot dataSnapshot2) {
-                                for(DataSnapshot postSnapshot2 : dataSnapshot2.getChildren())
-                                {
-                                    Service service = postSnapshot2.getValue(Service.class);
-                                    if(service.getId() == packageServiceJoin.serviceID)
-                                    {
-                                        listOfServices.add(service);
-                                        break;
-                                    }
-                                }
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Service service = dataSnapshot.getValue(Service.class);
+                                listOfServices.add(service);
+                                adapter.notifyDataSetChanged();
                             }
 
                             @Override
@@ -150,7 +144,6 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                     }
 
                 }
-                adapter.notifyDataSetChanged();
 
 
             }
@@ -248,6 +241,9 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                     public void onClick(DialogInterface dialogInterface, int i) {
                         deleteServiceForPackage();
                         deletePackage();
+                        Intent intent = new Intent(DetailsPackage.this, ListPackages.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -261,27 +257,33 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
 
     private void deleteServiceForPackage(){
 
+        mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Go to join table and delete
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
+                    if(packageServiceJoin.packageID.equals(packages.getId())){
+                        mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).removeValue();
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
+
+
     }
 
     //Delete from DB
     private void deletePackage(){
-
-
-
-    }
-
-    //Delete all rows in join table where idPackage exists
-    private void deleteLinkPackageToService() {
-
-        for(Service s : listOfServices){
-
-            //final PackageServiceJoin packServ = new PackageServiceJoin(packages.getId(), s.getId());
-
-
-
-        }
-
-
+        mDatabaseReference.child("packages").child(packages.getId()).removeValue();
     }
 
 

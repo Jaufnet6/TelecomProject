@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,9 +23,16 @@ import android.widget.Toast;
 import com.example.jaufray.telecomproject.Model.Package;
 import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -44,13 +52,16 @@ public class UpdatePackage extends AppCompatActivity {
 
     private String namePackage;
     private ArrayList<Service> listService;
+    private ArrayList<Service> removedServices = new ArrayList<>();
     private Integer pricePackage;
 
     private Package packages;
 
     private ArrayAdapter adapter;
 
-
+    //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +76,7 @@ public class UpdatePackage extends AppCompatActivity {
         //retrieve needed data
         packages = (Package) intent.getSerializableExtra("packageToModify");
         listService = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
+        removedServices = (ArrayList<Service>) intent.getSerializableExtra("removedServiceForPackage");
         namePackage = (String) intent.getStringExtra("packageName");
         pricePackage = (Integer) intent.getIntExtra("packagePrice", 0);
 
@@ -84,8 +96,17 @@ public class UpdatePackage extends AppCompatActivity {
         registerForContextMenu(service_list);
         service_list.setAdapter(adapter);
 
+        initFirebase();
 
 
+    }
+
+    //Firebase initialization
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        //Get firebase instance
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
 
     }
 
@@ -117,21 +138,59 @@ public class UpdatePackage extends AppCompatActivity {
         }
 
         //SavePackage
-
-
+        removeDeletedServices();
+        addJoinEntry();
+        updatePackage();
+        Intent intent = new Intent(UpdatePackage.this, ListPackages.class);
+        startActivity(intent);
         this.finish();
     }
 
-    //Create a row in the table between package and service for the many to many relation
-    public void addDataLinkService(){
+    private void removeDeletedServices(){
 
-        String id = packages.getId();
+        for(Service s: removedServices){
+            final String sId = s.getId();
 
+            mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
+                @Override
+                //Go to join table and delete
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
+                        if(packageServiceJoin.serviceID.equals(sId)){
+                            mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).removeValue();
+                        }
 
-        for(Service s : listService){
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("LoadPost:onCancelled", databaseError.toException());
+                }
+            });
+
 
 
         }
+
+    }
+
+    private void addJoinEntry(){
+
+        for (Service s : listService) {
+            String idService = s.getId();
+            PackageServiceJoin packageServiceJoin = new PackageServiceJoin(UUID.randomUUID().toString(), packages.getId(), s.getId());
+            mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).setValue(packageServiceJoin);
+
+        }
+
+    }
+
+    private void updatePackage(){
+        mDatabaseReference.child("packages").child(packages.getId()).child("name").setValue(namePackage);
+        mDatabaseReference.child("packages").child(packages.getId()).child("price").setValue(pricePackage);
     }
 
     public void addServicesToPackage(View view) {
@@ -141,6 +200,7 @@ public class UpdatePackage extends AppCompatActivity {
 
         Intent intent = new Intent(UpdatePackage.this, EditListServiceForPackage.class);
         intent.putExtra("serviceForPackage", (Serializable) listService);
+        intent.putExtra("removedServiceForPackage", (Serializable) removedServices);
         intent.putExtra("packageToEdit", packages);
         intent.putExtra("packageName", namePackage);
         intent.putExtra("packagePrice", pricePackage);
@@ -149,6 +209,47 @@ public class UpdatePackage extends AppCompatActivity {
         finish();
 
 
+    }
+
+    //Update and delete long click
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        menu.setHeaderTitle("Select action :");
+        menu.add(Menu.NONE, 0, Menu.NONE, "Delete");
+
+
+    }
+
+    //pressing on delete or update
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final Service service = listService.get(info.position);
+
+        switch (item.getItemId()) {
+
+            case 0: //Delete
+            {
+                new AlertDialog.Builder(UpdatePackage.this)
+                        .setMessage("Do you want to delete ? " + service.getName().toString())
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                removedServices.add(service);
+                                listService.remove(service);
+                            }
+                        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).create().show();
+            }
+            break;
+        }
+        return true;
     }
 
     public void cancelPackageUpdate (View view){
@@ -163,7 +264,11 @@ public class UpdatePackage extends AppCompatActivity {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteServiceForPackage();
                         deletePackage();
+                        Intent intent = new Intent(UpdatePackage.this, ListPackages.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -173,22 +278,35 @@ public class UpdatePackage extends AppCompatActivity {
         }).create().show();
     }
 
-    //delete package
+    private void deleteServiceForPackage(){
+
+        mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Go to join table and delete
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
+                    if(packageServiceJoin.packageID.equals(packages.getId())){
+                        mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).removeValue();
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
+
+
+    }
+
+    //Delete from DB
     private void deletePackage(){
-
-
-
+        mDatabaseReference.child("packages").child(packages.getId()).removeValue();
     }
 
-    //Method to delete all rows in the middle table between package and service where the idPackage is present
-    private void deleteLinkPackageToService() {
-
-        for(Service s : listService){
-
-
-
-        }
-
-
-    }
 }

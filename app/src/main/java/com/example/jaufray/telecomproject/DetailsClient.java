@@ -39,11 +39,8 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
     private TextView namePackage;
     private TextView pricePackage;
 
-
-    private String idPack;
-
     private Client client;
-    private Package clientpack = new Package();
+    private Package clientpack;
 
     private DrawerLayout mDrawerLayout;
     //Class to tie the functionnality of DraweLayout and the framework ActionBar
@@ -73,7 +70,6 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
         //get the client that was given when clicked in the list
         client = (Client) intent.getSerializableExtra("DetailsClient");
-        //idPack = client.getIdPackage();
 
         getPackageOfClient(client.getIdPackage());
 
@@ -96,8 +92,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         NPAClient.setText(client.getNpa());
         localityClient.setText(client.getLocality());
         countryClient.setText(client.getCountry());
-        pricePackage.setText(clientpack.getPrice());
-        namePackage.setText(clientpack.getName());
+
 
 
     }
@@ -118,29 +113,21 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
     }
 
-    private void getPackageOfClient(final String id) {
+    private void getPackageOfClient(String id) {
 
-        mDatabaseReference.child("packages").addValueEventListener(new ValueEventListener() {
+        final Package aPackage;
+
+        mDatabaseReference.child("packages").child(id).addValueEventListener(new ValueEventListener() {
             @Override
-            //Retrieve data from firebase
-            //DataSnapShot : contient les données provenant d'un emplacement de bd Firebase - on recoit les données en tant que DataSnapShot
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                    Package aPackage = postSnapshot.getValue(Package.class);
-                    if(aPackage.getId() == id){
-                        assignPackage(aPackage);
-                        break;
-                    }
-
-                }
-
+                clientpack = dataSnapshot.getValue(Package.class);
+                pricePackage.setText(Integer.toString(clientpack.getPrice()));
+                namePackage.setText(clientpack.getName());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w("LoadPost:onCancelled", databaseError.toException());
+
             }
         });
     }

@@ -40,6 +40,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
     private List<Service> serviceList = new ArrayList<Service>();
     private ArrayAdapter adapter;
     private List<Service> listToPass;
+    private ArrayList<Service> removedServices = new ArrayList<>();
 
     private Package packages;
 
@@ -57,6 +58,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
         setContentView(R.layout.activity_service_choice_for_package);
         final Intent intent = getIntent();
         listToPass = (ArrayList<Service>) intent.getSerializableExtra("serviceForPackage");
+        removedServices = (ArrayList<Service>) intent.getSerializableExtra("removedServiceForPackage");
         packages = (Package) intent.getSerializableExtra("packageToEdit");
         namePackage = (String) intent.getStringExtra("packageName");
         pricePackage = (Integer) intent.getIntExtra("packagePrice", 0);
@@ -91,6 +93,7 @@ public class EditListServiceForPackage extends AppCompatActivity {
                 listToPass.add(service);
                 Intent intent1 = new Intent(EditListServiceForPackage.this, UpdatePackage.class);
                 intent1.putExtra("serviceForPackage", (Serializable) listToPass);
+                intent1.putExtra("removedServiceForPackage", (Serializable) removedServices);
                 intent1.putExtra("packageToModify", packages);
                 intent1.putExtra("packageName", namePackage);
                 intent1.putExtra("packagePrice", pricePackage);
