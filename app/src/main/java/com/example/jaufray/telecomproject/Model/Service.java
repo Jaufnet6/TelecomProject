@@ -16,26 +16,18 @@ import io.reactivex.annotations.NonNull;
 public class Service implements Serializable {
 
 
-  /*  @NonNull
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idService")*/
-    @Exclude
     private String id;
 
-   // @ColumnInfo(name = "name")
     private String name;
 
-  //  @ColumnInfo(name = "description")
     private String description;
 
-    //@ColumnInfo(name = "price")
     private int price;
 
     public Service(){
 
     }
-
- //   @Ignore
+    
     public Service(String UID, String name, String description, int price) {
         this.id = UID;
         this.name = name;
