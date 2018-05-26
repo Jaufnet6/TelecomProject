@@ -101,8 +101,14 @@ public class UpdateClient extends AppCompatActivity {
         NPAClient.setText(clientNPA);
         localityClient.setText(clientLocality);
         countryClient.setText(clientCountry);
-        pricePackage.setText(packageClient.getPrice() + " CHF");
-        namePackage.setText(packageClient.getName());
+        try{
+            pricePackage.setText(packageClient.getPrice() + " CHF");
+            namePackage.setText(packageClient.getName());
+        }catch (Exception e){
+            pricePackage.setText("");
+            namePackage.setText("");
+        }
+
 
 
 //Firebase

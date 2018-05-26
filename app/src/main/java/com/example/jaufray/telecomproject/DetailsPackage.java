@@ -126,25 +126,28 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
                     final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
                     if(packageServiceJoin.packageID.equals(packages.getId())){
 
+                        try{
+                            mDatabaseReference.child("services").child(packageServiceJoin.serviceID).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Service service = dataSnapshot.getValue(Service.class);
+                                    listOfServices.add(service);
+                                    adapter.notifyDataSetChanged();
+                                }
 
-                        mDatabaseReference.child("services").child(packageServiceJoin.serviceID).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                Service service = dataSnapshot.getValue(Service.class);
-                                listOfServices.add(service);
-                                adapter.notifyDataSetChanged();
-                            }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+                        } catch (Exception e){
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                        }
 
-                            }
-                        });
+
 
                     }
 
                 }
-
 
             }
 

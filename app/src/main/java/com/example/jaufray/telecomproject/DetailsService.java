@@ -11,11 +11,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jaufray.telecomproject.Model.PackageServiceJoin;
 import com.example.jaufray.telecomproject.Model.Service;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -177,9 +180,35 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
     private void deleteService(final Service service) {
 
         mDatabaseReference.child("services").child(service.getId()).removeValue();
+        deleteAllJoins(service);
         Intent intent = new Intent(DetailsService.this, ListServices.class);
         startActivity(intent);
         finish();
+
+    }
+
+    private void deleteAllJoins(final Service service) {
+
+        mDatabaseReference.child("packageServiceJoins").addValueEventListener(new ValueEventListener() {
+            @Override
+            //Go to join table and delete
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    final PackageServiceJoin packageServiceJoin = postSnapshot.getValue(PackageServiceJoin.class);
+                    if(packageServiceJoin.serviceID.equals(service.getId())){
+                        mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).removeValue();
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("LoadPost:onCancelled", databaseError.toException());
+            }
+        });
 
     }
 

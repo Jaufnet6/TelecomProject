@@ -121,8 +121,14 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 clientpack = dataSnapshot.getValue(Package.class);
-                pricePackage.setText(Integer.toString(clientpack.getPrice()));
-                namePackage.setText(clientpack.getName());
+                try {
+                    pricePackage.setText(Integer.toString(clientpack.getPrice()));
+                    namePackage.setText(clientpack.getName());
+                } catch (Exception e){
+                    namePackage.setText("");
+                    pricePackage.setText("");
+                }
+
             }
 
             @Override
