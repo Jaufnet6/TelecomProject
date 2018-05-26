@@ -337,4 +337,12 @@ public class UpdatePackage extends AppCompatActivity {
         mDatabaseReference.child("packages").child(packages.getId()).removeValue();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent1 = new Intent(UpdatePackage.this, DetailsPackage.class);
+        intent1.putExtra("DetailPackages", packages);
+        startActivity(new Intent(intent1));
+        finish();
+    }
+
 }

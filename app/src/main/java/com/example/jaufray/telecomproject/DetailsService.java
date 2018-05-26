@@ -212,5 +212,11 @@ public class DetailsService extends AppCompatActivity implements NavigationView.
 
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(DetailsService.this, ListServices.class));
+        finish();
+    }
+
 
 }

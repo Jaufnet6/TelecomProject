@@ -112,4 +112,8 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 }

@@ -289,6 +289,12 @@ public class DetailsPackage extends AppCompatActivity implements NavigationView.
         mDatabaseReference.child("packages").child(packages.getId()).removeValue();
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(DetailsPackage.this, ListPackages.class));
+        finish();
+    }
+
 
 
 }

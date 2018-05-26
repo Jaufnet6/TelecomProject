@@ -171,5 +171,14 @@ public class UpdateService extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent1 = new Intent(UpdateService.this, DetailsService.class);
+        intent1.putExtra("DetailsService", service);
+        startActivity(new Intent(intent1));
+        finish();
+    }
+
+
 
 }

@@ -260,5 +260,13 @@ public class UpdateClient extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent1 = new Intent(UpdateClient.this, DetailsClient.class);
+        intent1.putExtra("DetailsClient", client);
+        startActivity(new Intent(intent1));
+        finish();
+    }
+
 
 }

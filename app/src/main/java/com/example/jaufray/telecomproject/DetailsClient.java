@@ -235,5 +235,11 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(DetailsClient.this, ListClient.class));
+        finish();
+    }
+
 
 }
