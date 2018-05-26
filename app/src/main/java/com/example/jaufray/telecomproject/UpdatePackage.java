@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.test.espresso.core.internal.deps.guava.collect.Iterators;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import io.reactivex.Observable;
@@ -185,14 +188,19 @@ public class UpdatePackage extends AppCompatActivity {
                     if(packages.getId().equals(join.packageID))
                         oldList.add(join.serviceID);
                 }
+
+                List<Service> toRemove = new ArrayList<Service>();
+
                 outerloop:
                 for (Service s : listService) {
                     for(String id : oldList){
                         if(s.getId().equals(id)){
-                            listService.remove(s);
+                            toRemove.add(s);
                             continue outerloop;
                         }
                     }
+
+                    listService.removeAll(toRemove);
                     PackageServiceJoin packageServiceJoin = new PackageServiceJoin(UUID.randomUUID().toString(), packages.getId(), s.getId());
                     mDatabaseReference.child("packageServiceJoins").child(packageServiceJoin.getId()).setValue(packageServiceJoin);
                 }
