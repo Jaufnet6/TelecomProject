@@ -9,21 +9,23 @@ This app is very simple to use. You can:
 
   - create services
   - create packages with several services 
-  - create clients
+  - create clients with packages
+  - discover where we are located
   
- In order to add a client, You need to create a package, as it is required for a client to be linked to a package.
- In order to add a Package, you need to create at least one service, as services are required when creating packages.
- 
+  All the data is stored on the cloud Firebase.
+  
  On the client list, you can long press on a client to delete it very quicky. 
  In order to edit the client, you need to click on the client and press the edit button.
  
  On the Service list, you can long press on a serve to delete it or edit it very quicky. 
  A second way to edit the service, is to press on the service, a click the edit button.
  
- On the package list, you cannot long press on a package. You need to click on it to fully view the description and be able to edit it.
+ On the package list, you cannot long press on a package. You need to click on it to fully view the description and be able to edit it. You can delete services within the package by long pressing on a service in the update mode.
  
  On each page, except when editing, you can access the drawer menu by click on the top left button or by swipping right from the left edge of the phone.
  There you can access the about and language page. On the language page, you can change the language to french or english. 
+ 
+ On the main menu, you have access to the map where you can see both our stores. 
  
  Hope you enjoy it!
  
