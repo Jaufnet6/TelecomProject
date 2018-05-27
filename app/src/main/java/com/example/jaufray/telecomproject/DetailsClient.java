@@ -122,7 +122,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
             public void onDataChange(DataSnapshot dataSnapshot) {
                 clientpack = dataSnapshot.getValue(Package.class);
                 try {
-                    pricePackage.setText(Integer.toString(clientpack.getPrice()));
+                    pricePackage.setText(Integer.toString(clientpack.getPrice()) + " CHF");
                     namePackage.setText(clientpack.getName());
                 } catch (Exception e){
                     namePackage.setText("");
@@ -188,13 +188,6 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         }
     }
 
-
-    //put package in package and to view for the user
-    public void onGetPackageSuccess(Package pack) {
-        clientpack = pack;
-        namePackage.setText(clientpack.getName());
-        pricePackage.setText(clientpack.getPrice() + " CHF");
-    }
     //Go to edit client
     public void editClient (View view){
 

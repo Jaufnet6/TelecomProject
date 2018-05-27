@@ -192,5 +192,12 @@ public class AddClient extends AppCompatActivity {
         this.finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent1 = new Intent(AddClient.this, ListClient.class);
+        startActivity(new Intent(intent1));
+        finish();
+    }
+
 
 }
