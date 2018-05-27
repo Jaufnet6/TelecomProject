@@ -8,6 +8,7 @@
     <string name="string_Client">Clients</string>
     <string name="string_Services">Services</string>
     <string name="string_Packages">Abonnements</string>
+    <string name="string_location">Localisation</string>
     <string name="string_Languages">Langues</string>
     <string name="string_About">À propos</string>
     <string name="developped">Développé par Daniela Lourenço et Jaufray Sornette</string>
