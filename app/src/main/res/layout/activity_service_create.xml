@@ -17,13 +17,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="460dp">
+        android:layout_height="435dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:minHeight="517dp">
+            android:minHeight="430dp">
 
             <EditText
                 android:id="@+id/et_name_service"
@@ -46,7 +46,7 @@
                 android:id="@+id/et_description_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="200dp"
+                android:minHeight="160dp"
                 android:hint="Description"
                 android:gravity="center_vertical"
                 android:fontFamily="@font/trebuc"
@@ -109,8 +109,8 @@
 
                 <Button
                     android:id="@+id/save_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="100dp"
@@ -119,8 +119,8 @@
 
                 <Button
                     android:id="@+id/cancel_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="100dp"
