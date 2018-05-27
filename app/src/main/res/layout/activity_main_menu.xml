@@ -74,6 +74,21 @@
             android:layout_marginTop="50dp"
             android:onClick="changeToPackage"/>
 
+        <Button
+            android:id="@+id/button_localisation"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/main_buttons_design"
+            android:textColorHint="#ffffff"
+            android:hint="Localisation"
+            android:fontFamily="@font/trebuc"
+            android:textSize="25sp"
+            android:padding="5dp"
+            android:backgroundTint="@color/localisationColor"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:onClick="changeToLocalisation"/>
+
     </LinearLayout>
     
     

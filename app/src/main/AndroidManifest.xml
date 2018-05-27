@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.jaufray.telecomproject"
     >
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/iconapp"
@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme"
         android:supportsRtl="true">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
         <activity android:name=".MainMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -99,6 +102,8 @@
             android:label="@string/string_Client"
             android:windowSoftInputMode="adjustPan">
         </activity>
+        <activity android:name=".MapsActivity"
+            android:label="Map"></activity>
 
 
     </application>

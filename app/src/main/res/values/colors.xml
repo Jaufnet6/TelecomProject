@@ -10,5 +10,6 @@
     <color name="clientColor">#699DD9</color>
     <color name="serviceColor">#326DB2</color>
     <color name="packageColor">#1D4C83</color>
+    <color name="localisationColor">#FF123B6B</color>
 
 </resources>

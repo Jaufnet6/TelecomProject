@@ -59,6 +59,12 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
     }
 
+    public void changeToLocalisation(View view)
+    {
+        Intent intent = new Intent(MainMenu.this, MapsActivity.class);
+        startActivity(intent);
+
+    }
 
 
     //Drawer back button
