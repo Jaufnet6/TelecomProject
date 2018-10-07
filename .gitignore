@@ -9,3 +9,8 @@
 /captures
 .externalNativeBuild
 /.idea/caches
+*.ser
+*.ser
+*.xml
+*.gradle
+*.gradle
