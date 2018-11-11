@@ -27,7 +27,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 
-public class DetailsClient extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class DetailsClient extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView nameClient;
     private TextView phoneClient;
@@ -74,16 +74,15 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         getPackageOfClient(client.getIdPackage());
 
 
-
         //Link to TextViews in the activity
-        nameClient = (TextView)findViewById(R.id.dt_name);
-        phoneClient = (TextView)findViewById(R.id.dt_phoneNumber);
-        addressClient = (TextView)findViewById(R.id.dt_street);
-        NPAClient = (TextView)findViewById(R.id.dt_postal_code);
-        localityClient = (TextView)findViewById(R.id.dt_city);
-        countryClient = (TextView)findViewById(R.id.dt_country);
-        pricePackage = (TextView)findViewById(R.id.dt_price_package);
-        namePackage = (TextView)findViewById(R.id.dt_name_package) ;
+        nameClient = (TextView) findViewById(R.id.dt_name);
+        phoneClient = (TextView) findViewById(R.id.dt_phoneNumber);
+        addressClient = (TextView) findViewById(R.id.dt_street);
+        NPAClient = (TextView) findViewById(R.id.dt_postal_code);
+        localityClient = (TextView) findViewById(R.id.dt_city);
+        countryClient = (TextView) findViewById(R.id.dt_country);
+        pricePackage = (TextView) findViewById(R.id.dt_price_package);
+        namePackage = (TextView) findViewById(R.id.dt_name_package);
 
         //Fill the textview fields
         nameClient.setText(client.getName());
@@ -94,8 +93,8 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         countryClient.setText(client.getCountry());
 
 
-
     }
+
     //Firebase initialization
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
@@ -103,11 +102,12 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference();
     }
-     @Override
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (mToggle.onOptionsItemSelected(item)) {
-           return true;
+            return true;
         }
         return super.onOptionsItemSelected(item);
 
@@ -124,7 +124,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
                 try {
                     pricePackage.setText(Integer.toString(clientpack.getPrice()) + " CHF");
                     namePackage.setText(clientpack.getName());
-                } catch (Exception e){
+                } catch (Exception e) {
                     namePackage.setText("");
                     pricePackage.setText("");
                 }
@@ -138,7 +138,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         });
     }
 
-    public void assignPackage(Package thePackage){
+    public void assignPackage(Package thePackage) {
         clientpack = thePackage;
     }
 
@@ -189,7 +189,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
     }
 
     //Go to edit client
-    public void editClient (View view){
+    public void editClient(View view) {
 
         Intent intent = new Intent(DetailsClient.this, UpdateClient.class);
         intent.putExtra("clientToModify", client);
@@ -199,8 +199,9 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
         this.finish();
 
     }
+
     //delete Client button
-    public void deleteClient(View view){
+    public void deleteClient(View view) {
 
         new AlertDialog.Builder(DetailsClient.this)
                 .setMessage("Do you want to delete ? " + client.getName().toString())
@@ -218,6 +219,7 @@ public class DetailsClient extends AppCompatActivity implements NavigationView.O
 
 
     }
+
     //Delete client in DB
     private void deleteClientDB(final Client client) {
         mDatabaseReference.child("clients").child(client.getId()).removeValue();
